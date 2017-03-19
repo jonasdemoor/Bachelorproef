@@ -99,13 +99,14 @@ Dit onderzoek zal trachten een antwoord te vinden op volgende vragen:
 \end{itemize}
 
 %---------- Stand van zaken ---------------------------------------------------
+\newpage
 
 \section{State-of-the-art}
 \label{sec:state-of-the-art}
 
-Hier beschrijf je de \emph{state-of-the-art} rondom je gekozen onderzoeksdomein. Dit kan bijvoorbeeld een literatuurstudie zijn. Je mag de titel van deze sectie ook aanpassen (literatuurstudie, stand van zaken, enz.). Zijn er al gelijkaardige onderzoeken gevoerd? Wat concluderen ze? Wat is het verschil met jouw onderzoek? Wat is de relevantie met jouw onderzoek?
+%Hier beschrijf je de \emph{state-of-the-art} rondom je gekozen onderzoeksdomein. Dit kan bijvoorbeeld een literatuurstudie zijn. Je mag de titel van deze sectie ook aanpassen (literatuurstudie, stand van zaken, enz.). Zijn er al gelijkaardige onderzoeken gevoerd? Wat concluderen ze? Wat is het verschil met jouw onderzoek? Wat is de relevantie met jouw onderzoek?
 
-Verwijs bij elke introductie van een term of bewering over het domein naar de vakliteratuur, bijvoorbeeld~\autocite{Doll1954}! Denk zeker goed na welke werken je refereert en waarom.
+%Verwijs bij elke introductie van een term of bewering over het domein naar de vakliteratuur, bijvoorbeeld~\autocite{Doll1954}! Denk zeker goed na welke werken je refereert en waarom.
 
 % Voor literatuurverwijzingen zijn er twee belangrijke commando's:
 % \autocite{KEY} => (Auteur, jaartal) Gebruik dit als de naam van de auteur
@@ -114,7 +115,17 @@ Verwijs bij elke introductie van een term of bewering over het domein naar de va
 %   functie heeft in de zin (bv. ``Uit onderzoek door Doll & Hill (1954) bleek
 %   ...'')
 
-Je mag gerust gebruik maken van subsecties in dit onderdeel.
+%Je mag gerust gebruik maken van subsecties in dit onderdeel.
+
+\subsection{\textit{The Zettabyte Filesystem} \autocite{ZFSBonwick}}
+
+Dit is een paper geschreven door de oorspronkelijke ontwikkelaars van ZFS. In deze paper wordt er een gedetailleerd overzicht gegeven van de architectuur van het bestandssysteem en worden klassieke problemen met andere bestandssystemen aangekaart. Er worden voortdurend vergelijkingen gemaakt tussen de manier waarop ZFS problemen aanpakt en de manier waarop andere bestandssystemen dit probleem aanpakken. Zo is het volgens \textcite{ZFSBonwick} bv. niet acceptabel om bij journaalgebaseerde bestandssystemen (zoals EXT4) enkel te vertrouwen op logs en het draaien van \texttt{fsck} als er eventuele corruptie van data zou optreden. Dit omdat volgens deze redenering dan alle recovery-code in de bootloader zich zou moeten bevinden, want het is perfect mogelijk dat het bestandssysteem met het besturingssysteem corrupt kan geraken. \\
+Als conclusie stellen de auteurs dat ZFS heel wat problemen van de meer ``klassieke'' bestandssystemen (zoals moeilijk beheer en slechte data integriteit) uit de weg gaat d.m.v. een aantal architecturale beslissingen (zoals een object-gebaseerd model, storage pools en uitgebreide checksumming op block-niveau) \autocite{ZFSBonwick}.
+
+\subsection{textit{ZFS and RAID-Z: The Über-FS?} \autocite{BrianHickmann2007}}
+
+Dit is een paper geschreven door studenten aan de universiteit van Wisconsin-Madison en is geschreven gedurende de periode dat ZFS nog maar net was uitgebracht. Er waren nog niet zoveel details gepubliceerd over RAID-Z door Sun, dus besloten deze studenten om zelf onderzoek te doen naar de interne werking van deze ZFS functionaliteit. Ook analyseren ze de performantie van een ZFS RAID bij hoge fragmentatie en bij bijna volle schijven. Hierbij kwamen ze tot de conclusie dat performantie heel wat slechter is dan in andere gevallen. Daarnaast onderzochten de studenten of ZFS wel degelijk een oplossing biedt voor het RAID 5 ``write hole'' probleem, waarbij data in een inconsistente staat kan geraken als het systeem bijvoorbeeld crasht. Ze  concludeerden dat RAID-Z wel degelijk een oplossing bood voor dit probleem. \\
+Deze paper komt in grote lijnen overeen met dingen die ik ook zou willen testen. Maar waar deze paper niet over spreekt is performantie bij verschillende toepassingen (zoals databases en virtualisatie); dit is een aspect dat ik graag zou onderzoeken.
 
 %---------- Methodologie ------------------------------------------------------
 \section{Methodologie}
