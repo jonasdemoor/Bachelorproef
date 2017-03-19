@@ -86,20 +86,16 @@ Bij de sleutelwoorden geef je het onderzoeksdomein, samen met andere sleutelwoor
   %\item de doelstelling en onderzoeksvraag/-vragen
 %\end{itemize}
 
-Informatietechnologie is niet meer weg te denken uit het bedrijfsleven: nagenoeg elk bedrijf vertrouwt op IT voor het verwezenlijken van haar businessdoelstellingen. Zowel bedrijven als klanten vertrouwen erop dat vertrouwelijke data niet alleen in de juiste handen blijft, maar dat deze ook beschermd is tegen ongewilde gebeurtenissen. Denk maar aan het falen van schijven en andere hardware of aan een verwoestende natuurramp. \\
-Tegen het falen van schijven is de meest gebruikte oplossing RAID, wat staat voor Redundant Array of Independent (of Inexpensive) Disks. RAID is echter niet geheell feilloos: het beschermt bv. niet tegen fouten die gemaakt zijn door gebruikers (denk maar aan het wissen van belangrijke data) en het biedt ook geen oplossing als er in een zelfde tijdsbestek meerdere schijven falen \autocite{PeterM.Chen1993}. \\
+Al jarenlang is de meest gebruikte oplossing tegen dataverlies door het falen van schijven  RAID, wat staat voor Redundant Array of Independent (of Inexpensive) Disks. RAID is echter niet geheel feilloos: het beschermt bv. niet tegen fouten die gemaakt zijn door gebruikers (denk maar aan het wissen van belangrijke data) en het biedt ook geen oplossing als er in een zelfde tijdsbestek meerdere schijven falen \autocite{PeterM.Chen1993}. \\
 In 2002 begon het toenmalige Sun Microsystems, nu onderdeel van Oracle Corporation, aan de ontwikkeling van ZFS (Zettabyte Filesystem). Dit is een bestandssysteem dat volledig \textit{from scratch} is ontwikkeld om \textit{``de tekortkomingen van huidige bestandssystemen op te lossen''}\autocite{JeffBonwick_lastZFS}, vooral met betrekking tot data-integriteit. Volgens de toenmalige hoofdontwikkelaar \textcite{ZFSBonwick} biedt ZFS heel wat vernieuwende functionaliteiten zoals een eenvoudiger beheer, automatische foutcorrectie, automatisch schalende partities en een softwarematige RAID onder de term \textit{RAID-Z}. \\
-Oorspronkelijk is ZFS voor Solaris ontwikkeld, maar tegenwoordig wordt de ontwikkeling hoofdzakelijk gestuwd door het OpenZFS Project\autocite{OpenZFSHistory2014}. Sinds 2013 is ZFS ook beschikbaar voor Linux, maar de eerste uitgaven leden onder nogal wat stabiliteitsproblemen. Tegenwoordig is ZFS op Linux volwassen genoeg geworden om in te zetten in productie. Deze bachelorproef is dan ook een goede gelegenheid om zelf wat meer onderzoek te doen naar ZFS en of het een volwaardig alternatief zou zijn voor een klassieke, hardwaregebaseerde RAID-oplossing op een server.
-
+Sinds 2013 is ZFS ook beschikbaar voor Linux, maar de eerste uitgaven leden onder nogal wat stabiliteitsproblemen. Tegenwoordig is ZFS op Linux volwassen genoeg geworden om in te zetten in productie. Deze bachelorproef is dan ook een goede gelegenheid om zelf wat meer onderzoek te doen naar ZFS en of het een volwaardig alternatief zou zijn voor een klassieke, hardwaregebaseerde RAID-oplossing op een server. \\ \\
 Dit onderzoek zal trachten een antwoord te vinden op volgende vragen:
-
 \begin{itemize}
 \item{Wat zijn de grootste verschillen tussen een klassieke RAID-oplossing en ZFS RAID-Z? Hoe is de architectuur van ZFS opgebouwd en op welke manieren tracht het oplossingen te vinden voor de problemen die zich voordoen bij andere bestandssystemen en RAID-opstellingen?}
   \item{Komt ZFS zijn beloften qua data-integriteit en performantie na onder verschillende workloads en toepassingen?}
 \end{itemize}
 
 %---------- Stand van zaken ---------------------------------------------------
-\newpage
 
 \section{State-of-the-art}
 \label{sec:state-of-the-art}
@@ -122,7 +118,7 @@ Dit onderzoek zal trachten een antwoord te vinden op volgende vragen:
 Dit is een paper geschreven door de oorspronkelijke ontwikkelaars van ZFS. In deze paper wordt er een gedetailleerd overzicht gegeven van de architectuur van het bestandssysteem en worden klassieke problemen met andere bestandssystemen aangekaart. Er worden voortdurend vergelijkingen gemaakt tussen de manier waarop ZFS problemen aanpakt en de manier waarop andere bestandssystemen dit probleem aanpakken. Zo is het volgens \textcite{ZFSBonwick} bv. niet acceptabel om bij journaalgebaseerde bestandssystemen (zoals EXT4) enkel te vertrouwen op logs en het draaien van \texttt{fsck} als er eventuele corruptie van data zou optreden. Dit omdat volgens deze redenering dan alle recovery-code in de bootloader zich zou moeten bevinden, want het is perfect mogelijk dat het bestandssysteem met het besturingssysteem corrupt kan geraken. \\
 Als conclusie stellen de auteurs dat ZFS heel wat problemen van de meer ``klassieke'' bestandssystemen (zoals moeilijk beheer en slechte data integriteit) uit de weg gaat d.m.v. een aantal architecturale beslissingen (zoals een object-gebaseerd model, storage pools en uitgebreide checksumming op block-niveau) \autocite{ZFSBonwick}.
 
-\subsection{textit{ZFS and RAID-Z: The Über-FS?} \autocite{BrianHickmann2007}}
+\subsection{\textit{ZFS and RAID-Z: The \"{U}ber-FS?} \autocite{BrianHickmann2007}}
 
 Dit is een paper geschreven door studenten aan de universiteit van Wisconsin-Madison en is geschreven gedurende de periode dat ZFS nog maar net was uitgebracht. Er waren nog niet zoveel details gepubliceerd over RAID-Z door Sun, dus besloten deze studenten om zelf onderzoek te doen naar de interne werking van deze ZFS functionaliteit. Ook analyseren ze de performantie van een ZFS RAID bij hoge fragmentatie en bij bijna volle schijven. Hierbij kwamen ze tot de conclusie dat performantie heel wat slechter is dan in andere gevallen. Daarnaast onderzochten de studenten of ZFS wel degelijk een oplossing biedt voor het RAID 5 ``write hole'' probleem, waarbij data in een inconsistente staat kan geraken als het systeem bijvoorbeeld crasht. Ze  concludeerden dat RAID-Z wel degelijk een oplossing bood voor dit probleem. \\
 Deze paper komt in grote lijnen overeen met dingen die ik ook zou willen testen. Maar waar deze paper niet over spreekt is performantie bij verschillende toepassingen (zoals databases en virtualisatie); dit is een aspect dat ik graag zou onderzoeken.
@@ -131,8 +127,10 @@ Deze paper komt in grote lijnen overeen met dingen die ik ook zou willen testen.
 \section{Methodologie}
 \label{sec:methodologie}
 
-Hier beschrijf je hoe je van plan bent het onderzoek te voeren. Welke onderzoekstechniek ga je toepassen om elk van je onderzoeksvragen te beantwoorden? Gebruik je hiervoor experimenten, vragenlijsten, simulaties? Je beschrijft ook al welke tools je denkt hiervoor te gebruiken of te ontwikkelen.
+%Hier beschrijf je hoe je van plan bent het onderzoek te voeren. Welke onderzoekstechniek ga je toepassen om elk van je onderzoeksvragen te beantwoorden? Gebruik je hiervoor experimenten, vragenlijsten, simulaties? Je beschrijft ook al welke tools je denkt hiervoor te gebruiken of te ontwikkelen.
 
+Naast een theoretisch deel dat vooral zal handelen over de architectuur van ZFS en de werking van zowel hardwarematige als softwarematige RAID, zal er ook een praktisch deel zijn. In dit deel zal ik de performantie (vooral disk I/O performantie) van RAID-Z vergelijken met die van een hardwarematige RAID 5. Standaard RAID-Z komt overeen met RAID 5 qua functionaliteit. Daarnaast ga ik ook de performantie van verschillende toepassingen onder ZFS vergelijken met de performantie van deze toepassingen onder ``gewone'' bestandssystemen (zoals EXT4 en XFS). Bij deze laatstgenoemde vergelijking zal er geen RAID-opstelling worden gebruikt en zal ZFS dus op slechts één schijf draaien. \\
+Voor deze testen ga ik gebruikmaken van verschillende tools (zoals \texttt{dd}) en benchmarks om de performantie te meten. Bij dit onderzoek ga ik gebruikmaken van een fysieke server met een RAID-controller die beschikbaar zal worden gesteld door DVIT of een werknemer van DVIT.
 %---------- Verwachte resultaten ----------------------------------------------
 \section{Verwachte resultaten}
 \label{sec:verwachte_resultaten}
