@@ -23,15 +23,13 @@
 %---------- Titel & auteur ----------------------------------------------------
 
 % TODO: geef werktitel van je eigen voorstel op
-\PaperTitle{Titel voorstel}
+\PaperTitle{ZFS met RAID-Z als alternatief voor klassieke RAID-oplossingen}
 \PaperType{Onderzoeksvoorstel Bachelorproef} % Type document
 
 % TODO: vul je eigen naam in als auteur, geef ook je emailadres mee!
-\Authors{Jens Buysse\textsuperscript{1}, Anita Bernard\textsuperscript{2}, Bert Van Vreckem\textsuperscript{3}} % Authors
+\Authors{Jonas De Moor\textsuperscript{1}} % Authors
 \affiliation{\textbf{Contact:}
-  \textsuperscript{1} \href{mailto:jens.buysse@hogent.be}{jens.buysse@hogent.be};
-  \textsuperscript{2} \href{mailto:anita.bernard@hogent.be}{anita.bernard@hogent.be};
-  \textsuperscript{3} \href{mailto:bert.vanvreckem@hogent.be}{bert.vanvreckem@hogent.be}}
+  \textsuperscript{1} \href{mailto:jonas.demoor.v3741@student.hogent.be}{jonas.demoor.v3741@student.hogent.be}} 
 
 %---------- Abstract ----------------------------------------------------------
 
@@ -58,7 +56,7 @@ Bij de sleutelwoorden geef je het onderzoeksdomein, samen met andere sleutelwoor
 %
 % De andere sleutelwoorden zijn vrij te kiezen
 
-\Keywords{Onderzoeksdomein. Keyword1 --- Keyword2 --- Keyword3} % Keywords
+\Keywords{Systeem- en Netwerkbeheer. Opslagapparaten --- Serverhardware --- Bestandssystemen} % Keywords
 \newcommand{\keywordname}{Sleutelwoorden} % Defines the keywords heading name
 
 %---------- Titel, inhoud -----------------------------------------------------
@@ -78,14 +76,26 @@ Bij de sleutelwoorden geef je het onderzoeksdomein, samen met andere sleutelwoor
 \section{Introductie} % The \section*{} command stops section numbering
 \label{sec:introductie}
 
-Hier introduceer je werk. Je hoeft hier nog niet te technisch te gaan.
+%Hier introduceer je werk. Je hoeft hier nog niet te technisch te gaan.
 
-Je beschrijft zeker:
+%Je beschrijft zeker:
+
+%\begin{itemize}
+  %\item de probleemstelling en context
+  %\item de motivatie en relevantie voor het onderzoek
+  %\item de doelstelling en onderzoeksvraag/-vragen
+%\end{itemize}
+
+Informatietechnologie is niet meer weg te denken uit het bedrijfsleven: nagenoeg elk bedrijf vertrouwt op IT voor het verwezenlijken van haar businessdoelstellingen. Zowel bedrijven als klanten vertrouwen erop dat vertrouwelijke data niet alleen in de juiste handen blijft, maar dat deze ook beschermd is tegen ongewilde gebeurtenissen. Denk maar aan het falen van schijven en andere hardware of aan een verwoestende natuurramp. \\
+Tegen het falen van schijven is de meest gebruikte oplossing RAID, wat staat voor Redundant Array of Independent (of Inexpensive) Disks. RAID is echter niet geheell feilloos: het beschermt bv. niet tegen fouten die gemaakt zijn door gebruikers (denk maar aan het wissen van belangrijke data) en het biedt ook geen oplossing als er in een zelfde tijdsbestek meerdere schijven falen \autocite{PeterM.Chen1993}. \\
+In 2002 begon het toenmalige Sun Microsystems, nu onderdeel van Oracle Corporation, aan de ontwikkeling van ZFS (Zettabyte Filesystem). Dit is een bestandssysteem dat volledig \textit{from scratch} is ontwikkeld om \textit{``de tekortkomingen van huidige bestandssystemen op te lossen''}\autocite{JeffBonwick_lastZFS}, vooral met betrekking tot data-integriteit. Volgens de toenmalige hoofdontwikkelaar \textcite{ZFSBonwick} biedt ZFS heel wat vernieuwende functionaliteiten zoals een eenvoudiger beheer, automatische foutcorrectie, automatisch schalende partities en een softwarematige RAID onder de term \textit{RAID-Z}. \\
+Oorspronkelijk is ZFS voor Solaris ontwikkeld, maar tegenwoordig wordt de ontwikkeling hoofdzakelijk gestuwd door het OpenZFS Project\autocite{OpenZFSHistory2014}. Sinds 2013 is ZFS ook beschikbaar voor Linux, maar de eerste uitgaven leden onder nogal wat stabiliteitsproblemen. Tegenwoordig is ZFS op Linux volwassen genoeg geworden om in te zetten in productie. Deze bachelorproef is dan ook een goede gelegenheid om zelf wat meer onderzoek te doen naar ZFS en of het een volwaardig alternatief zou zijn voor een klassieke, hardwaregebaseerde RAID-oplossing op een server.
+
+Dit onderzoek zal trachten een antwoord te vinden op volgende vragen:
 
 \begin{itemize}
-  \item de probleemstelling en context
-  \item de motivatie en relevantie voor het onderzoek
-  \item de doelstelling en onderzoeksvraag/-vragen
+\item{Wat zijn de grootste verschillen tussen een klassieke RAID-oplossing en ZFS RAID-Z? Hoe is de architectuur van ZFS opgebouwd en op welke manieren tracht het oplossingen te vinden voor de problemen die zich voordoen bij andere bestandssystemen en RAID-opstellingen?}
+  \item{Komt ZFS zijn beloften qua data-integriteit en performantie na onder verschillende workloads en toepassingen?}
 \end{itemize}
 
 %---------- Stand van zaken ---------------------------------------------------
