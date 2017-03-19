@@ -3,7 +3,7 @@
 
 
 @Electronic{BrianHickmann2007,
-  Title                    = {ZFS and RAID-Z: The Uber-FS?},
+  Title                    = {ZFS and RAID-Z: The Über-FS?},
   Author                   = {Brian Hickmann, Kynan Shook},
   Language                 = {English},
   Organization             = {University of Wisconsin – Madison},
@@ -33,7 +33,7 @@ uncovered serious performance degradation and
 erratic behavior in ZFS when the disk is near full and
 heavily fragmented.},
   Owner                    = {Jonas De Moor},
-  Timestamp                = {19.03.2017}
+  Timestamp                = {2017.03.17}
 }
 
 @Electronic{JeffBonwick_lastZFS,

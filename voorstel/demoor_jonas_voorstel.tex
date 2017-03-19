@@ -33,10 +33,14 @@
 
 %---------- Abstract ----------------------------------------------------------
 
-  \Abstract{Hier schrijf je de samenvatting van je voorstel, als een doorlopende tekst van één paragraaf. Wat hier zeker in moet vermeld worden: \textbf{Context} (Waarom is dit werk belangrijk?); \textbf{Nood} (Waarom moet dit onderzocht worden?); \textbf{Taak} (Wat ga je (ongeveer) doen?); \textbf{Object} (Wat staat in dit document geschreven?); \textbf{Resultaat} (Wat verwacht je van je onderzoek?); \textbf{Conclusie} (Wat verwacht je van van de conclusies?); \textbf{Perspectief} (Wat zegt de toekomst voor dit werk?).
+%  \Abstract{Hier schrijf je de samenvatting van je voorstel, als een doorlopende tekst van één paragraaf. Wat hier zeker in moet vermeld worden: \textbf{Context} (Waarom is dit werk belangrijk?); \textbf{Nood} (Waarom moet dit onderzocht worden?); \textbf{Taak} (Wat ga je (ongeveer) doen?); \textbf{Object} (Wat staat in dit document geschreven?); \textbf{Resultaat} (Wat verwacht je van je onderzoek?); \textbf{Conclusie} (Wat verwacht je van van de conclusies?); \textbf{Perspectief} (Wat zegt de toekomst voor dit werk?).
 
-Bij de sleutelwoorden geef je het onderzoeksdomein, samen met andere sleutelwoorden die je werk beschrijven.
-}
+%Bij de sleutelwoorden geef je het onderzoeksdomein, samen met andere sleutelwoorden die je werk beschrijven.
+%}
+
+\Abstract{Bij bedrijven worden RAID-oplossingen al jarenlang gebruikt voor bescherming tegen dataverlies. Klassieke RAID kent echter een aantal inherente problemen, waaronder risico op corruptie van data bij een systeemcrash. In 2002 ontwikkelde het toenmalige Sun Microsystems ZFS, een nieuw bestandssysteem voor Solaris dat lang bestaande problemen met bestandssystemen van de laatste 20 jaar moet oplossen. ZFS biedt naast een ingebouwde volume manager en storage pools nog een hoop andere functionaliteiten, waaronder RAID-Z, een softwarematige RAID-oplossing dat niet gebukt gaat onder de problemen van klassieke RAID-oplossingen.\\
+  Ondertussen heeft een groep ontwikkelaars zich opgesplitst van Oracle en werd het OpenZFS project opgericht met de bedoeling om ZFS te ontwikkelen op een open manier. Sinds 2013 is ZFS ook beschikbaar voor Linux, en in 2016 begon Canonical van de populaire distributie Ubuntu met plannen om ZFS op te nemen in de distributie. \\
+Dit onderzoek zal de architectuur van ZFS bespreken, samen met de belangrijkste verschillen tussen ZFS, RAID en ``klassieke'' bestandssystemen. Ook wordt er een praktisch onderzoek verricht om zo de performantie en betrouwbaarheid van ZFS in kaart te brengen.}
 
 %---------- Onderzoeksdomein en sleutelwoorden --------------------------------
 % TODO: Sleutelwoorden:
@@ -56,7 +60,7 @@ Bij de sleutelwoorden geef je het onderzoeksdomein, samen met andere sleutelwoor
 %
 % De andere sleutelwoorden zijn vrij te kiezen
 
-\Keywords{Systeem- en Netwerkbeheer. Opslagapparaten --- Serverhardware --- Bestandssystemen} % Keywords
+\Keywords{Systeem- en Netwerkbeheer --- Opslagapparaten --- Serverhardware --- Bestandssystemen --- ZFS --- Unix} % Keywords
 \newcommand{\keywordname}{Sleutelwoorden} % Defines the keywords heading name
 
 %---------- Titel, inhoud -----------------------------------------------------
@@ -135,13 +139,17 @@ Voor deze testen ga ik gebruikmaken van verschillende tools (zoals \texttt{dd}) 
 \section{Verwachte resultaten}
 \label{sec:verwachte_resultaten}
 
-Hier beschrijf je welke resultaten je verwacht. Als je metingen en simulaties uitvoert, kan je hier al mock-ups maken van de grafieken samen met de verwachte conclusies. Benoem zeker al je assen en de stukken van de grafiek die je gaat gebruiken. Dit zorgt ervoor dat je concreet weet hoe je je data gaat moeten structureren.
+%Hier beschrijf je welke resultaten je verwacht. Als je metingen en simulaties uitvoert, kan je hier al mock-ups maken van de grafieken samen met de verwachte conclusies. Benoem zeker al je assen en de stukken van de grafiek die je gaat gebruiken. Dit zorgt ervoor dat je concreet weet hoe je je data gaat moeten structureren.
+
+Ik verwacht dat hardwaregebaseerde RAID iets betere performantie zal hebben dan RAID-Z. Maar qua betrouwbaarheid zal RAID-Z dan weer een streepje voor hebben. Bij het testen van verschillende soorten toepassingen op ZFS verwacht ik dat de resultaten niet al teveel zullen verschillen van de resultaten bij het draaien van deze toepassingen op ``gewone'' bestandssystemen. Enkel bij databases zou dit wel eens een grotere impact kunnen hebben.
 
 %---------- Verwachte conclusies ----------------------------------------------
 \section{Verwachte conclusies}
 \label{sec:verwachte_conclusies}
 
-Hier beschrijf je wat je verwacht uit je onderzoek, met de motivatie waarom. Het is \textbf{niet} erg indien uit je onderzoek andere resultaten en conclusies vloeien dan dat je hier beschrijft: het is dan juist interessant om te onderzoeken waarom jouw hypothesen niet overeenkomen met de resultaten.
+%Hier beschrijf je wat je verwacht uit je onderzoek, met de motivatie waarom. Het is \textbf{niet} erg indien uit je onderzoek andere resultaten en conclusies vloeien dan dat je hier beschrijft: het is dan juist interessant om te onderzoeken waarom jouw hypothesen niet overeenkomen met de resultaten.
+
+Ik verwacht dat ik ZFS met RAID-Z als volwaardig (en misschien zelfs goedkoper) alternatief voor klassieke RAID ga kunnen bestempelen. Ook al zou ZFS misschien een goed alternatief (of zelfs beter) zijn dan hardwaregebaseerde RAID, dan betekent dit niet dat ``gewone'' RAID geen plaats meer zou hebben. Een argument tegen ZFS zou bijvoorbeeld kunnen zijn dat het bestandssysteem enkel beschikbaar is voor Unix en Linux. Ik verwacht dat RAID dus nog voor lange tijd zijn plaats zal hebben in de opslagwereld. 
 
 %------------------------------------------------------------------------------
 % Referentielijst
