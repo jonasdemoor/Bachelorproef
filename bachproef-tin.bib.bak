@@ -1,0 +1,131 @@
+% This file was created with JabRef 2.10.
+% Encoding: Cp1252
+
+
+@Electronic{BrianHickmann2007,
+  Title                    = {ZFS and RAID-Z: The Uber-FS?},
+  Author                   = {Brian Hickmann, Kynan Shook},
+  Language                 = {English},
+  Organization             = {University of Wisconsin – Madison},
+  Url                      = {http://pages.cs.wisc.edu/~remzi/Classes/736/Fall2007/Projects/BrianKynan/paper.pdf},
+  Year                     = {2007},
+
+  Abstract                 = {ZFS has been touted by Sun Microsystems as the
+“last word in file systems”. It is a revolutionary file
+system with several new features that improve its
+reliability, manageability, and performance. ZFS also
+contains RAID-Z, an integrated software RAID system
+that claims to solve the RAID-5 write hole without
+special hardware. While these claims are impressive,
+very little information about ZFS and RAID-Z has been
+published and no work has been done to verify these
+claims. In this work, we investigate RAID-Z and ZFS
+by examining the on-disk file layout. We also use a
+kernel extension to intercept reads and writes to the
+backing store and use this temporal information to
+further understand the file system’s behavior. With
+these tools, we were able to discover how RAID-Z lays
+files out on the disk. We also verified that RAID-Z
+both solved the RAID-5 write hole and maintains its
+full-stripe write semantics even when the volume is full
+or heavily fragmented. Finally, during our testing, we
+uncovered serious performance degradation and
+erratic behavior in ZFS when the disk is near full and
+heavily fragmented.},
+  Owner                    = {Jonas De Moor},
+  Timestamp                = {19.03.2017}
+}
+
+@Electronic{JeffBonwick_lastZFS,
+  Title                    = {ZFS The Last Word In File Systems},
+  Author                   = {Jeff Bonwick, Bill Moore},
+  Language                 = {English},
+  Month                    = {Unknown},
+  Organization             = {Sun Microsystems},
+  Url                      = {https://wiki.illumos.org/download/attachments/1146951/zfs_last.pdf},
+  Year                     = {Unknown},
+
+  Owner                    = {Jonas De Moor},
+  Timestamp                = {2017.03.17}
+}
+
+@Electronic{ZFSBonwick,
+  Title                    = {The Zettabyte Filesystem},
+  Author                   = {Jeff Bonwick, et al},
+  Language                 = {English},
+  Month                    = {Unknown},
+  Organization             = {Sun Microsystems},
+  Url                      = {http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.184.3704&rep=rep1&type=pdf},
+  Year                     = {2002},
+
+  Abstract                 = {In this paper we describe a new file system that
+provides strong data integrity guarantees, simple
+administration, and immense capacity. We show
+that with a few changes to the traditional high-level
+file system architecture — including a redesign of
+the interface between the file system and volume
+manager, pooled storage, a transactional copy-onwrite
+model, and self-validating checksums — we
+can eliminate many drawbacks of traditional file
+systems. We describe a general-purpose productionquality
+file system based on our new architecture,
+the Zettabyte File System (ZFS). Our new architecture
+reduces implementation complexity, allows new
+performance improvements, and provides several
+useful new features almost as a side effect.},
+  Owner                    = {Jonas De Moor},
+  Timestamp                = {18.03.2017}
+}
+
+@Electronic{OpenZFSHistory2014,
+  Title                    = {History - OpenZFS},
+  Author                   = {OpenZFSProject},
+  Language                 = {English},
+  Month                    = {May},
+  Organization             = {OpenZFS Project},
+  Url                      = {http://open-zfs.org/wiki/History},
+  Year                     = {2014},
+
+  Owner                    = {Jonas De Moor},
+  Timestamp                = {18.03.2017}
+}
+
+@Electronic{PeterM.Chen1993,
+  Title                    = {RAID: High-Performance, Reliable Secondary Storage},
+  Author                   = {Peter M. Chen, et al},
+  Language                 = {English},
+  Month                    = {October},
+  Organization             = {University of Michigan},
+  Url                      = {http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.41.3889&rep=rep1&type=pdf},
+  Year                     = {1993},
+
+  Abstract                 = {Disk arrays were proposed in the 1980s as a way to use parallelism between
+multiple disks to improve aggregate I/O performance. Today they appear in the product
+lines of most major computer manufacturers. This paper gives a comprehensive overview
+of disk arrays and provides a framework in which to organize current and
+future work. The paper first introduces disk technology and reviews the driving forces
+that have popularized disk arrays: performance and reliability. It then discusses the two
+architectural techniques used in disk arrays: striping across multiple disks to improve performance
+and redundancy to improve reliability. Next, the paper describes seven disk
+array architectures, called RAID (Redundant Arrays of Inexpensive Disks) levels 0-6 and
+compares their performance, cost, and reliability. It goes on to discuss advanced research
+and implementation topics such as refining the basic RAID levels to improve performance
+and designing algorithms to maintain data consistency. Last, the paper describes five disk
+array prototypes or products and discusses future opportunities for research. The paper
+includes an annotated bibliography of disk array-related literature.},
+  Owner                    = {Jonas De Moor},
+  Timestamp                = {18.03.2017}
+}
+
+@Electronic{VantageRecovery2017,
+  Title                    = {RAID 5 Data Recovery FAQ},
+  Author                   = {VantageDataRecovery},
+  Language                 = {Egnlish},
+  Organization             = {Vantage Data Recovery},
+  Url                      = {https://www.vantexdatarecovery.com/vantagetech1.com/faq/raid-5-recovery-faq.html},
+  Year                     = {2017},
+
+  Owner                    = {Jonas De Moor},
+  Timestamp                = {18.03.2017}
+}
+
