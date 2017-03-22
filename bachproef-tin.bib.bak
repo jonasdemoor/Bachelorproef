@@ -1,16 +1,12 @@
-% This file was created with JabRef 2.10.
-% Encoding: Cp1252
+% Encoding: windows-1252
 
-
-@Electronic{BrianHickmann2007,
-  Title                    = {ZFS and RAID-Z: The Uber-FS?},
-  Author                   = {Brian Hickmann, Kynan Shook},
-  Language                 = {English},
-  Organization             = {University of Wisconsin – Madison},
-  Url                      = {http://pages.cs.wisc.edu/~remzi/Classes/736/Fall2007/Projects/BrianKynan/paper.pdf},
-  Year                     = {2007},
-
-  Abstract                 = {ZFS has been touted by Sun Microsystems as the
+@Thesis{BrianHickmann2007,
+  author       = {Brian Hickmann, Kynan Shook},
+  title        = {ZFS and RAID-Z: The Uber-FS?},
+  year         = {2007},
+  language     = {English},
+  url          = {http://pages.cs.wisc.edu/~remzi/Classes/736/Fall2007/Projects/BrianKynan/paper.pdf},
+  abstract     = {ZFS has been touted by Sun Microsystems as the
 “last word in file systems”. It is a revolutionary file
 system with several new features that improve its
 reliability, manageability, and performance. ZFS also
@@ -32,33 +28,45 @@ or heavily fragmented. Finally, during our testing, we
 uncovered serious performance degradation and
 erratic behavior in ZFS when the disk is near full and
 heavily fragmented.},
-  Owner                    = {Jonas De Moor},
-  Timestamp                = {19.03.2017}
+  organization = {University of Wisconsin – Madison},
+  owner        = {Jonas De Moor},
+  timestamp    = {19.03.2017},
 }
 
-@Electronic{JeffBonwick_lastZFS,
-  Title                    = {ZFS The Last Word In File Systems},
-  Author                   = {Jeff Bonwick, Bill Moore},
+@Techreport{DavidA.Paterson1987,
+  Title                    = {A Case for Redundant Arrays of Inexpensive Disks},
+  Author                   = {David A. Paterson, et al},
+  Institution              = {University of California, Berkeley},
+  Year                     = {1987},
   Language                 = {English},
-  Month                    = {Unknown},
-  Organization             = {Sun Microsystems},
-  Url                      = {https://wiki.illumos.org/download/attachments/1146951/zfs_last.pdf},
-  Year                     = {Unknown},
+  Url                      = {https://www2.eecs.berkeley.edu/Pubs/TechRpts/1987/CSD-87-391.pdf},
 
+  Abstract                 = {Increasing performance of CPUs and memories will be squandered if not matched by a similar performance increase in I/O. While the capacity of Single Large Expensive Disk (SLED) has grown rapdily, the performance improvement of SLED has been modest. Redundant Arrays of Inexpensive Disks (RAID), based on the magnetic disk technology developed for personal computers, offers an attractive alternative to SLED, promising improvements of an order of magnitude in performance , reliability, power consumption, and scalability.
+This paper introduces five levels of RAIDs, giving their relative cost/performance, and compares RAIDs to an IBM 3380 and a Fujitsu Super Eagle.},
   Owner                    = {Jonas De Moor},
-  Timestamp                = {2017.03.17}
+  Timestamp                = {21.03.2017}
 }
 
-@Electronic{ZFSBonwick,
-  Title                    = {The Zettabyte Filesystem},
-  Author                   = {Jeff Bonwick, et al},
-  Language                 = {English},
-  Month                    = {Unknown},
-  Organization             = {Sun Microsystems},
-  Url                      = {http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.184.3704&rep=rep1&type=pdf},
-  Year                     = {2002},
+@Conference{JeffBonwick_lastZFS,
+  author       = {Jeff Bonwick, Bill Moore},
+  title        = {ZFS The Last Word In File Systems},
+  year         = {Unknown},
+  language     = {English},
+  organization = {Sun Microsystems},
+  month        = {Unknown},
+  url          = {https://wiki.illumos.org/download/attachments/1146951/zfs_last.pdf},
+  owner        = {Jonas De Moor},
+  timestamp    = {2017.03.17},
+}
 
-  Abstract                 = {In this paper we describe a new file system that
+@TechReport{ZFSBonwick,
+  author       = {Jeff Bonwick, et al},
+  title        = {The Zettabyte Filesystem},
+  year         = {2002},
+  language     = {English},
+  month        = {Unknown},
+  url          = {http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.184.3704&rep=rep1&type=pdf},
+  abstract     = {In this paper we describe a new file system that
 provides strong data integrity guarantees, simple
 administration, and immense capacity. We show
 that with a few changes to the traditional high-level
@@ -73,31 +81,31 @@ the Zettabyte File System (ZFS). Our new architecture
 reduces implementation complexity, allows new
 performance improvements, and provides several
 useful new features almost as a side effect.},
-  Owner                    = {Jonas De Moor},
-  Timestamp                = {18.03.2017}
+  organization = {Sun Microsystems},
+  owner        = {Jonas De Moor},
+  timestamp    = {18.03.2017},
 }
 
-@Electronic{OpenZFSHistory2014,
-  Title                    = {History - OpenZFS},
-  Author                   = {OpenZFSProject},
-  Language                 = {English},
-  Month                    = {May},
-  Organization             = {OpenZFS Project},
-  Url                      = {http://open-zfs.org/wiki/History},
-  Year                     = {2014},
-
-  Owner                    = {Jonas De Moor},
-  Timestamp                = {18.03.2017}
+@WWW{OpenZFSHistory2014,
+  author       = {OpenZFSProject},
+  title        = {History - OpenZFS},
+  year         = {2014},
+  url          = {http://open-zfs.org/wiki/History},
+  language     = {English},
+  organization = {OpenZFS Project},
+  month        = {May},
+  owner        = {Jonas De Moor},
+  timestamp    = {18.03.2017},
 }
 
 @Electronic{PeterM.Chen1993,
   Title                    = {RAID: High-Performance, Reliable Secondary Storage},
   Author                   = {Peter M. Chen, et al},
+  Url                      = {http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.41.3889&rep=rep1&type=pdf},
+  Year                     = {1993},
   Language                 = {English},
   Month                    = {October},
   Organization             = {University of Michigan},
-  Url                      = {http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.41.3889&rep=rep1&type=pdf},
-  Year                     = {1993},
 
   Abstract                 = {Disk arrays were proposed in the 1980s as a way to use parallelism between
 multiple disks to improve aggregate I/O performance. Today they appear in the product
@@ -117,15 +125,48 @@ includes an annotated bibliography of disk array-related literature.},
   Timestamp                = {18.03.2017}
 }
 
-@Electronic{VantageRecovery2017,
-  Title                    = {RAID 5 Data Recovery FAQ},
-  Author                   = {VantageDataRecovery},
-  Language                 = {Egnlish},
-  Organization             = {Vantage Data Recovery},
-  Url                      = {https://www.vantexdatarecovery.com/vantagetech1.com/faq/raid-5-recovery-faq.html},
-  Year                     = {2017},
-
-  Owner                    = {Jonas De Moor},
-  Timestamp                = {18.03.2017}
+@WWW{VantageRecovery2017,
+  author       = {VantageDataRecovery},
+  title        = {RAID 5 Data Recovery FAQ},
+  year         = {2017},
+  url          = {https://www.vantexdatarecovery.com/vantagetech1.com/faq/raid-5-recovery-faq.html},
+  language     = {Egnlish},
+  organization = {Vantage Data Recovery},
+  owner        = {Jonas De Moor},
+  timestamp    = {18.03.2017},
 }
 
+@Book{OSThreePiecesRemzi2015,
+  author =       {Remzi H. Arpaci-Dusseau and Andrea C. Arpaci-Dusseau},
+  title =        "{Operating Systems: Three Easy Pieces}",
+  publisher =    {Arpaci-Dusseau Books},
+  month =        "May",
+  year =         {2015},
+  edition =      {0.91},
+}
+
+@TechReport{Chen1994,
+  author      = {Peter M. Chen , et al.},
+  title       = {RAID: High-Performance, Reliable Secondary Storage},
+  institution = {University of Michigan , Carnegie Mellon University , University of California (Berkeley)},
+  year        = {1994},
+  language    = {English},
+  pages       = {8-31},
+  url         = {http://citeseerx.ist.psu.edu/viewdoc/download;jsessionid=59E48A55C27748208046D52C5730C98F?doi=10.1.1.41.3889&rep=rep1&type=pdf},
+  abstract    = {Disk arrays were proposed in the 1980s as a way to use parallelism between
+multiple disks to improve aggregate I/O performance. Today they appear in the product
+lines of most major computer manufacturers. This paper gives a comprehensive overview
+of disk arrays and provides a framework in which to organize current and
+future work. The paper first introduces disk technology and reviews the driving forces
+that have popularized disk arrays: performance and reliability. It then discusses the two
+architectural techniques used in disk arrays: striping across multiple disks to improve performance
+and redundancy to improve reliability. Next, the paper describes seven disk
+array architectures, called RAID (Redundant Arrays of Inexpensive Disks) levels 0-6 and
+compares their performance, cost, and reliability. It goes on to discuss advanced research
+and implementation topics such as refining the basic RAID levels to improve performance
+and designing algorithms to maintain data consistency. Last, the paper describes five disk
+array prototypes or products and discusses future opportunities for research. The paper
+includes an annotated bibliography of disk array-related literature.},
+}
+
+@Comment{jabref-meta: databaseType:biblatex;}

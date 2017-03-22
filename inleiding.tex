@@ -24,9 +24,13 @@ In dit hoofdstuk wordt er een korte inleiding gegeven over de basisprincipes van
 
 \section{RAID}
 
-In 1987 publiceerden een 
+Al van oudscher worden magnetische harde schijven gebruikt als opslagmedium voor data. Maar reeds in de jaren 80 zagen onderzoekers in dat I/O-performance een bottleneck zou vormen voor computersystemen in de toekomst. Terwijl geheugenchips en processoren steeds sneller werden, bevonden opslagmedia zich in een impasse \autocite{DavidA.Paterson1987}.
 
-\section{ZFS}
+In de paper \textit{"A Case for Redundant Arrays of Inexpensive Disks"}  formuleerden \textcite{DavidA.Paterson1987} en zijn collega's voor het eerst de term 'RAID', wat een acroniem is voor 'Redundant Arrays of Inexpensive Disks'. De oorspronkelijke idee achter RAID was dat een verzameling van goedkopere schijven performanter zou zijn dan grotere en duurdere mainframeschijven van die tijd. 
+
+Naast performantie en kost was betrouwbaarheid (reliability)  ook een belangrijke factor. Als bv. één of meerdere schijven van de array falen, dan mag dit geen invloed hebben op de werking van de rest van de verzameling schijven. Daarom introduceerden de onderzoekers de zgn. "RAID levels"    \autocite{DavidA.Paterson1987}, die vandaag de dag nog steeds in gebruik zijn. Er bestaan een aantal RAID-niveaus, waarvan de voornaamste zullen besproken worden.
+
+Bij het bouwen van RAID-systemen worden er gebruikelijk drie aspecten in beschouwing genomen: \textbf{performantie} (performance), \textbf{betrouwbaarheid} (reliability) en \textbf{capaciteit} (capacity). Een RAID-niveau is in principe niets anders dan een balans tussen deze verschillende eigenschappen; meestal zullen er dus één of meerdere trade-offs moeten gemaakt worden \autocite{OSThreePiecesRemzi2015}.
 
 \section{Probleemstelling en Onderzoeksvragen}
 \label{sec:onderzoeksvragen}
