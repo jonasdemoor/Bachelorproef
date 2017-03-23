@@ -98,33 +98,6 @@ useful new features almost as a side effect.},
   timestamp    = {18.03.2017},
 }
 
-@Electronic{PeterM.Chen1993,
-  Title                    = {RAID: High-Performance, Reliable Secondary Storage},
-  Author                   = {Peter M. Chen, et al},
-  Url                      = {http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.41.3889&rep=rep1&type=pdf},
-  Year                     = {1993},
-  Language                 = {English},
-  Month                    = {October},
-  Organization             = {University of Michigan},
-
-  Abstract                 = {Disk arrays were proposed in the 1980s as a way to use parallelism between
-multiple disks to improve aggregate I/O performance. Today they appear in the product
-lines of most major computer manufacturers. This paper gives a comprehensive overview
-of disk arrays and provides a framework in which to organize current and
-future work. The paper first introduces disk technology and reviews the driving forces
-that have popularized disk arrays: performance and reliability. It then discusses the two
-architectural techniques used in disk arrays: striping across multiple disks to improve performance
-and redundancy to improve reliability. Next, the paper describes seven disk
-array architectures, called RAID (Redundant Arrays of Inexpensive Disks) levels 0-6 and
-compares their performance, cost, and reliability. It goes on to discuss advanced research
-and implementation topics such as refining the basic RAID levels to improve performance
-and designing algorithms to maintain data consistency. Last, the paper describes five disk
-array prototypes or products and discusses future opportunities for research. The paper
-includes an annotated bibliography of disk array-related literature.},
-  Owner                    = {Jonas De Moor},
-  Timestamp                = {18.03.2017}
-}
-
 @WWW{VantageRecovery2017,
   author       = {VantageDataRecovery},
   title        = {RAID 5 Data Recovery FAQ},
