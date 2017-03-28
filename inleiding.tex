@@ -30,6 +30,13 @@ In de paper \textit{"A Case for Redundant Arrays of Inexpensive Disks"}  formule
 
 Naast performantie en kost was betrouwbaarheid (reliability)  ook een belangrijke factor. Als bv. één of meerdere schijven van de array falen, dan mag dit geen invloed hebben op de werking van de rest van de verzameling schijven. Daarom introduceerden de onderzoekers de zgn. "RAID levels"    \autocite{DavidA.Paterson1987}, die vandaag de dag nog steeds in gebruik zijn. Er bestaan een aantal RAID-niveaus, waarvan de voornaamste zullen besproken worden.
 
+\begin{figure}
+	\centering
+	\includegraphics[width=0.8\textwidth]{inleiding-raid-illustratie}
+	\caption{Illustratie van verschillende RAID-niveaus \autocite{Chen1994}}
+	\label{fig:chen_array_illustratie}
+\end{figure}
+
 Bij het bouwen van RAID-systemen worden er gebruikelijk drie aspecten in beschouwing genomen: \textbf{performantie} (performance), \textbf{betrouwbaarheid} (reliability) en \textbf{capaciteit} (capacity). Een RAID-niveau is in principe niets anders dan een balans tussen deze verschillende eigenschappen; meestal zullen er dus één of meerdere trade-offs moeten gemaakt worden \autocite{Chen1994}.
 
 Begrippen die centraal staan bij RAID zijn \textit{\textbf{striping}} en \textit{\textbf{parity}}. Striping heeft betrekking op de manier waarop een RAID-controller (hetzij hardwarematig, hetzij softwarematig) de blokken data verdeelt over de array van schijven. Bij RAID 0 bijvoorbeeld wordt de data gelijkmatig gedistribueerd volgens het \textit{round-robin}-algoritme \autocite{OSThreePiecesRemzi2015}. Datablokken die verdeeld zijn over meerdere schijven en samen één geheel vormen worden een \textit{stripe} genoemd. \\ 
@@ -39,7 +46,7 @@ Parity is een mechanisme dat werd geïntroduceerd bij RAID-niveau 4 om betrouwba
 
 Naast RAID 0 en RAID 4 zijn er nog andere RAID-levels, zoals RAID 1 en RAID 5. RAID 1 staat ook bekend als \textit{mirroring}, omdat het kopieën maakt van de datablokken naar één of meerdere disks afhankelijk van het aantal schijven. Op gebied van capaciteit is RAID 1 niet echt gunstig, aangezien maar de helft van de totale schijfruimte bruikbaar is. Stel dat er vier schijven in een array aanwezig zijn, dan is slechts de opslagcapaciteit van twee schijven bruikbaar. Daarentegen is de betrouwbaarheid van RAID 1 wel vele malen beter dan die van RAID 0: in theorie mogen er bij een reeks van \textit{n} schijven $\frac{n}{2}$ schijven falen. Maar dan mogen de schijven die elkaars mirror zijn niet falen, want dan is de data op deze disks verloren.  Daarom houdt men in de praktijk meestal de maatstaf van één schijf aan \autocite{OSThreePiecesRemzi2015}.
 
-Als laatste wordt RAID 5 besproken. RAID 5 is in principe niets anders dan RAID-niveau 4, maar dan uitgebreid met functionaliteit dat de parity blocks roteert over de verschillende schijven. Dit is een groot verschil t.o.v. RAID 4, waarbij de parity blocks zich op één disk bevinden. Read-performantie is nagenoeg gelijk aan RAID 4, maar write-performantie is stukken beter. Dit komt omdat bij RAID 5 de schrijfoperaties parallel kunnen worden afgehandeld; bij RAID 4 vormt de parity-schijf een \textit{bottleneck} bij het wegschrijven van data. De reden hiervoor is dat bij het updaten van data ook de parity blocks moeten worden geüpdatet; alle operaties worden dus m.a.w. serieel uitgevoerd \autocite{OSThreePiecesRemzi2015}.
+Als laatste wordt RAID 5 besproken. RAID 5 is in principe niets anders dan RAID-niveau 4, maar dan uitgebreid met functionaliteit dat de parity blocks roteert over de verschillende schijven. Dit is een groot verschil t.o.v. RAID 4, waarbij de parity blocks zich op één disk bevinden. Read-performantie is nagenoeg gelijk aan RAID 4, maar write-performantie is stukken beter. Dit komt omdat bij RAID 5 de schrijfoperaties parallel kunnen worden afgehandeld; bij RAID 4 vormt de parity-schijf een \textit{bottleneck} bij het wegschrijven van data \autocite{Chen1994}. De reden hiervoor is dat bij het updaten van data ook de parity blocks moeten worden geüpdatet; alle operaties worden dus m.a.w. serieel uitgevoerd \autocite{OSThreePiecesRemzi2015}.
 
 Er bestaan nog andere, niet-standaard RAID levels, zoals RAID 6 en RAID 10, maar deze worden hier niet besproken.
 
