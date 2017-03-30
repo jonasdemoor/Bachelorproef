@@ -52,6 +52,12 @@ Er bestaan nog andere, niet-standaard RAID levels, zoals RAID 6 en RAID 10, maar
 
 \section{ZFS}
 
+ZFS is een bestandssysteem dat ontwikkeld is door het toenmalige Sun Microsystems, nu onderdeel van Oracle Corporation. Voormalig Sun-werknemer Jeff Bonwick was de oorspronkelijke hoofdontwikkelaar achter het bestandssysteem. De ontwikkeling van ZFS startte aan het begin van de jaren 2000; Sun had reeds met de ontwikkeling van bestandssystemen geëxperimenteerd, maar deze pogingen misluktten telkens \autocite{Bonwick2015}.
+
+In die tijd gebruikte het bedrijf haar UNIX-besturingssysteem Solaris intern voor verschillende soorten toepassingen, waaronder file servers \autocite{Bonwick2015}. De schijven van deze servers waren opgedeeld in volumes, beheerd door de Solaris Volume Manager (SVM) en geformatteerd in UFS (UNIX Filesystem) \autocite{Bonwick2015}. Toen een verkeerd ingevoerd SVM-commando erin slaagde om het systeem te doen crashen en voor een enorme \textit{downtime} zorgde bij  Sun, was dit voor Bonwick een aanleiding om volledig van de grond op een bestandssysteem op te bouwen dat makkelijk in gebruik én beheer was. Het was toen dat \textcite{Bonwick2015} zich afvroeg "waarom het zo pijnlijk is om opslag te beheren".
+
+De hoofdreden om een volledig nieuw bestandssysteem te ontwikkelen was volgens \textcite{JeffBonwick_lastZFS} dat de toenmalige oplossingen voor bestandssystemen totaal achterhaald waren. Bestandssystemen waren nog ontwikkeld voor opslagnoden uit de jaren '80 en '90, welke niet te vergelijken zijn met de huidige noden van zowel bedrijven als particulieren. Naarmate de nood aan meer opslagruimte steeg, moesten er oplossingen worden bedacht, en dit m.b.v. bestandssystemen die hier helemaal niet op voorzien waren. Een 'tussenoplossing', aldus volgens \textcite{JeffBonwick_lastZFS}, die ook vandaag de dag nog gebruikt wordt, is de combinatie van volumes en bestandssystemen. Volumes zijn abstracties voor (delen van) fysieke schijven; typisch maakt men één bestandssysteem per volume aan. 
+
 
 
 \section{Probleemstelling en Onderzoeksvragen}

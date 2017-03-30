@@ -142,4 +142,46 @@ array prototypes or products and discusses future opportunities for research. Th
 includes an annotated bibliography of disk array-related literature.},
 }
 
+@TechReport{Goda2012,
+  author      = {Kazuo Goda and Masaru Kitsuregawa},
+  title       = {The History of Storage Systems},
+  institution = {Institute of Electrical and Electronics Engineers (IEEE)},
+  year        = {2012},
+  type        = {techreport},
+  language    = {English},
+  pages       = {8},
+  url         = {http://ieeexplore.ieee.org/document/6182574/},
+  abstract    = {This paper reviews the history of storage systems.
+The first section begins with the era of early mechanical
+calculators and the following four sections review historically
+major storage devices such as magnetic tapes, magnetic disks,
+optical devices, and solid-state devices. The final two sections
+focus on recent system technologies such as storage networking
+and cloud-based storage.},
+  timestamp   = {2017-03-23},
+}
+
+@Conference{Bonwick2015,
+  author       = {Jeff Bonwick},
+  title        = {The Birth of ZFS by Jeff Bonwick},
+  year         = {2015},
+  date         = {2015-10-21},
+  language     = {English},
+  organization = {OpenZFS Project},
+  url          = {https://www.youtube.com/watch?v=dcV2PaMTAJ4&feature=youtu.be},
+  urldate      = {2017-03-30},
+  timestamp    = {2017-03-30},
+}
+
+@WWW{Bonwick2010,
+  author    = {Jeff Bonwick},
+  title     = {And now, Page 2},
+  year      = {2010},
+  date      = {2010-09-27},
+  url       = {https://blogs.oracle.com/bonwick/en_US/entry/and_now_page_2},
+  language  = {English},
+  urldate   = {2017-03-30},
+  timestamp = {2017-03-30},
+}
+
 @Comment{jabref-meta: databaseType:biblatex;}
