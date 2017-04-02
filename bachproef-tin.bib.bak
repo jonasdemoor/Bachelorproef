@@ -48,7 +48,7 @@ This paper introduces five levels of RAIDs, giving their relative cost/performan
 }
 
 @Conference{JeffBonwick_lastZFS,
-  author       = {Jeff Bonwick, Bill Moore},
+  author       = {Jeff Bonwick and Bill Moore},
   title        = {ZFS The Last Word In File Systems},
   year         = {Unknown},
   language     = {English},
@@ -182,6 +182,17 @@ and cloud-based storage.},
   language  = {English},
   urldate   = {2017-03-30},
   timestamp = {2017-03-30},
+}
+
+@WWW{Bonwick2005,
+  author       = {Jeff Bonwick},
+  title        = {RAID-Z},
+  year         = {2005},
+  date         = {2005-11-17},
+  url          = {https://blogs.oracle.com/bonwick/entry/raid_z},
+  language     = {English},
+  organization = {Sun Microsystems},
+  urldate      = {2017-04-02},
 }
 
 @Comment{jabref-meta: databaseType:biblatex;}
