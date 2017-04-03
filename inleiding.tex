@@ -22,7 +22,7 @@
 
 In dit hoofdstuk wordt er een korte inleiding gegeven over de basisprincipes van RAID, aangezien RAID-Z een softwarematige vorm van RAID is. Daarnaast wordt de geschiedenis en globale werking van ZFS reeds kort besproken. Aan het einde van dit hoofdstuk kunnen de probleemstelling en onderzoeksvragen worden teruggevonden, samen met de verdere indeling van deze bachelorproef.
 
-\section{RAID}
+\section{Basisbeginselen van RAID}
 
 Al van oudscher worden magnetische harde schijven gebruikt als opslagmedium voor data \autocite{Goda2012}. Maar reeds in de jaren 80 zagen onderzoekers in dat I/O-performance een bottleneck zou vormen voor computersystemen in de toekomst. Terwijl geheugenchips en processoren steeds sneller werden, bevonden opslagmedia zich in een impasse \autocite{DavidA.Paterson1987}.
 
@@ -50,7 +50,7 @@ Als laatste wordt RAID 5 besproken. RAID 5 is in principe niets anders dan RAID-
 
 Er bestaan nog andere, niet-standaard RAID levels, zoals RAID 6 en RAID 10, maar deze worden hier niet besproken.
 
-\section{ZFS}
+\section{Inleiding tot ZFS \& RAID-Z}
 
 ZFS is een bestandssysteem dat ontwikkeld is door het toenmalige Sun Microsystems, nu onderdeel van Oracle Corporation. Voormalig Sun-werknemer Jeff Bonwick was de oorspronkelijke hoofdontwikkelaar achter het bestandssysteem. De ontwikkeling van ZFS startte aan het begin van de jaren 2000; Sun had reeds met de ontwikkeling van bestandssystemen geëxperimenteerd, maar deze pogingen misluktten telkens \autocite{Bonwick2015}. ZFS is een \textit{copy-on-write} (COW) bestandssysteem \autocite{BrianHickmann2007}: bij elke aanpassing van een datablok, wordt er eerst een nieuw blok aangemaakt, waarna het aangepaste datablok naar het nieuwe, lege datablok wordt gekopieerd \autocite{ZFSBonwick}.
 
@@ -73,7 +73,9 @@ Het ZFS-bestandssysteem omvat ook een softwarematige RAID, RAID-Z genaamd. Volge
 
 Een oplossing voor dit probleem is het gebruik van NVRAM waarin stripes tijdelijk kunnen worden bijgehouden. Indien er zich dan een systeemcrash voordoet, dan kan de RAID-controller m.b.v. de gegevens in het NVRAM de originele data herstellen. Maar waar RAID geen oplossing voor heeft, aldus volgens \textcite{Bonwick2005}, is het optreden van \textit{silent data corruption}; de RAID-controller weet immers niet of het al dan niet om corrupte data gaat. Het enige waar een RAID-controller zicht op heeft, zijn blokken. Hiervoor biedt ZFS samen met RAID-Z een oplossing: aangezien het bestandssysteem en RAID-Z samen één geheel vormen, is het mogelijk om van datacorruptie te herstellen of om dit zelfs tegen te gaan. Bij het herstellen van data op de array, overloopt RAID-Z de metadata van het bestandssysteem om zo de stripe-grootte te achterhalen. Ook vergelijkt ZFS bij elk datablok de berekende checksum: indien deze checksums niet overeenkomen, dan tracht ZFS dit blok te repareren m.b.v. de parity-informatie van RAID-Z. Op deze manier kan datacorruptie vroegtijdig worden opgemerkt en kan defecte hardware eventueel vervangen worden \autocite{Bonwick2005}.
 
+Ondertussen werd Sun Microsystems overgenomen door Oracle in 2010, na het faillissement van deze eerstegenoemde \autocite{OracleOnbekend}. In 2010 richtten enkele ex-ontwikkelaars van Solaris het illumos-project op met de bedoeling om een volledig open source variant van OpenSolaris te ontwikkelen; ook ZFS werd verder ontwikkeld als onderdeel van illumos \autocite{illumos2012}. De reden hiervoor was dat Oracle geen nieuwe uitgaven meer uitbracht voor OpenSolaris. In 2013 werd het OpenZFS-project opgericht, dat zichzelf als de \textit{"ware en open opvolger van het oorspronkelijke ZFS-project"} ziet\autocite{OpenZFSHistory2014}.
 
+Mede dankzij dit project is ZFS ondertussen beschikbaar op verschillende platformen, waaronder FreeBSD, Linux en macOS.
 
 \section{Probleemstelling en Onderzoeksvragen}
 \label{sec:onderzoeksvragen}
@@ -108,6 +110,7 @@ De rest van deze bachelorproef is als volgt opgebouwd:
 In Hoofdstuk~\ref{ch:methodologie} wordt de methodologie toegelicht en worden de gebruikte onderzoekstechnieken besproken om een antwoord te kunnen formuleren op de onderzoeksvragen.
 
 %% TODO: Vul hier aan voor je eigen hoofstukken, één of twee zinnen per hoofdstuk
+In Hoofdstuk~\ref{ch:h3} wordt er een globaal overzicht gegeven van de architectuur en ontwerpprincipes van ZFS. In de daaropvolgende hoofdstukken worden de belangrijkste onderdelen en functionaliteiten wat meer uitgediept. 
 
 In Hoofdstuk~\ref{ch:conclusie}, tenslotte, wordt de conclusie gegeven en een antwoord geformuleerd op de onderzoeksvragen. Daarbij wordt ook een aanzet gegeven voor toekomstig onderzoek binnen dit domein.
 
