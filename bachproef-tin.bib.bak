@@ -169,6 +169,17 @@ useful new features almost as a side effect.},
   Timestamp                = {18.03.2017}
 }
 
+@Conference{KendiOnbekend,
+  Title                    = {ZFS: Enhancing the Open Source Storage System (and the Kernel)},
+  Author                   = {Christian Kendi},
+  Year                     = {Onbekend},
+  Language                 = {English},
+  Url                      = {https://www.blackhat.com/presentations/bh-dc-10/Kendi_Christian/Blackhat-DC-2010-Kendi-Enhancing-ZFS-slides.pdf},
+
+  Owner                    = {Jonas De Moor},
+  Timestamp                = {04.04.2017}
+}
+
 @Www{OpenZFSHistory2014,
   Title                    = {History - OpenZFS},
   Author                   = {OpenZFSProject},
