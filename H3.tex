@@ -26,4 +26,8 @@ Een niet onbelangrijke feature hierbij zijn storage pools. Storage pools hebben 
 
 \subsection{Consistentie \& Integriteit}
 
-Eén van de taken van een bestandssysteem is om ervoor te zorgen dat het in een consistente toestand blijft, i.e. het moet mogelijk zijn om van inconsistente toestanden te herstellen d.m.v. bijvoorbeeld een journal \autocite{OSThreePiecesRemzi2015}
+Eén van de taken van een bestandssysteem is om ervoor te zorgen dat het in een consistente toestand blijft, i.e. het moet mogelijk zijn om van inconsistente toestanden te herstellen d.m.v. bijvoorbeeld een journal of door een filesystem check te draaien \autocite{OSThreePiecesRemzi2015}. Een nadeel aan deze technieken volgens \textcite{ZFSBonwick} is dat deze niet makkelijk zijn om te implementeren, omdat bijvoorbeeld in het geval van journaling filesystems een roll back of roll forward moet worden uitgevoerd. Hierbij moet ook nog de volgorde van de bewerkingen in acht worden genomen \autocite{OSThreePiecesRemzi2015}. 
+
+De oplossing volgens \textcite{ZFSBonwick} is om het bestandssysteem te allen tijde consistent te houden; er mag m.a.w. geen enkel moment zijn waarop het file system in een inconsistente toestand terecht komen. Dit wordt verwezenlijkt door de Copy-On-Write eigenschappen ZFS, waardoor bewerkingen atomair gebeuren \autocite{ZFSBonwick}.
+
+
