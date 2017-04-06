@@ -13,7 +13,7 @@ De principes die aan de basis van ZFS liggen vloeiden meestal voort uit de probl
 
 \subsection{Eenvoud van beheer \& Storage Pools}
 
-Volgens \textcite{ZFSBonwick} kan en moet het aanmaken en beheren van bestandssystemen een stuk makkelijker gemaakt worden. Hierbij speelt automatisatie van verschillende taken een belangrijke rol. Het doel van de gebruiker, nl. \textit{"Het aanmaken van een bestandssysteem"} zou moeten worden vooropgesteld; tevens moet dit proces zo snel een eenvoudig mogelijk verlopen. Ook moet het mogelijk zijn om beheerderstaken (zoals bestandssystemen aanmaken en verwijderen) uit te voeren zonder de werking van het gehele systeem te ondermijnen \autocite{ZFSBonwick}. 
+Volgens \textcite{ZFSBonwick} kan en moet het aanmaken en beheren van bestandssystemen een stuk makkelijker gemaakt worden. Hierbij speelt automatisatie van verschillende taken een belangrijke rol. Ook moet het mogelijk zijn om beheerderstaken (zoals bestandssystemen aanmaken en verwijderen) uit te voeren zonder de werking van het gehele systeem te ondermijnen \autocite{ZFSBonwick}. 
 
 Een niet onbelangrijke feature hierbij zijn storage pools. Storage pools hebben als doel om opslagruimte zoveel mogelijk los te koppelen van de fysieke schijven: alle schijven bevinden zich in een pool van disks. Uit deze pool kunnen bestandssystemen worden aangemaakt, zonder rekening te moeten houden met de limitaties van bv. partities. Tevens kunnen bestandssystemen op een flexibele manier gebruik maken van deze pooled storage door automatisch in te krimpen en uit te breiden wanneer nodig \autocite{ZFSBonwick}. 
 
@@ -23,11 +23,19 @@ Een niet onbelangrijke feature hierbij zijn storage pools. Storage pools hebben 
         \caption{Illustratie van ZFS pooled storage (rechts) t.o.v.volume-based storage (links) \autocite{ZFSBonwick}}
         \label{fig:bonwick_pools_illustratie}
 \end{figure}
-
+  
 \subsection{Consistentie \& Integriteit}
 
 Eén van de taken van een bestandssysteem is om ervoor te zorgen dat het in een consistente toestand blijft, i.e. het moet mogelijk zijn om van inconsistente toestanden te herstellen d.m.v. bijvoorbeeld een journal of door een filesystem check te draaien \autocite{OSThreePiecesRemzi2015}. Een nadeel aan deze technieken volgens \textcite{ZFSBonwick} is dat deze niet makkelijk zijn om te implementeren, omdat bijvoorbeeld in het geval van journaling filesystems een roll back of roll forward moet worden uitgevoerd. Hierbij moet ook nog de volgorde van de bewerkingen in acht worden genomen \autocite{OSThreePiecesRemzi2015}. 
 
-De oplossing volgens \textcite{ZFSBonwick} is om het bestandssysteem te allen tijde consistent te houden; er mag m.a.w. geen enkel moment zijn waarop het file system in een inconsistente toestand terecht komen. Dit wordt verwezenlijkt door de Copy-On-Write eigenschappen ZFS, waardoor bewerkingen atomair gebeuren \autocite{ZFSBonwick}.
+De oplossing volgens \textcite{ZFSBonwick} is om het bestandssysteem te allen tijde consistent te houden; er mag m.a.w. geen enkel moment zijn waarop het systeem in een inconsistente toestand terecht komen. Dit wordt verwezenlijkt door de Copy-On-Write eigenschappen van ZFS, waardoor bewerkingen atomair gebeuren \autocite{Li2009}. 
+
+Een ander aspect waar ZFS een antwoord op tracht te vinden, is het voorkomen en minimaliseren van datacorruptie. Volgens \textcite{ZFSBonwick} is het niet verstandig om volledig te vertrouwen op hardware, omdat er steeds een kans is dat deze bugs bevat. Dit kan leiden tot \textit{silent data corruption}: dit is een fenomeen waarbij de schijf corrupte datablokken niet kan detecteren \autocite{OSThreePiecesRemzi2015}. Om deze reden bevat ZFS een uitgebreid checksumming-mechanisme dat werkt op blokniveau. Indien men ZFS zou voorstellen als een boomstructuur, dan bevatten de \textit{parent blocks} steeds de checksums van hun kinderen \autocite{ZFSBonwick}. Bij het uitlezen en wegschrijven van een blok data wordt de checksum berekend en gecontroleerd met de (eventueel) reeds bestaande checksum. Indien deze overeenkomen, dan wordt het datablok doorgegeven. Indien deze niet overeenkomen, dan tracht ZFS het corrupte blok te repareren. Echter moet er wel opgemerkt worden dat er voor automatische foutcorrectie (goede)kopieën van de corrupte blokken moeten beschikbaar zijn \autocite{Li2009}.
+
+\subsection{Ingebouwde volumebeheerder}
+
+Indien bijvoorbeeld LVM (Logical Volume Manager) wordt gebruikt op een Linux-systeem voor het aanmaken van volumes, dan staan de volumes relatief "los" van de bestandssystemen die worden aangemaakt op deze volumes: eerst maakt men volumes aan, nadien pas bestandssystemen \autocite{Lewis2006}. 
+
+\textcite{ZFSBonwick} is van mening dat een volledige integratie van de volumebeheerder in het bestandssysteem een aantal interessante voordelen met zich meebrengt, zoals betere optimalisaties en betere consistentie, omdat de volume manager nu "weet" hoe de bestandssystemen in de storage pool(s) zijn opgebouwd.
 
 
