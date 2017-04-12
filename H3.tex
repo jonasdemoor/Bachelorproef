@@ -5,7 +5,7 @@
 \chapter{Ontwerpprincipes \& architectuur van ZFS}
 \label{ch:h3}
 
-In dit hoofdstuk worden enkele principes besproken waarop de ontwikkelaars zich hebben gebaseerd bij het ontwerp en de onwtikkeling van ZFS. Tevens wordt de architectuur van ZFS globaal beschreven, om zo de ontwerpbeslissingen van de ontwikkelaars wat meer toe te lichten.
+In dit hoofdstuk worden enkele principes besproken waarop de ontwikkelaars zich hebben gebaseerd bij het ontwerp en de ontwikkeling van ZFS. Tevens wordt de architectuur van ZFS globaal beschreven, om zo de ontwerpbeslissingen van de ontwikkelaars wat meer toe te lichten.
 
 \section{Ontwerpprincipes}
 
@@ -58,7 +58,7 @@ Daarnaast staat de DMU ook garant voor de consistentie van alle data. Om deze re
 
 Deze laag vertaalt objecten komende van de Data Management Unit naar met POSIX compatibele bestandssystemen \autocite{ZFSBonwick}. POSIX (acroniem voor Portable Operating System Interface) is een reeks van standaarden waaraan ontwikkelaars zich moeten houden indien ze willen dat hun programma's \textit{portable} (overdraagbaar) zijn. Dit betekent dat het weinig tot geen moeite zou moeten kosten voor een ontwikkelaar om een programma draaiende te krijgen op bv. verschillende UNIX-systemen \autocite{IEEE2016}. Solaris en macOS zijn voorbeelden van 'POSIX-compliant' besturingssystemen \autocite{GroupOnbekend}.
 
-Voor het uitvoeren van bewerkingen maakt de ZPL gebruik van de onderliggende Data Management Unit. Het aanmaken van een bestandssysteem gebeurt bijvoorbeeld door de ZFS POSIX Layer: de ZPL maakt enkele DMU-objecten aan metadata e.d. aan en maakt gebruik van het transactiemodel van de DMU om deze objecten weg te schrijven. Dankzij deze aanpak verlopen deze bewerkingen ook atomair \autocite{ZFSBonwick}. 
+Voor het uitvoeren van bewerkingen maakt de ZPL gebruik van de onderliggende Data Management Unit. Het aanmaken van een bestandssysteem gebeurt bijvoorbeeld door de ZFS POSIX Layer: de ZPL maakt enkele DMU-objecten met metadata e.d. aan en maakt gebruik van het transactiemodel van de DMU om deze objecten weg te schrijven. Dankzij deze aanpak verlopen deze bewerkingen ook atomair \autocite{ZFSBonwick}. 
 
 \subsection{ZFS Attribute Processor (ZAP)}
 
