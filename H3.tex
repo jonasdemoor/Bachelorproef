@@ -64,7 +64,17 @@ Voor het uitvoeren van bewerkingen maakt de ZPL gebruik van de onderliggende Dat
 
 De ZFS Attribute Processor is een component die samenwerkt met de DMU-laag. De ZAP manipuleert ZAP-objecten: dit zijn speciale DMU-objecten die metadata over allerhande dingen bijhouden in de vorm van key-value pairs. Deze informatie handelt over verschillende andere objecten, zoals datasets en filesystem objects. Voor een grote hoeveelheid attributen (en dus informatie) wordt er gebruikgemaakt van zgn. fatzaps; indien de hoeveelheid informatie nogal gering is, dan kies ZFS voor microzaps \autocite{Microsystems2006}.
 
+\begin{figure}
+        \centering
+        \includegraphics[width=0.7\textwidth]{h3-zfs_overview}
+        \caption{Een overzicht van de verschillende componenten van ZFS \autocite{KendiOnbekend}}
+        \label{fig:kendi_zfs_overview}
+\end{figure}
+
 \subsection{ZFS Intent Log (ZIL)}
 
-Deze component houdt logbestanden bij van alle transacties voor het geval dat het bestandssysteem toch in een inconsistente toestand zou terecht komen. (HIER ZAT IK) 
+Deze component houdt logbestanden bij van alle transacties voor het geval dat het bestandssysteem toch in een inconsistente toestand zou terecht komen, bijvoorbeeld bij een stroompanne. Op deze manier kunnen transacties worden gereplayed indien consistentie van uiterst belang is. Deze records worden bijgehouden in het RAM-geheugen tot ze worden gepersisteerd door een DMU-transactie of door een \texttt{fsync} \autocite{ZFSBonwick}. 
 
+\subsection{ZFS Volume (ZVOL)}
+
+ZFS Volumes of ZVOL's zijn objecten die binnen ZFS worden voorgesteld als een koppel van een property object en een dataobject. Deze logische volumes worden dan aan het OS doorgegeven als ordinaire UNIX block devices en kunnen ook op deze manier benaderd worden \autocite{Microsystems2006}.

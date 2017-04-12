@@ -129,6 +129,18 @@ and cloud-based storage.},
   Timestamp                = {2017-03-23}
 }
 
+@Www{GroupOnbekend,
+  Title                    = {Open Brand},
+  Author                   = {The Open Group},
+  Url                      = {https://www.opengroup.org/openbrand/register/xy.htm},
+  Year                     = {Onbekend},
+  Language                 = {English},
+  Organization             = {The Open Group},
+
+  Owner                    = {Jonas De Moor},
+  Timestamp                = {11.04.2017}
+}
+
 @Www{IEEE2016,
   Title                    = {The Open Group Base Specifications Issue 7},
   Author                   = {IEEE and The Open Group},
