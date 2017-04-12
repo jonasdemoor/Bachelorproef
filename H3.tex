@@ -56,7 +56,7 @@ Daarnaast staat de DMU ook garant voor de consistentie van alle data. Om deze re
 
 \subsection{ZFS POSIX Layer (ZPL)}
 
-Deze laag vertaalt objecten komende van de Data Management Unit naar met POSIX compatibele bestandssystemen \autocite{ZFSBonwick}. POSIX (acroniem voor Portable Operating System Interface) is een reeks van standaarden waaraan ontwikkelaars zich moeten houden indien ze willen dat hun programma's \textit{portable} (overdraagbaar) zijn. Dit betekent dat het weinig tot geen moeite zou moeten kosten voor een ontwikkelaar om een programma draaiende te krijgen op bv. verschillende UNIX-systemen \autocite{IEEE2016}. MacOS en Solaris zijn voorbeelden van 'POSIX-compliant' besturingssystemen \autocite{GroupOnbekend}.
+Deze laag vertaalt objecten komende van de Data Management Unit naar met POSIX compatibele bestandssystemen \autocite{ZFSBonwick}. POSIX (acroniem voor Portable Operating System Interface) is een reeks van standaarden waaraan ontwikkelaars zich moeten houden indien ze willen dat hun programma's \textit{portable} (overdraagbaar) zijn. Dit betekent dat het weinig tot geen moeite zou moeten kosten voor een ontwikkelaar om een programma draaiende te krijgen op bv. verschillende UNIX-systemen \autocite{IEEE2016}. Solaris en macOS zijn voorbeelden van 'POSIX-compliant' besturingssystemen \autocite{GroupOnbekend}.
 
 Voor het uitvoeren van bewerkingen maakt de ZPL gebruik van de onderliggende Data Management Unit. Het aanmaken van een bestandssysteem gebeurt bijvoorbeeld door de ZFS POSIX Layer: de ZPL maakt enkele DMU-objecten aan metadata e.d. aan en maakt gebruik van het transactiemodel van de DMU om deze objecten weg te schrijven. Dankzij deze aanpak verlopen deze bewerkingen ook atomair \autocite{ZFSBonwick}. 
 
