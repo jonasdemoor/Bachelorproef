@@ -229,6 +229,15 @@ useful new features almost as a side effect.},
   Timestamp                = {06.04.2017}
 }
 
+@Book{,
+  Title                    = {FreeBSD Mastery: ZFS},
+  Author                   = {Michael W Lucas and Allan Jude},
+  Year                     = {2015},
+
+  Owner                    = {jonas},
+  Timestamp                = {2017.04.17}
+}
+
 @Techreport{Microsystems2006,
   Title                    = {ZFS on-disk specification},
   Author                   = {Sun Microsystems},
