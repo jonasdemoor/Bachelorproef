@@ -6,3 +6,10 @@
 \chapter{Het opslagmodel van ZFS}
 \label{ch:h4}
 
+In dit hoofdstuk worden de interne bestandssysteemoperaties van ZFS wat meer toegelicht. Hierbij wordt vooral de werking van de Storage Pool Allocator en de Data Management Unit dieper uitgespit, aangezien deze componenten het beheer van data voor zich nemen.
+
+\section{Structuur van het bestandssysteem}
+
+Datablokken worden bij ZFS voorgesteld als een boomstructuur. Vele andere bestandssystemen, zoals BTRFS op Linux, gebruiken ook boomstructuren voor het bijhouden van data \autocite{Project2017a}. De algemene werking van ZFS en andere, boomgebaseerde bestandssystemen verschillen niet zo heel veel. Echter zijn er ook eigenschappen die uniek zijn aan de manier waarop ZFS de data opslaat.
+
+De belangrijkste elementen van een boom in de informatica zijn de volgende: de wortel (Eng.: \textit{root}), de knopen (Eng.: \textit{nodes}) en de bladeren (Eng.: \textit{leaves}) \autocite{Cohen}.  
