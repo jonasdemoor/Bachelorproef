@@ -12,4 +12,8 @@ In dit hoofdstuk worden de interne bestandssysteemoperaties van ZFS wat meer toe
 
 Datablokken worden bij ZFS voorgesteld als een boomstructuur. Vele andere bestandssystemen, zoals BTRFS op Linux, gebruiken ook boomstructuren voor het bijhouden van data \autocite{Project2017a}. De algemene werking van ZFS en andere, boomgebaseerde bestandssystemen verschillen niet zo heel veel. Echter zijn er ook eigenschappen die uniek zijn aan de manier waarop ZFS de data opslaat.
 
-De belangrijkste elementen van een boom in de informatica zijn de volgende: de wortel (Eng.: \textit{root}), de knopen (Eng.: \textit{nodes}) en de bladeren (Eng.: \textit{leaves}) \autocite{Cohen}.  
+De belangrijkste elementen van een boom in de informatica zijn de volgende: de wortel (Eng.: \textit{root}), de knopen (Eng.: \textit{nodes}) en de bladeren (Eng.: \textit{leaves}) \autocite{Cohen}. Indien men bij de wortel van een ZFS-boom start, dan komt men als eerste de \textit{\"{u}berblock} tegen: dit is simpelweg een andere benaming voor de wortel van de boom. Dit datablok bevat een checksum van zichzelf en verwijst naar de andere datablokken in de boom. Zoals reeds gezegd in Hoofdstuk \ref{ch:h3}, worden alle blokken gechecksummed om corruptie van data tegen te gaan. Deze checksums worden bewaard in het datablok zelf en in de ouder van de ouder van dit blok: op deze is de hele ketting van datablokken gechecksummed en kan er makkelijk schade worden vastgesteld en kan deze schade eventueel worden gerepareerd. De \textit{\"{u}berblock} is het enige datablok die geen ouder heeft, en dus bewaart deze zijn checksum bij zichzelf \autocite{ZFSBonwick}.  
+
+\section{Checksumming \& Redundantie op blokniveau}
+
+
