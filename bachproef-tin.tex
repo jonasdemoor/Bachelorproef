@@ -40,6 +40,39 @@
 %  - tweede zit  = 3e examenperiode => 3
 \newcommand{\examenperiode}{2}
 
+
+% Woordenlijst
+
+% Andere naam voor woordenlijst
+%\renewcommand{\glossaryname}{Gebruikte termen}
+
+\newglossaryentry{performantie}
+{
+  name={Performantie},
+  description={Performantie (Engels: performance) is een vrij uitgebreid begrip in de informatica. In het algemeen bedoelt men met performantie meestal hoe goed een computersysteem vooropgestelde taken kan uitvoeren in een bepaalde situatie. Bij het meten van performantie van een systeem kan men één of meerdere aspecten beschouwen: bij schijven kan bijvoorbeeld het aantal I/O's (Invoer- en uitvoerbewerkingen) worden genomen als maatstaf; bij CPU's kan een maatstaf bijvoorbeeld het aantal instructies per seconde zijn dat deze kan verwerken}
+}
+
+\newglossaryentry{betrouwbaarheid}
+{
+  name={Betrouwbaarheid},
+  description={Betrouwbaarheid (Engels: reliability) heeft betrekking op de betrouwbaarheid van een computersysteem, i.e. of deze al dan niet zijn taken op een juiste manier uitvoert. Men kan bijvoorbeeld stellen dat er zich bij een computersysteem een X aantal fouten mogen voordoen; als deze grens overschreden wordt, dan wordt het systeem als onbetrouwbaar verklaard. Daarnaast heeft betrouwbaarheid ook te maken met de handelswijze van een systeem indien er zich een fout voordoet: men kan zich bijvoorbeeld afvragen hoe er zou moeten gereageerd worden op een kritieke fout en hiervoor test cases opstellen om de betrouwbaarheid van het systeem te testen}
+}
+
+\newglossaryentry{capaciteit}
+{
+  name={Capaciteit},
+  description={In de context van schijven of RAID-systemen kan capaciteit (Engels: capacity) een aantal betekenissen hebben. In deze scriptie wordt er vooral gesproken over de bruikbare capaciteit van een schijf of RAID-array: dit is de hoeveelheid schijfruimte die kan gebruikt worden door gebruikers om data op te slaan. Daarnaast kan men ook spreken over de totale capaciteit: dit is de som van de gebruikte schijfruimte en de vrije schijfruimte. In theorie is de totale capaciteit van een schijf gelijk aan de werkelijke grootte van een schijf. }
+}
+
+\newglossaryentry{atomair}
+{
+  name={Atomair},
+  description={In de informatica betekent atomiciteit (Engels: atomicity) hetzelfde als ondeelbaarheid; vaak wordt dit begrip ook omschreven als een "alles-of-niets" aanpak. In de context van bijvoorbeeld databanksystemen heeft atomiciteit betrekking op o.a. transacties: ofwel verloopt een transactie succesvol, ofwel mislukt deze (door bv. een onderbreking) en moet de databank kunnen teruggebracht worden naar een consistente toestand. Meestal betekent dit dan dat er een rollback moet worden uitgevoerd.} 
+}
+
+
+\makenoidxglossaries
+
 %%=============================================================================
 %% Inhoud document
 %%=============================================================================
@@ -70,6 +103,8 @@
 %% Als je een lijst van afkortingen of termen wil toevoegen, dan hoort die
 %% hier thuis. Gebruik bijvoorbeeld de ``glossaries'' package.
 
+
+
 %%---------- Kern -------------------------------------------------------------
 
 \input{inleiding}
@@ -90,6 +125,8 @@
 \printbibliography
 \addcontentsline{toc}{chapter}{\textcolor{maincolor}{\IfLanguageName{dutch}{Bibliografie}{Bibliography}}}
 
+% Woordenlijst
+\printnoidxglossaries
 
 \listoffigures
 \listoftables
