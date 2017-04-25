@@ -58,6 +58,13 @@ De Data Management Unit is de laag boven de SPA en is a.h.w. de 'lijm' tussen de
 
 Daarnaast staat de DMU ook garant voor de consistentie van alle data. Om deze reden worden transacties binnen ZFS geïmplementeerd door de Data Management Unit als COW-transacties (Copy-On-Write). Hierbij wordt gebruik gemaakt van een 'alles of niets'-aanpak: ofwel is de transactie gelukt, ofwel is de transactie mislukt en moeten er back-upblokken worden aangewend \autocite{ZFSBonwick}.
 
+\begin{figure}
+        \centering
+        \includegraphics[width=0.7\textwidth]{h3-zfs_overview}
+        \caption{Een overzicht van de verschillende componenten van ZFS \autocite{KendiOnbekend}}
+        \label{fig:kendi_zfs_overview}
+\end{figure}
+
 \subsection{ZFS POSIX Layer (ZPL)}
 
 Deze laag vertaalt objecten komende van de Data Management Unit naar met POSIX compatibele bestandssystemen \autocite{ZFSBonwick}. POSIX (acroniem voor Portable Operating System Interface) is een reeks van standaarden waaraan ontwikkelaars zich moeten houden indien ze willen dat hun programma's \textit{portable} (overdraagbaar) zijn. Dit betekent dat het weinig tot geen moeite zou moeten kosten voor een ontwikkelaar om een programma draaiende te krijgen op bv. verschillende UNIX-systemen \autocite{IEEE2016}. Solaris en macOS zijn voorbeelden van 'POSIX-compliant' besturingssystemen \autocite{GroupOnbekend}.
@@ -67,13 +74,6 @@ Voor het uitvoeren van bewerkingen maakt de ZPL gebruik van de onderliggende Dat
 \subsection{ZFS Attribute Processor (ZAP)}
 
 De ZFS Attribute Processor is een component die samenwerkt met de DMU-laag. De ZAP manipuleert ZAP-objecten: dit zijn speciale DMU-objecten die metadata over allerhande dingen bijhouden in de vorm van key-value pairs. Deze informatie handelt over verschillende andere objecten, zoals datasets en filesystem objects. Voor een grote hoeveelheid attributen (en dus informatie) wordt er gebruikgemaakt van zgn. fatzaps; indien de hoeveelheid informatie nogal gering is, dan kiest ZFS voor microzaps \autocite{Microsystems2006}.
-
-\begin{figure}
-        \centering
-        \includegraphics[width=0.7\textwidth]{h3-zfs_overview}
-        \caption{Een overzicht van de verschillende componenten van ZFS \autocite{KendiOnbekend}}
-        \label{fig:kendi_zfs_overview}
-\end{figure}
 
 \subsection{ZFS Intent Log (ZIL)}
 
