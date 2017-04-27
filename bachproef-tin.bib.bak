@@ -2,6 +2,20 @@
 % Encoding: ISO8859_1
 
 
+@Techreport{DavidA.Paterson1987,
+  Title                    = {A Case for Redundant Arrays of Inexpensive Disks},
+  Author                   = {A. Paterson, David et al},
+  Institution              = {University of California, Berkeley},
+  Year                     = {1987},
+  Language                 = {English},
+  Url                      = {https://www2.eecs.berkeley.edu/Pubs/TechRpts/1987/CSD-87-391.pdf},
+
+  Abstract                 = {Increasing performance of CPUs and memories will be squandered if not matched by a similar performance increase in I/O. While the capacity of Single Large Expensive Disk (SLED) has grown rapdily, the performance improvement of SLED has been modest. Redundant Arrays of Inexpensive Disks (RAID), based on the magnetic disk technology developed for personal computers, offers an attractive alternative to SLED, promising improvements of an order of magnitude in performance , reliability, power consumption, and scalability.
+This paper introduces five levels of RAIDs, giving their relative cost/performance, and compares RAIDs to an IBM 3380 and a Fujitsu Super Eagle.},
+  Owner                    = {Jonas De Moor},
+  Timestamp                = {25.04.2017}
+}
+
 @Book{OSThreePiecesRemzi2015,
   Title                    = {{Operating Systems: Three Easy Pieces}},
   Author                   = {Remzi H. Arpaci-Dusseau and Andrea C. Arpaci-Dusseau},
@@ -12,45 +26,34 @@
   Month                    = {May}
 }
 
-@Conference{Bonwick2015,
-  Title                    = {The Birth of ZFS by Jeff Bonwick},
-  Author                   = {Jeff Bonwick},
-  Date                     = {2015-10-21},
-  Year                     = {2015},
-  Language                 = {English},
-  Organization             = {OpenZFS Project},
-  Url                      = {https://www.youtube.com/watch?v=dcV2PaMTAJ4&feature=youtu.be},
-  Urldate                  = {2017-03-30},
-
-  Timestamp                = {2017-03-30}
-}
-
 @Www{Bonwick2010,
   Title                    = {And now, Page 2},
-  Author                   = {Jeff Bonwick},
+  Author                   = {Bonwick, Jeff},
   Date                     = {2010-09-27},
   Url                      = {https://blogs.oracle.com/bonwick/en_US/entry/and_now_page_2},
   Year                     = {2010},
   Language                 = {English},
   Urldate                  = {2017-03-30},
 
-  Timestamp                = {2017-03-30}
+  Timestamp                = {25.04.2017}
 }
 
 @Www{Bonwick2005,
   Title                    = {RAID-Z},
-  Author                   = {Jeff Bonwick},
+  Author                   = {Bonwick, Jeff},
   Date                     = {2005-11-17},
   Url                      = {https://blogs.oracle.com/bonwick/entry/raid_z},
   Year                     = {2005},
   Language                 = {English},
   Organization             = {Sun Microsystems},
-  Urldate                  = {2017-04-02}
+  Urldate                  = {2017-04-02},
+
+  Timestamp                = {25.04.2017}
 }
 
 @Conference{JeffBonwick_lastZFS,
   Title                    = {ZFS The Last Word In File Systems},
-  Author                   = {Jeff Bonwick and Bill Moore},
+  Author                   = {Bonwick, Jeff and Moore, Bill},
   Year                     = {Unknown},
   Language                 = {English},
   Month                    = {Unknown},
@@ -58,12 +61,82 @@
   Url                      = {https://wiki.illumos.org/download/attachments/1146951/zfs_last.pdf},
 
   Owner                    = {Jonas De Moor},
-  Timestamp                = {2017.03.17}
+  Timestamp                = {25.04.2017}
+}
+
+@Conference{Bonwick2015,
+  Title                    = {The Birth of ZFS by Jeff Bonwick},
+  Author                   = {Bonwick, Jeff and others},
+  Year                     = {2015},
+  Language                 = {English},
+  Organization             = {OpenZFS Project},
+  Url                      = {https://www.youtube.com/watch?v=dcV2PaMTAJ4&feature=youtu.be},
+  Urldate                  = {2017-03-30},
+
+  Timestamp                = {25.04.2017}
+}
+
+@Techreport{ZFSBonwick,
+  Title                    = {The Zettabyte Filesystem},
+  Author                   = {Bonwick, Jeff and others},
+  Year                     = {2002},
+  Language                 = {English},
+  Month                    = {Unknown},
+  Url                      = {http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.184.3704&rep=rep1&type=pdf},
+
+  Abstract                 = {In this paper we describe a new file system that
+provides strong data integrity guarantees, simple
+administration, and immense capacity. We show
+that with a few changes to the traditional high-level
+file system architecture — including a redesign of
+the interface between the file system and volume
+manager, pooled storage, a transactional copy-onwrite
+model, and self-validating checksums — we
+can eliminate many drawbacks of traditional file
+systems. We describe a general-purpose productionquality
+file system based on our new architecture,
+the Zettabyte File System (ZFS). Our new architecture
+reduces implementation complexity, allows new
+performance improvements, and provides several
+useful new features almost as a side effect.},
+  Organization             = {Sun Microsystems},
+  Owner                    = {Jonas De Moor},
+  Timestamp                = {25.04.2017}
+}
+
+@Www{Cohen,
+  Title                    = {Trees},
+  Author                   = {Cohen, Jonathan},
+  Url                      = {https://www.cs.jhu.edu/~cohen/CS226/Lectures/Trees.pdf},
+  Organization             = {Johns Hopkins Department of Computer Science},
+
+  Owner                    = {jonas},
+  Timestamp                = {25.04.2017}
+}
+
+@Techreport{Goda2012,
+  Title                    = {The History of Storage Systems},
+  Author                   = {Goda, Kazuo and Kitsuregawa, Masaru},
+  Institution              = {Institute of Electrical and Electronics Engineers (IEEE)},
+  Year                     = {2012},
+  Language                 = {English},
+  Pages                    = {8},
+  Type                     = {techreport},
+  Url                      = {http://ieeexplore.ieee.org/document/6182574/},
+
+  Abstract                 = {This paper reviews the history of storage systems.
+The first section begins with the era of early mechanical
+calculators and the following four sections review historically
+major storage devices such as magnetic tapes, magnetic disks,
+optical devices, and solid-state devices. The final two sections
+focus on recent system technologies such as storage networking
+and cloud-based storage.},
+  Timestamp                = {25.04.2017}
 }
 
 @Thesis{BrianHickmann2007,
   Title                    = {ZFS and RAID-Z: The Uber-FS?},
-  Author                   = {Brian Hickmann, Kynan Shook},
+  Author                   = {Hickmann, Brian and Shook, Kynan},
   Year                     = {2007},
   Language                 = {English},
   Url                      = {http://pages.cs.wisc.edu/~remzi/Classes/736/Fall2007/Projects/BrianKynan/paper.pdf},
@@ -92,75 +165,19 @@ erratic behavior in ZFS when the disk is near full and
 heavily fragmented.},
   Organization             = {University of Wisconsin – Madison},
   Owner                    = {Jonas De Moor},
-  Timestamp                = {19.03.2017}
-}
-
-@Www{,
-  Title                    = {Trees},
-  Author                   = {Jonathan Cohen},
-  Url                      = {https://www.cs.jhu.edu/~cohen/CS226/Lectures/Trees.pdf},
-  Organization             = {Johns Hopkins Department of Computer Science},
-
-  Owner                    = {jonas},
-  Timestamp                = {2017.04.17}
-}
-
-@Techreport{DavidA.Paterson1987,
-  Title                    = {A Case for Redundant Arrays of Inexpensive Disks},
-  Author                   = {David A. Paterson, et al},
-  Institution              = {University of California, Berkeley},
-  Year                     = {1987},
-  Language                 = {English},
-  Url                      = {https://www2.eecs.berkeley.edu/Pubs/TechRpts/1987/CSD-87-391.pdf},
-
-  Abstract                 = {Increasing performance of CPUs and memories will be squandered if not matched by a similar performance increase in I/O. While the capacity of Single Large Expensive Disk (SLED) has grown rapdily, the performance improvement of SLED has been modest. Redundant Arrays of Inexpensive Disks (RAID), based on the magnetic disk technology developed for personal computers, offers an attractive alternative to SLED, promising improvements of an order of magnitude in performance , reliability, power consumption, and scalability.
-This paper introduces five levels of RAIDs, giving their relative cost/performance, and compares RAIDs to an IBM 3380 and a Fujitsu Super Eagle.},
-  Owner                    = {Jonas De Moor},
-  Timestamp                = {21.03.2017}
-}
-
-@Techreport{Goda2012,
-  Title                    = {The History of Storage Systems},
-  Author                   = {Kazuo Goda and Masaru Kitsuregawa},
-  Institution              = {Institute of Electrical and Electronics Engineers (IEEE)},
-  Year                     = {2012},
-  Language                 = {English},
-  Pages                    = {8},
-  Type                     = {techreport},
-  Url                      = {http://ieeexplore.ieee.org/document/6182574/},
-
-  Abstract                 = {This paper reviews the history of storage systems.
-The first section begins with the era of early mechanical
-calculators and the following four sections review historically
-major storage devices such as magnetic tapes, magnetic disks,
-optical devices, and solid-state devices. The final two sections
-focus on recent system technologies such as storage networking
-and cloud-based storage.},
-  Timestamp                = {2017-03-23}
-}
-
-@Www{GroupOnbekend,
-  Title                    = {Open Brand},
-  Author                   = {The Open Group},
-  Url                      = {https://www.opengroup.org/openbrand/register/xy.htm},
-  Year                     = {Onbekend},
-  Language                 = {English},
-  Organization             = {The Open Group},
-
-  Owner                    = {Jonas De Moor},
-  Timestamp                = {11.04.2017}
+  Timestamp                = {25.04.2017}
 }
 
 @Www{IEEE2016,
   Title                    = {The Open Group Base Specifications Issue 7},
-  Author                   = {IEEE and The Open Group},
+  Author                   = {{IEEE and The Open Group}},
   Url                      = {http://pubs.opengroup.org/onlinepubs/9699919799/},
   Year                     = {2016},
   Language                 = {English},
   Organization             = {IEEE, The Open Group},
 
   Owner                    = {Jonas De Moor},
-  Timestamp                = {11.04.2017}
+  Timestamp                = {25.04.2017}
 }
 
 @Www{illumos2012,
@@ -175,59 +192,31 @@ and cloud-based storage.},
   Timestamp                = {03.04.2017}
 }
 
-@Techreport{ZFSBonwick,
-  Title                    = {The Zettabyte Filesystem},
-  Author                   = {Jeff Bonwick, et al},
-  Year                     = {2002},
-  Language                 = {English},
-  Month                    = {Unknown},
-  Url                      = {http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.184.3704&rep=rep1&type=pdf},
-
-  Abstract                 = {In this paper we describe a new file system that
-provides strong data integrity guarantees, simple
-administration, and immense capacity. We show
-that with a few changes to the traditional high-level
-file system architecture — including a redesign of
-the interface between the file system and volume
-manager, pooled storage, a transactional copy-onwrite
-model, and self-validating checksums — we
-can eliminate many drawbacks of traditional file
-systems. We describe a general-purpose productionquality
-file system based on our new architecture,
-the Zettabyte File System (ZFS). Our new architecture
-reduces implementation complexity, allows new
-performance improvements, and provides several
-useful new features almost as a side effect.},
-  Organization             = {Sun Microsystems},
-  Owner                    = {Jonas De Moor},
-  Timestamp                = {18.03.2017}
-}
-
 @Conference{KendiOnbekend,
   Title                    = {ZFS: Enhancing the Open Source Storage System (and the Kernel)},
-  Author                   = {Christian Kendi},
+  Author                   = {Kendi, Christian},
   Year                     = {Onbekend},
   Language                 = {English},
   Url                      = {https://www.blackhat.com/presentations/bh-dc-10/Kendi_Christian/Blackhat-DC-2010-Kendi-Enhancing-ZFS-slides.pdf},
 
   Owner                    = {Jonas De Moor},
-  Timestamp                = {04.04.2017}
+  Timestamp                = {25.04.2017}
 }
 
 @Www{Lewis2006,
   Title                    = {LVM HOWTO},
-  Author                   = {AJ Lewis},
+  Author                   = {Lewis, AJ},
   Url                      = {http://www.tldp.org/HOWTO/LVM-HOWTO/recipethreescsi.html#AEN1078},
   Year                     = {2006},
   Subtitle                 = {Setting up LVM on three SCSI disks},
 
   Owner                    = {Jonas De Moor},
-  Timestamp                = {06.04.2017}
+  Timestamp                = {25.04.2017}
 }
 
 @Phdthesis{Li2009,
   Title                    = {Digital Crime Scene Investigation for the Zettabyte File System},
-  Author                   = {Andrew Li},
+  Author                   = {Li, Andrew},
   Date                     = {2009-0-09},
   Institution              = {Macquarie University},
   Year                     = {2009},
@@ -236,56 +225,21 @@ useful new features almost as a side effect.},
   Url                      = {http://web.science.mq.edu.au/~rdale/teaching/itec810/2009H1/FinalReports/Li_Andrew_FinalReport.pdf},
 
   Owner                    = {Jonas De Moor},
-  Timestamp                = {06.04.2017}
+  Timestamp                = {25.04.2017}
 }
 
 @Book{Lucas2015,
   Title                    = {FreeBSD Mastery: ZFS},
-  Author                   = {Michael W Lucas and Allan Jude},
+  Author                   = {Lucas, Michael W. and Jude, Allan},
   Year                     = {2015},
 
   Owner                    = {jonas},
-  Timestamp                = {2017.04.17}
-}
-
-@Techreport{Microsystems2006,
-  Title                    = {ZFS on-disk specification},
-  Author                   = {Sun Microsystems},
-  Year                     = {2006},
-  Language                 = {English},
-  Url                      = {http://www.giis.co.in/Zfs_ondiskformat.pdf},
-
-  Owner                    = {Jonas De Moor},
-  Timestamp                = {11.04.2017}
-}
-
-@Www{OpenZFSHistory2014,
-  Title                    = {History - OpenZFS},
-  Author                   = {OpenZFSProject},
-  Url                      = {http://open-zfs.org/wiki/History},
-  Year                     = {2014},
-  Language                 = {English},
-  Month                    = {May},
-  Organization             = {OpenZFS Project},
-
-  Owner                    = {Jonas De Moor},
-  Timestamp                = {18.03.2017}
-}
-
-@Www{OracleOnbekend,
-  Title                    = {Oracle and Sun Microsystems},
-  Author                   = {Oracle},
-  Url                      = {https://www.oracle.com/sun/index.html},
-  Year                     = {Onbekend},
-  Language                 = {English},
-
-  Owner                    = {Jonas De Moor},
-  Timestamp                = {03.04.2017}
+  Timestamp                = {25.04.2017}
 }
 
 @Techreport{Chen1994,
   Title                    = {RAID: High-Performance, Reliable Secondary Storage},
-  Author                   = {Peter M. Chen , et al.},
+  Author                   = {M. Chen ,Peter and others},
   Institution              = {University of Michigan , Carnegie Mellon University , University of California (Berkeley)},
   Year                     = {1994},
   Language                 = {English},
@@ -305,48 +259,100 @@ compares their performance, cost, and reliability. It goes on to discuss advance
 and implementation topics such as refining the basic RAID levels to improve performance
 and designing algorithms to maintain data consistency. Last, the paper describes five disk
 array prototypes or products and discusses future opportunities for research. The paper
-includes an annotated bibliography of disk array-related literature.}
+includes an annotated bibliography of disk array-related literature.},
+  Timestamp                = {25.04.2017}
 }
 
-@Www{Project2017,
-  Title                    = {Status},
-  Author                   = {BTRFS Project},
-  Date                     = {2014-03-04},
-  Url                      = {https://btrfs.wiki.kernel.org/index.php/Status},
-  Year                     = {2017},
-  Language                 = {English}
-}
+@Www{OracleOnbekend,
+  Title                    = {Oracle and Sun Microsystems},
+  Author                   = {{Oracle Corporation}},
+  Url                      = {https://www.oracle.com/sun/index.html},
+  Year                     = {Onbekend},
+  Language                 = {English},
 
-@Www{Project2017a,
-  Title                    = {On-disk Format},
-  Author                   = {BTRFS Project},
-  Url                      = {https://btrfs.wiki.kernel.org/index.php/On-disk_Format#Basic_Structures},
-  Year                     = {2017},
-
-  Owner                    = {jonas},
-  Timestamp                = {2017.04.17}
+  Owner                    = {Jonas De Moor},
+  Timestamp                = {25.04.2017}
 }
 
 @Www{Sharwood2016,
   Title                    = {Ubuntu 16.04 LTS arrives today complete with forbidden ZFS},
-  Author                   = {Simon Sharwood},
+  Author                   = {Sharwood,Simon},
   Date                     = {2016-04-21},
   Url                      = {https://www.theregister.co.uk/2016/04/21/ubuntu_16_04_lts_launched/},
   Year                     = {2016},
   Language                 = {English},
-  Organization             = {The Register}
+  Organization             = {The Register},
+
+  Timestamp                = {25.04.2017}
+}
+
+@Techreport{Microsystems2006,
+  Title                    = {ZFS on-disk specification},
+  Author                   = {{Sun Microsystems}},
+  Year                     = {2006},
+  Language                 = {English},
+  Url                      = {http://www.giis.co.in/Zfs_ondiskformat.pdf},
+
+  Owner                    = {Jonas De Moor},
+  Timestamp                = {25.04.2017}
+}
+
+@Www{Project2017,
+  Title                    = {Status},
+  Author                   = {{The BTRFS Project}},
+  Date                     = {2014-03-04},
+  Url                      = {https://btrfs.wiki.kernel.org/index.php/Status},
+  Year                     = {2017},
+  Language                 = {English},
+
+  Timestamp                = {25.04.2017}
+}
+
+@Www{Project2017a,
+  Title                    = {On-disk Format},
+  Author                   = {{The BTRFS Project}},
+  Url                      = {https://btrfs.wiki.kernel.org/index.php/On-disk_Format#Basic_Structures},
+  Year                     = {2017},
+
+  Owner                    = {jonas},
+  Timestamp                = {25.04.2017}
+}
+
+@Www{GroupOnbekend,
+  Title                    = {Open Brand},
+  Author                   = {{The Open Group}},
+  Url                      = {https://www.opengroup.org/openbrand/register/xy.htm},
+  Year                     = {Onbekend},
+  Language                 = {English},
+  Organization             = {The Open Group},
+
+  Owner                    = {Jonas De Moor},
+  Timestamp                = {25.04.2017}
+}
+
+@Www{OpenZFSHistory2014,
+  Title                    = {History - OpenZFS},
+  Author                   = {{The OpenZFS Project}},
+  Url                      = {http://open-zfs.org/wiki/History},
+  Year                     = {2014},
+  Language                 = {English},
+  Month                    = {May},
+  Organization             = {OpenZFS Project},
+
+  Owner                    = {Jonas De Moor},
+  Timestamp                = {25.04.2017}
 }
 
 @Www{VantageRecovery2017,
   Title                    = {RAID 5 Data Recovery FAQ},
-  Author                   = {VantageDataRecovery},
+  Author                   = {{Vantage Data Recovery}},
   Url                      = {https://www.vantexdatarecovery.com/vantagetech1.com/faq/raid-5-recovery-faq.html},
   Year                     = {2017},
   Language                 = {Egnlish},
   Organization             = {Vantage Data Recovery},
 
   Owner                    = {Jonas De Moor},
-  Timestamp                = {18.03.2017}
+  Timestamp                = {25.04.2017}
 }
 
 @comment{jabref-meta: databaseType:biblatex;}
