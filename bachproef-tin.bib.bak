@@ -41,7 +41,6 @@ This paper introduces five levels of RAIDs, giving their relative cost/performan
 @Www{Bonwick2005,
   Title                    = {RAID-Z},
   Author                   = {Bonwick, Jeff},
-  Date                     = {2005-11-17},
   Url                      = {https://blogs.oracle.com/bonwick/entry/raid_z},
   Year                     = {2005},
   Language                 = {English},

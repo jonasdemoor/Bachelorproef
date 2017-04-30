@@ -1,0 +1,82 @@
+
+%%=============================================================================
+%% H5 - Installatie & Voorbereiding van een Linux-server voor ZFS
+%%=============================================================================
+
+\chapter{Opzetten van een testserver voor ZFS}
+\label{ch:h5}
+
+In dit hoofdstuk wordt de procedure besproken die werd ondernomen bij het omvormen van een desktopcomputer tot een volwaardige Linux-server die kan gebruikt worden voor ZFS. Nadien worden de stappen besproken voor de installatie van ZFS op deze server.
+
+\section{Gebruikte hardware}
+
+Voor deze scriptie wordt er een HP Pavilion Elite HPE-310be desktopcomputer gebruikt voor te experimenteren met ZFS en het uitvoeren van de testen. Bij het kiezen van een systeem werd er zoveel mogelijk rekening gehouden met de aanbevelingen van de OpenZFS-ontwikkelaars waar mogelijk\footnote{Het gebruikte geheugen beschikt niet over ECC-errorcorrectie; ECC-functionaliteit wordt door de OpenZFS-ontwikkelaars aangeraden om datacorruptie te voorkomen \autocite{OpenZFSProject2017}.}. Wat verder volgt er een overzicht van de specificaties van het gekozen systeem.
+
+\begin{table}
+  \centering
+  \begin{tabular}{c l}
+    \hline
+    \multicolumn{2}{c}{\textbf{Specificaties}} \\
+    \hline
+    Fabrikant & HP \\
+    \hline
+    Model & HP Pavilion Elite HPE-310be \\
+    \hline
+    CPU & Intel Core i5 650 @ 3.2 GHz (4 Cores) \\
+    \hline
+    Geheugen & 10GB DDR3 @ 1333MHz \\
+    \hline
+    GPU & AMD Radeon HD 5570 \\
+    \hline
+    \multirow{4}{*}{Interne schijven} & SAMSUNG HD103SJ (1TB) \\
+      & WDC WD1002FAEX-0 (1TB) \\
+      & WDC WD5000AZRX-0 (500GB) \\
+    \hline
+    Externe schijf & WD Elements 1078 (1TB) \\
+    \hline
+    RAID Controller & Intel Corporation SATA RAID Controller \\
+    \hline
+  \end{tabular}
+  \caption{Specificaties van het systeem dat gebruikt wordt doorheen deze bachelorproef (data verkregen via \texttt{lshw})}
+  \label{tab:specs_desktop }
+\end{table}
+
+\section{Installatie van Linux}
+
+De Linux-distributie die wordt gebruikt doorheen deze scriptie is Fedora 25 Server Edition. De belangrijkste redenen om voor Fedora te kiezen, zijn de volgende:
+
+\begin{itemize}
+  \item{Het beschikt over een relatief recente Linux kernel en recente packages;}
+  \item{Het is relatief eenvoudig om OpenZFS te installeren op Fedora;}
+  \item{De distributie is eenvoudig te installeren}
+\end{itemize}
+
+Fedora werd geïnstalleerd op een externe harde schijf via USB: dit om de interne schijven zoveel mogelijk vrij te houden voor ZFS en het uitvoeren van testen. Op de volgende pagina bevindt zich een overzicht van de schijfindeling die gehanteerd werd.
+
+\begin{sidewaysfigure} 
+  \Tree
+  [.Opslag
+      [
+        .{Externe\\Opslag}
+          [
+            .{WD Elements 1078\\(1TB)\\\texttt{(/dev/sdd)}}
+                {\texttt{/boot}\\(1GB)\\\texttt{(/dev/sdd1)}}
+                [
+                  .{\texttt{/dev/sdd2}\\(930.5GB)\\(LVM)}
+                    {fedora-swap\\(4.9GB)}
+                    {fedora-root\\(15GB)\\\texttt{(/)}}
+                    {VRIJE\\RUIMTE\\(910.6GB)}
+                ]
+          ]
+      ]
+      [
+        .{Interne\\ Opslag}
+            {SAMSUNG\\HD103SJ\\(1TB)\\\texttt{/dev/sda}}
+            {WDC\\WD1002FAEX-0\\(1TB)\\\texttt{/dev/sdb}}
+            {WDC\\WD5000AZRX-0\\(500GB)\\\texttt{/dev/sdc}} 
+      ]  !{\qframesubtree} 
+  ]
+  \caption{Illustratie van de gehanteerde disk-layout van het systeem. De ingekaderde schijven zullen gebruikt worden door ZFS.}
+\end{sidewaysfigure}
+
+
