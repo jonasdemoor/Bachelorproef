@@ -63,6 +63,12 @@
 % Tree
 \usepackage{qtree}
 
+\lstdefinestyle{command_style}{
+  basicstyle=\ttfamily,
+  breaklines=true
+}
+
+
 %----------------------------------------------------------------------------------------
 %	FONTS
 %----------------------------------------------------------------------------------------
@@ -580,7 +586,7 @@ addtohook={%
 % Je kan dit aanpassen aan de taal die je zelf het meeste gebruikt in je
 % bachelorproef.
 \newcommand{\codefragment}[2]{ \lstset{%
-  language=java,
+  language=bash,
   breaklines=true,
   float=th,
   caption={#2},

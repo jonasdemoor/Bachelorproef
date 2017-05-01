@@ -22,7 +22,7 @@ Voor deze scriptie wordt er een HP Pavilion Elite HPE-310be desktopcomputer gebr
     \hline
     Model & HP Pavilion Elite HPE-310be \\
     \hline
-    CPU & Intel Core i5 650 @ 3.2 GHz (4 Cores) \\
+    CPU & Intel Core i5 650 @ 3.2 GHz (2 Cores; 4 Threads) \\
     \hline
     Geheugen & 10GB DDR3 @ 1333MHz \\
     \hline
@@ -51,7 +51,7 @@ De Linux-distributie die wordt gebruikt doorheen deze scriptie is Fedora 25 Serv
   \item{De distributie is eenvoudig te installeren}
 \end{itemize}
 
-Fedora werd geïnstalleerd op een externe harde schijf via USB: dit om de interne schijven zoveel mogelijk vrij te houden voor ZFS en het uitvoeren van testen. Op de volgende pagina bevindt zich een overzicht van de schijfindeling die gehanteerd werd.
+Fedora wordt geïnstalleerd op een externe harde schijf via USB: dit om de interne schijven zoveel mogelijk vrij te houden voor ZFS en het uitvoeren van testen. Op de volgende pagina bevindt zich een overzicht van de schijfindeling die gehanteerd wordt.
 
 \begin{sidewaysfigure} 
   \Tree
@@ -79,4 +79,90 @@ Fedora werd geïnstalleerd op een externe harde schijf via USB: dit om de intern
   \caption{Illustratie van de gehanteerde disk-layout van het systeem. De ingekaderde schijven zullen gebruikt worden door ZFS.}
 \end{sidewaysfigure}
 
+Na de installatie worden er nog enkele kleine dingen aangepast, zoals het uitzetten van de Cockpit-service en het aanpassen van de SSH-daemon (\texttt{PermitRootLogin} wordt op 'No' gezet). De firewall is reeds goed ingesteld: er moeten geen aanpassingen worden gemaakt.
 
+Na het herstarten van de SSH-daemon is de server klaar voor gebruik en kan er worden ingelogd via SSH.
+
+\section{Installatie van ZFS}
+
+Voor de installatie van OpenZFS wordt er gebruik gemaakt van de documentatie en repositories van ZFS On Linux, een zusterproject van OpenZFS dat de installatie en het gebruik van OpenZFS op Linux vergemakkelijkt \autocite{ZFSOL2017}. Het installeren van ZFS is vrij eenvoudig: eerst voegt men de nodige repositories toe, nadien installeert men de nodige packages; tenslotte moeten nog de nodige kernel modules worden ingeladen. Men kan de kernel modules inladen via \texttt{modprobe} of men kan simpelweg de server herstarten. 
+
+Bij het installeren van ZFS werden nauwgezet de stappen gevolgd uit de GitHub wiki van \textcite{ZFSOL2016}. Alle commando's worden uitgevoerd als \texttt{root}, tenzij anders aangegeven.
+
+\clearpage
+
+Eerst en vooral worden de nodige packages geïnstalleerd. Deze packages voegen een \texttt{.repo}-bestand toe aan \texttt{/etc/yum.repos.d/}: dit maakt het voor DNF (de package manager van Fedora) mogelijk om deze repository te gebruiken als installatiebron.
+
+\begin{lstlisting}[language=bash,style=command_style]
+$ dnf install http://download.zfsonlinux.org/fedora/zfs-release$(rpm -E %dist).noarch.rpm
+\end{lstlisting}
+
+Nadien moet de GPG key van ZFS On Linux worden gecontroleerd. Indien nodig moet eerst GnuPG worden geïnstalleerd. De vingerafdruk van de geïnstalleerde sleutel zou moeten overeenkomen met C93A FFFD 9F3F 7B03 C310  CEB6 A9D5 A1C0 F14A B620.
+
+\begin{lstlisting}[language=bash,style=command_style]
+$ dnf install gnupg
+$ gpg --quiet --with-fingerprint /etc/pki/rpm-gpg/RPM-GPG-KEY-zfsonlinux
+\end{lstlisting}
+
+Nadat de repository is opgezet, worden de benodigde packages voor ZFS geïnstalleerd. De kernel modules voor ZFS worden gecompileerd via DKMS.
+
+\begin{lstlisting}[language=bash,style=command_style]
+$ dnf install kernel-devel zfs 
+\end{lstlisting}
+
+Na installatie moet de ZFS kernel module in de draaiende kernel worden ingeladen en moeten de benodigde services worden geactiveerd.
+
+\begin{lstlisting}[language=bash,style=command_style]
+$ modprobe zfs
+$ systemctl enable zfs.target && systemctl start zfs.target
+$ systemctl enable zfs-import-cache && systemctl start zfs-import-cache
+$ systemctl enable zfs-mount && systemctl start zfs-mount
+\end{lstlisting}
+
+\section{Uittesten van ZFS}
+
+Op dit moment is ZFS geïnstalleerd en zou het naar behoren moeten werken. In deze sectie worden enkele manieren aangereikt om na te gaan of ZFS correct geïnstalleerd is.
+
+Een eerste vereiste voor ZFS is dat de kernel module in de huidige kernel moet ingeladen zijn. Dit kan eenvoudig worden nagegaan met het volgende commando:
+
+\begin{lstlisting}[language=bash,style=command_style]
+$ lsmod | grep "zfs"
+zfs                  2699264  0
+zunicode              331776  1 zfs
+zavl                   16384  1 zfs
+zcommon                49152  1 zfs
+znvpair                77824  2 zcommon,zfs
+spl                    98304  3 znvpair,zcommon,zfs
+\end{lstlisting}
+
+\texttt{lsmod} geeft een lijst van alle modules die op dit moment in de kernel zijn geladen. De output van \texttt{lsmod} wordt doorgestuurd ("gepipet") naar het commando \texttt{grep}; dit commando filtert de lijnen waarin het woord 'zfs' voorkomt en print deze af op het scherm. De output zou er ongeveer zoals hierboven moeten uitzien.
+
+Een tweede vereiste voor het correct functioneren van ZFS is dat de nodige services moeten geactiveerd zijn. Op een Linux-systeem dat \texttt{systemd} gebruikt als init-systeem en service supervisor kan dit worden nagegaan met het commando \texttt{systemctl status}. De targets en unit files die zeker moeten geactiveerd zijn, zijn \texttt{zfs.target}, \texttt{zfs-import-cache.service} en \texttt{zfs-mount.service}. Hieronder bevindt zich een voorbeeld. 
+
+\begin{lstlisting}[language=bash,style=command_style,escapechar=\%]
+$ systemctl status zfs-mount.service
+%\textbullet% zfs-mount.service - Mount ZFS filesystems
+   Loaded: loaded (/usr/lib/systemd/system/zfs-mount.service; enabled; vendor 
+   Active: active (exited) since Mon 2017-05-01 12:35:43 CEST; 2h 43min ago
+  Process: 1731 ExecStart=/sbin/zfs mount -a (code=exited, status=0/SUCCESS)
+ Main PID: 1731 (code=exited, status=0/SUCCESS)
+    Tasks: 0 (limit: 4915)
+   CGroup: /system.slice/zfs-mount.service
+
+May 01 12:35:43 SRV-ZFS systemd[1]: Starting Mount ZFS filesystems...
+May 01 12:35:43 SRV-ZFS systemd[1]: Started Mount ZFS filesystems.
+\end{lstlisting}
+
+Als laatste kan er worden nagekeken of twee beheerscommando's van ZFS, \texttt{zpool} en \texttt{zfs}, naar behoren werken.
+
+\begin{lstlisting}[language=bash,style=command_style]
+$ zpool status
+no pools available
+\end{lstlisting}
+
+\begin{lstlisting}[language=bash,style=command_style]
+$ zfs list
+no datasets available
+\end{lstlisting}
+
+De uitvoer van deze commando's is normaal, aangezien er nog geen pools en bijgevolg dus ook geen datasets zijn aangemaakt.
