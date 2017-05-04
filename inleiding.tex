@@ -5,6 +5,12 @@
 \chapter{Inleiding}
 \label{ch:inleiding}
 
+Al jarenlang is de meest gebruikte oplossing tegen dataverlies door het falen van schijven  RAID, wat staat voor Redundant Array of Independent (of Inexpensive) Disks. RAID is echter niet geheel feilloos: het beschermt bv. niet tegen fouten die gemaakt zijn door gebruikers (denk maar aan het wissen van belangrijke data) en het biedt ook geen oplossing als er in een zelfde tijdsbestek meerdere schijven falen \autocite{Chen1994}.
+
+In 2002 begon het toenmalige Sun Microsystems, nu onderdeel van Oracle Corporation, aan de ontwikkeling van ZFS (Zettabyte Filesystem). Dit is een bestandssysteem dat volledig \textit{from scratch} is ontwikkeld om \textit{``de tekortkomingen van huidige bestandssystemen op te lossen''}\autocite{JeffBonwick_lastZFS}, vooral met betrekking tot data-integriteit. Volgens de toenmalige hoofdontwikkelaar \textcite{ZFSBonwick} biedt ZFS heel wat vernieuwende functionaliteiten zoals een eenvoudiger beheer, automatische foutcorrectie, automatisch schalende bestandssystemen en een softwarematige RAID onder de term \textit{RAID-Z}. 
+
+Sinds 2013 is ZFS ook beschikbaar voor Linux, maar de eerste uitgaven leden onder nogal wat stabiliteitsproblemen. Tegenwoordig is ZFS op Linux volwassen genoeg geworden om in te zetten in productie. Deze bachelorproef is dan ook een goede gelegenheid om zelf wat meer onderzoek te doen naar ZFS en of het een volwaardig alternatief zou zijn voor een klassieke, hardwaregebaseerde RAID-oplossing op een server.
+
 \section{Probleemstelling en Onderzoeksvragen}
 \label{sec:onderzoeksvragen}
 

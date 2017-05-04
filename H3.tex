@@ -50,7 +50,7 @@ De taak van de SPA is hoofdzakelijk om datablokken van verschillende apparaten i
 
 De Storage Pool Allocator biedt een interface aan tot \textbf{data virtual addresses (DVA's)}: dit zijn de adressen van de virtuele datablocks die zich in een storage pool bevinden. De datablokken die zich fysiek op een schijf bevinden worden dus niet rechtstreeks aangesproken; alle communicatie van bovenliggende lagen gericht tot de fysieke disks moet eerst via de SPA. Hierdoor worden de ontwerpprincipes van \textit{'Eenvoud van beheer'} en \textit{'Storage Pools'} gerealiseerd: schijven kunnen dynamisch worden toegevoegd zonder de werking van de rest van het systeem te ondermijnen. Ook kan de systeembeheerder op een flexibele manier bestandssystemen aanmaken, zonder rekenschap te moeten geven aan de onderliggende fysieke structuur \autocite{ZFSBonwick}.
 
-Deze eigenschappen zjin te danken aan VDEV's (Virtual Devices). Dit zijn a.h.w. de bouwstenen van storage pools \autocite{Lucas2015}. Deze worden in Hoofdstuk \ref{ch:h5} wat meer toegelicht.
+%Deze eigenschappen zjin te danken aan VDEV's (Virtual Devices). Dit zijn a.h.w. de bouwstenen van storage pools \autocite{Lucas2015}. Deze worden in Hoofdstuk \ref{ch:h5} wat meer toegelicht.
 
 \subsection{Data Management Unit (DMU)}
 
