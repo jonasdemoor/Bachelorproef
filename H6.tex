@@ -12,7 +12,7 @@ In dit hoofdstuk worden zpools en diens bouwstenen, VDEV's, wat meer toegelicht.
 
 \subsection{Concept}
 
-VDEV's (of voluit Virtual Devices) zijn de bouwstenen van storage pools; het zijn een soort van device drivers die elk een bepaalde functionaliteit aanbieden. Er bestaan verschillende soorten VDEV's: zo zijn er bijvoorbeeld striping VDEV's en mirror VDEV's. Ook worden de verschillende RAID-Z-vormen geïmplementeerd met behulp van één of meerdere VDEV's \autocite{ZFSBonwick}.
+VDEV's (of voluit Virtual Devices) zijn de bouwstenen van storage pools; het zijn een soort van device drivers die elk een bepaalde functionaliteit aanbieden. Er bestaan verschillende soorten VDEV's: zo zijn er bijvoorbeeld \gls{striping} VDEV's en mirror VDEV's. Ook worden de verschillende RAID-Z-vormen geïmplementeerd met behulp van één of meerdere VDEV's \autocite{ZFSBonwick}.
 
 Conceptueel worden virtual devices voorgesteld in een boomstructuur, waarvan de bladeren de fysieke VDEV's voorstellen; deze VDEV's komen overeen met fysieke apparaten zoals harde schijven. De andere knopen in de boom worden logische VDEV's genoemd omdat ze een groepering vormen van fysieke VDEV's. Zoals in elke boom bestaat er ook in deze structuur van virtual devices een wortel of \textit{root}. De kinderen van deze root VDEV worden de top-level VDEV's genoemd \autocite{Microsystems2006}.
 
@@ -25,11 +25,11 @@ Conceptueel worden virtual devices voorgesteld in een boomstructuur, waarvan de 
 
 \subsection{Speciale VDEV's}
 
-Naast VDEV's voor redundantie en striping bestaan er ook nog andere virtual devices die een specifieke rol vervullen. Deze VDEV's worden ingezet met als hoofddoel de performantie van ZFS naar omhoog te trekken \autocite{Lucas2015}.
+Naast VDEV's voor redundantie en \gls{striping} bestaan er ook nog andere virtual devices die een specifieke rol vervullen. Deze VDEV's worden ingezet met als hoofddoel de \gls{performantie} van ZFS naar omhoog te trekken \autocite{Lucas2015}.
 
 \subsubsection{SLOG: Seperate Intent Log}
 
-Onder normale omstandigheden bevindt de ZFS Intent Log (ZIL) zich in een pool en worden de bewerkingen die op dit moment bezig zijn naar deze log geschreven. Echter kan de systeembeheerder deze log naar een apart, snel apparaat (zoals een SSD) buiten een pool verplaatsen om zo de performantie omhoog te trekken. ZFS kan logdata effciënter groeperen in batches in plaats van deze weg te schrijven in de volgorde dat de opslagbewerkingen gebeuren; daarna worden deze weggeschreven naar de pool. Dit verhoogt de gehele efficiëntie en snelheid van bewerkingen aanzienlijk. Vele databanksystemen wachten bijvoorbeeld totdat data gepersisteerd is naar de schijf alvorens verder te gaan met een volgende operatie. ZFS kan deze soort operaties loggen en achteraf uitvoeren; het bestandssysteem meldt terwijl aan de databank dat deze operatie gepersisteerd is \autocite{Lucas2015}.
+Onder normale omstandigheden bevindt de ZFS Intent Log (ZIL) zich in een pool en worden de bewerkingen die op dit moment bezig zijn naar deze log geschreven. Echter kan de systeembeheerder deze log naar een apart, snel apparaat (zoals een SSD) buiten een pool verplaatsen om zo de \gls{performantie} omhoog te trekken. ZFS kan logdata effciënter groeperen in batches in plaats van deze weg te schrijven in de volgorde dat de opslagbewerkingen gebeuren; daarna worden deze weggeschreven naar de pool. Dit verhoogt de gehele efficiëntie en snelheid van bewerkingen aanzienlijk. Vele databanksystemen wachten bijvoorbeeld totdat data gepersisteerd is naar de schijf alvorens verder te gaan met een volgende operatie. ZFS kan deze soort operaties loggen en achteraf uitvoeren; het bestandssysteem meldt terwijl aan de databank dat deze operatie gepersisteerd is \autocite{Lucas2015}.
 
 \subsubsection{L2ARC: Level 2 Adaptive Replacement Cache}
 
@@ -155,9 +155,9 @@ Vooraleer er overgegaan wordt tot het aanmaken van VDEV's, moet er worden opgeme
 
 \subsubsection{Striping VDEV's}
 
-Striping VDEV's komen overeen met RAID-niveau 0; bij zpools bestaande uit striping VDEV's wordt data gelijkmatig verdeeld over de verschillende VDEV's.
+Striping VDEV's komen overeen met RAID-niveau 0; bij zpools bestaande uit \gls{striping} VDEV's wordt data gelijkmatig verdeeld over de verschillende VDEV's.
 
-In de voorgaande sectie over zpools werden er bij het aanmaken van een nieuwe zpool impliciet striping VDEV's gebruikt:
+In de voorgaande sectie over zpools werden er bij het aanmaken van een nieuwe zpool impliciet \gls{striping} VDEV's gebruikt:
 
 \begin{lstlisting}[language=bash,style=command_style]
 $ zpool create storage /dev/sda /dev/sdb /dev/sdc
@@ -182,9 +182,9 @@ In dit geval wordt elke fysieke harde schijf in een aparte VDEV gestopt en wordt
 
 Bij mirror VDEV's zijn de kinderen van de VDEV's kopieën van elkaar: dit is hetzelfde principe dat bij RAID 1 wordt toegepast. 
 
-Mirrors zijn overigens de enige VDEV's waaraan die men na creatie nog kan wijzigen, samen met stripes. Aan een mirror VDEV kunnen achteraf nog schijven worden toegevoegd; een striping VDEV kan worden geüpgradet tot een mirror VDEV door een extra schijf of schijven aan de VDEV toe te voegen \autocite{FBSDDP2017}.
+Mirrors zijn overigens de enige VDEV's waaraan die men na creatie nog kan wijzigen, samen met stripes. Aan een mirror VDEV kunnen achteraf nog schijven worden toegevoegd; een \gls{striping} VDEV kan worden geüpgradet tot een mirror VDEV door een extra schijf of schijven aan de VDEV toe te voegen \autocite{FBSDDP2017}.
 
-We beschikken bijvoorbeeld over de volgende storage pool met één striping VDEV, bestaande uit één fysieke schijf:
+We beschikken bijvoorbeeld over de volgende storage pool met één \gls{striping} VDEV, bestaande uit één fysieke schijf:
 
 \begin{lstlisting}[language=bash,style=command_style]
 $ zpool create storage /dev/sda
@@ -201,7 +201,7 @@ $ zpool status
   errors: No known data errors
 \end{lstlisting}
 
-Deze striping VDEV kan makkelijk worden geüpgradet naar een mirror VDEV m.b.v. het commando \texttt{zpool attach <naam pool> <naam VDEV> <schijf>}:
+Deze \gls{striping} VDEV kan makkelijk worden geüpgradet naar een mirror VDEV m.b.v. het commando \texttt{zpool attach <naam pool> <naam VDEV> <schijf>}:
 
 \begin{lstlisting}[language=bash,style=command_style]
 $ zpool attach storage sda sdb
@@ -224,7 +224,7 @@ Bij het weergeven van de structuur van de pool, kan men zien dat de stripe werd 
 
 \subsubsection{RAID-Z1 VDEV's}
 
-Aangezien het testsysteem over slechts drie fysieke schijven beschikt, kunnen we niet verder gaan dan RAID-niveau 5\footnote{In theorie zou er kunnen gebruikt gemaakt worden van binary files als storage-backend; ZFS kan namelijk bestanden gebruiken als provider. Maar aangezien deze bestanden op de externe harde schijf zouden moeten worden opgeslagen, zou dit de performantie te sterk naar beneden halen (de schijf is aangesloten via USB 2.0).}. Het equivalent van RAID 5 bij ZFS is RAID-Z1.  
+Aangezien het testsysteem over slechts drie fysieke schijven beschikt, kunnen we niet verder gaan dan RAID-niveau 5\footnote{In theorie zou er kunnen gebruikt gemaakt worden van binary files als storage-backend; ZFS kan namelijk bestanden gebruiken als provider. Maar aangezien deze bestanden op de externe harde schijf zouden moeten worden opgeslagen, zou dit de \gls{performantie} te sterk naar beneden halen (de schijf is aangesloten via USB 2.0).}. Het equivalent van RAID 5 bij ZFS is RAID-Z1.  
 
 Om een RAID-Z1 VDEV te kunnen creeëren, dienen eerst de bestaande VDEV's worden verwijderd. Het makkelijkste is om de bestaande pool volledig te verwijderen en een nieuwe pool met een RAID-Z1 VDEV aan te maken:
 
