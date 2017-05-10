@@ -26,7 +26,7 @@ Een niet onbelangrijke feature hierbij zijn storage pools. Storage pools hebben 
   
 \subsection{Consistentie \& Integriteit}
 
-Eén van de taken van een bestandssysteem is om ervoor te zorgen dat het in een consistente toestand blijft, i.e. het moet mogelijk zijn om van inconsistente toestanden te herstellen d.m.v. bijvoorbeeld een journal of door een filesystem check te draaien \autocite{OSThreePiecesRemzi2015}. Een nadeel aan deze technieken volgens \textcite{ZFSBonwick} is dat deze niet makkelijk zijn om te implementeren, omdat bijvoorbeeld in het geval van journaling filesystems een roll back of roll forward moet worden uitgevoerd. Hierbij moet ook nog de volgorde van de bewerkingen in acht worden genomen \autocite{OSThreePiecesRemzi2015}. 
+Eén van de taken van een bestandssysteem is om ervoor te zorgen dat het in een consistente toestand blijft, i.e. het moet mogelijk zijn om van inconsistente toestanden te herstellen d.m.v. bijvoorbeeld een \gls{journal} of door een filesystem check te draaien \autocite{OSThreePiecesRemzi2015}. Een nadeel aan deze technieken volgens \textcite{ZFSBonwick} is dat deze niet makkelijk zijn om te implementeren, omdat bijvoorbeeld in het geval van journaling filesystems een roll back of roll forward moet worden uitgevoerd. Hierbij moet ook nog de volgorde van de bewerkingen in acht worden genomen \autocite{OSThreePiecesRemzi2015}. 
 
 De oplossing volgens \textcite{ZFSBonwick} is om het bestandssysteem te allen tijde consistent te houden; er mag m.a.w. geen enkel moment zijn waarop het systeem in een inconsistente toestand kan terecht komen. Dit wordt verwezenlijkt door de Copy-On-Write eigenschappen van ZFS, waardoor bewerkingen \gls{atomair} gebeuren \autocite{Li2009}. 
 
@@ -77,7 +77,7 @@ De ZFS Attribute Processor is een component die samenwerkt met de DMU-laag. De Z
 
 \subsection{ZFS Intent Log (ZIL)}
 
-Deze component houdt logbestanden bij van alle transacties voor het geval dat het bestandssysteem toch in een inconsistente toestand zou terecht komen, bijvoorbeeld bij een stroompanne. Op deze manier kunnen transacties worden gereplayed indien consistentie van uiterst belang is. Deze records worden bijgehouden in het RAM-geheugen tot ze worden gepersisteerd door een DMU-transactie of door een \texttt{fsync} \autocite{ZFSBonwick}. 
+Deze component houdt logbestanden bij van alle transacties voor het geval dat het bestandssysteem toch in een inconsistente toestand zou terecht komen, bijvoorbeeld bij een stroompanne. Op deze manier kunnen transacties worden gereplayed indien consistentie van uiterst belang is. Deze records worden bijgehouden in het RAM-geheugen tot ze worden gepersisteerd door een DMU-transactie of door een \texttt{\gls{fsync}} \autocite{ZFSBonwick}. 
 
 \subsection{ZFS Volume (ZVOL)}
 
