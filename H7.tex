@@ -6,4 +6,23 @@
 \chapter{ZFS Datasets}
 \label{ch:h7}
 
+In dit hoofdstuk worden ZFS datasets of bestandssystemen besproken. Er wordt onder andere getoond hoe men bestandssystemen kan aanmaken, wijzigen en delen met andere computers op het netwerk. 
+
+\section{Verschillen met andere bestandssystemen}
+
+In essentie verschillen datasets (of bestandssystemen) binnen ZFS niet zo heel veel van andere, "traditionele" bestandssystemen. Een dataset is in principe een verzameling van data dat een bepaalde naam heeft; deze dataset vormt een logische eenheid van beheer. Dit komt grotendeels overeen met partities bij andere bestandssystemen, waarbij een (deel van) een schijf wordt gereserveerd voor een bepaald type gebruik (zoals gebruikersmappen) \autocite{Lucas2015}.
+
+Toch zijn er een aantal grote verschillen m.b.t. de manier waarop er omgegaan wordt met de beschikbare schijfruimte
+
+\subsection{Gebruik van de beschikbare opslagcapaciteit}
+
+Een groot verschil tussen bestandssystemen bij ZFS en andere bestandssystemen, is dat ZFS datasets gebruik maken van de voordelen van storage pools. ZFS legt bijna geen limieten op aan de grootte van bestandssystemen; de enige limiet die aan de grootte van bestandssystemen wordt opgelegd, is de grootte van de storage pool. Dit is een groot verschil met traditionele bestandssystemen: alvorens een partitie aan te maken en te formatteren, moet de systeembeheerder eerst nadenken over de grootte en lay-out van deze partitie en van de rest van de schijf of schijven. Na deze beslissingen genomen te hebben, maakt de gebruiker deze partitie aan. \autocite{Lucas2015}.
+
+Standaard neemt een ZFS dataset de ruimte van een pool in die het nodig heeft; de systeembeheerder moet zich dus niet bezighouden met het vooraf instellen van de grootte van een dataset. Het is echter wel mogelijk om de groei van een dataset tegen te gaan d.m.v. quota's en reservaties; het gebruik van ZFS properties op datasets komt later in dit hoofdstuk nog aan bod. 
+
+Het grote voordeel van de aanpak van ZFS is dat het triviaal is om een nieuwe dataset aan te maken; bij andere bestandssystemen is het heel wat lastiger om nieuwe partities aan te maken als een disk reeds volledig gepartitioneerd is omdat de groottes van de partities reeds vastliggen. In de meeste gevallen moet er een nieuwe schijf worden toegevoegd en gepartitioneerd \autocite{FBSDDP2017}.
+
+\subsection{Types van datasets}
+
+In tegenstelling tot 
 
