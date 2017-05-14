@@ -8,21 +8,84 @@
 
 In dit hoofdstuk worden ZFS datasets of bestandssystemen besproken. Er wordt onder andere getoond hoe men bestandssystemen kan aanmaken, wijzigen en delen met andere computers op het netwerk. 
 
-\section{Verschillen met andere bestandssystemen}
+\section{Verschillen met traditionele bestandssystemen}
 
 In essentie verschillen datasets (of bestandssystemen) binnen ZFS niet zo heel veel van andere, "traditionele" bestandssystemen. Een dataset is in principe een verzameling van data dat een bepaalde naam heeft; deze dataset vormt een logische eenheid van beheer. Dit komt grotendeels overeen met partities bij andere bestandssystemen, waarbij een (deel van) een schijf wordt gereserveerd voor een bepaald type gebruik (zoals gebruikersmappen) \autocite{Lucas2015}.
 
-Toch zijn er een aantal grote verschillen m.b.t. de manier waarop er omgegaan wordt met de beschikbare schijfruimte
+Toch zijn er een aantal grote verschillen, zoals bijvoorbeeld de manier waarop er omgegaan wordt met beschikbare schijfruimte.  
 
 \subsection{Gebruik van de beschikbare opslagcapaciteit}
 
-Een groot verschil tussen bestandssystemen bij ZFS en andere bestandssystemen, is dat ZFS datasets gebruik maken van de voordelen van storage pools. ZFS legt bijna geen limieten op aan de grootte van bestandssystemen; de enige limiet die aan de grootte van bestandssystemen wordt opgelegd, is de grootte van de storage pool. Dit is een groot verschil met traditionele bestandssystemen: alvorens een partitie aan te maken en te formatteren, moet de systeembeheerder eerst nadenken over de grootte en lay-out van deze partitie en van de rest van de schijf of schijven. Na deze beslissingen genomen te hebben, maakt de gebruiker deze partitie aan. \autocite{Lucas2015}.
+Een groot verschil tussen bestandssystemen bij ZFS en vele andere bestandssystemen, is dat ZFS datasets gebruik maken van de voordelen van storage pools. ZFS legt bijna geen limieten op aan de grootte van bestandssystemen; de enige limiet die aan de grootte van bestandssystemen wordt opgelegd, is de grootte van de storage pool. Dit is een groot verschil met traditionele bestandssystemen: alvorens een partitie aan te maken en te formatteren, moet de systeembeheerder eerst nadenken over de grootte en lay-out van deze partitie en van de rest van de schijf of schijven. Na deze beslissingen genomen te hebben, maakt de gebruiker deze partitie aan. \autocite{Lucas2015}.
 
-Standaard neemt een ZFS dataset de ruimte van een pool in die het nodig heeft; de systeembeheerder moet zich dus niet bezighouden met het vooraf instellen van de grootte van een dataset. Het is echter wel mogelijk om de groei van een dataset tegen te gaan d.m.v. quota's en reservaties; het gebruik van ZFS properties op datasets komt later in dit hoofdstuk nog aan bod. 
+Standaard neemt een ZFS dataset de ruimte van een pool in die het nodig heeft; de systeembeheerder moet zich dus niet bezighouden met het vooraf instellen van de grootte van een dataset. Het is echter wel mogelijk om de groei van een dataset tegen te gaan d.m.v. quota's en reservaties \autocite{FBSDDP2017}; het gebruik van ZFS properties op datasets komt later in dit hoofdstuk nog aan bod. 
 
-Het grote voordeel van de aanpak van ZFS is dat het triviaal is om een nieuwe dataset aan te maken; bij andere bestandssystemen is het heel wat lastiger om nieuwe partities aan te maken als een disk reeds volledig gepartitioneerd is omdat de groottes van de partities reeds vastliggen. In de meeste gevallen moet er een nieuwe schijf worden toegevoegd en gepartitioneerd \autocite{FBSDDP2017}.
+\subsection{Verschillende types van datasets}
 
-\subsection{Types van datasets}
+Een dataset kan binnen ZFS een aantal vormen aannemen. Eén van de meest voorkomende vormen van een dataset is een \textbf{file system} of bestandssysteem: dit is het equivalent van een klassiek bestandssysteem, met bestanden, mappen, permissies enzovoorts. Daarnaast bestaan er nog andere datasettypes, zoals snapshots, clones, volumes (of zvols) en bookmarks \autocite{Lucas2015}. Deze verschillende types zullen iets uitgebreider worden besproken in de volgende sectie.  
 
-In tegenstelling tot 
+\subsection{Hiërarchische structuur van ZFS datasets}
 
+Datasets worden - net zoals zpools - binnen ZFS voorgesteld als objecten, met elk bepaalde eigenschappen (of properties). Traditionele bestandssystemen hebben ook bepaalde eigenschappen die kunnen veranderd worden, maar ZFS gaat hier nog een stap verder in. Net zoals bij VDEV's worden datasets voorgesteld in een boomstructuur: elke dataset heeft een ouder en eventueel kinderen. Dit maakt het mogelijk om overerving toe te passen op datasets; hierbij erven de kinderen van een bepaalde dataset de properties over van hun ouder \autocite{FBSDDP2017}.
+
+Datasets maken het voor de systeembeheerder makkelijk om verschillende soorten data van elkaar te scheiden; op deze datasets kunnen dan bepaalde properties worden ingesteld m.b.t. bijvoorbeeld gebruikersrechten. Met behulp van ouder-kind relaties tussen datasets kunnen zowel algemene eigenschappen als meer specifieke eigenschappen worden ingesteld. Er kan bijvoorbeeld een dataset worden aangemaakt voor een project; deze beschikt dan over algemene eigenschappen, zoals toegangsrechten voor de verschillende teams die aan het project werken. Binnen deze ouder-dataset kunnen kind-datasets worden aangemaakt met meer specifieke eigenschapppen; elke dataset behoort bijvoorbeeld toe aan een specifiek team en heeft dan ook eigenschappen die uniek zijn voor dat bepaald team, bovenop de reeds overgeërfde eigenschappen van de ouder-dataset (voorbeeld naar \textcite{Lucas2015}).
+
+\section{Aanmaken \& beheren van ZFS datasets}
+
+Voor het beheer van datasets wordt het commando \texttt{zfs} gebruikt; de syntax komt grotendeels overeen met die van \texttt{zpool}, het commando om ZFS pools te beheren. 
+
+Als vertrekpunt wordt er een zpool gebruikt bestaande uit één RAID-Z1 VDEV en drie fysieke VDEV's:
+
+\begin{lstlisting}[language=bash,style=command_style]
+  $ zpool create storage raidz1 /dev/sda /dev/sdb /dev/sdc
+  $ zpool status
+    pool: storage
+   state: ONLINE
+    scan: none requested
+  config:
+
+	NAME        STATE     READ WRITE CKSUM
+	storage     ONLINE       0     0     0
+	  raidz1-0  ONLINE       0     0     0
+	    sda     ONLINE       0     0     0
+	    sdb     ONLINE       0     0     0
+	    sdc     ONLINE       0     0     0
+
+  errors: No known data errors
+\end{lstlisting}
+
+\subsection{Bekijken en aanmaken van datasets}
+
+Om de huidige aanwezige datasets te bekijken, gebruik je het commando \texttt{zfs list}:
+
+\begin{lstlisting}[language=bash,style=command_style] 
+  $ zfs list
+  NAME      USED  AVAIL  REFER  MOUNTPOINT
+  storage   464K   898G   128K  /storage
+\end{lstlisting}
+
+In dit geval is er reeds automatisch een dataset aangemaakt met de naam 'storage' en als mountpoint '/storage'. Deze heeft dezelde naam als de zpool: deze is dus m.a.w. de parent-dataset van alle andere datasets die binnen deze pool zullen worden aangemaakt.
+
+Er kan ook een lijst worden opgevraagd van alle aangekoppelde (\textit{mounted}) bestandssystemen m.b.v. het UNIX-commando \texttt{df}:
+
+\begin{lstlisting}[language=bash,style=command_style] 
+  $ df -h
+  Filesystem               Size  Used Avail Use% Mounted on
+  devtmpfs                 4.9G     0  4.9G   0% /dev
+  tmpfs                    4.9G     0  4.9G   0% /dev/shm
+  tmpfs                    4.9G  920K  4.9G   1% /run
+  tmpfs                    4.9G     0  4.9G   0% /sys/fs/cgroup
+  /dev/mapper/fedora-root   15G  1.8G   14G  12% /
+  tmpfs                    4.9G  4.0K  4.9G   1% /tmp
+  /dev/sdd1                976M  138M  772M  16% /boot
+  tmpfs                    993M     0  993M   0% /run/user/1000
+  storage                  899G  128K  899G   1% /storage 
+\end{lstlisting}
+
+Zoals kan worden afgeleid uit de uitvoer van bovenstaand commando, is de ZFS dataset inderdaad gekoppeld aan de map \texttt{/storage}.
+
+Om binnen de dataset \texttt{storage} een nieuwe dataset aan te maken, gebruik je het commando \texttt{zfs create}. Met behulp van dit commando kunnen er verschillende soorten ZFS datasets worden aangemaakt. Hieronder volgt een overzicht van de verschillende soorten datasets en hoe deze kunnen worden ingezet.
+
+\subsubsection{Filesystems}
+
+Filesystems (of bestandssystemen) zijn de meest voorkomende datasettypes.
