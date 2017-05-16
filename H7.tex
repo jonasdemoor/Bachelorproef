@@ -108,4 +108,56 @@ Uit de uitvoer van \texttt{zfs list} kan men de makkelijk de ouder-kindrelaties 
 
 \subsubsection{Volumes}
 
-ZFS volumes (of zvols) zijn 
+ZFS volumes (of zvols) zijn het equivalent van UNIX block devices en worden dan ook als block devices voorgesteld; zvols bevinden zich onder de map \texttt{/dev/zvol}. In deze situatie doet ZFS zich voor als een soort van volume manager: de zvols worden door gebruikers en applicaties gezien als een normale schijf. Bovenop deze ZFS volumes kunnen dan andere bestandssystemen (zoals EXT4) worden aangemaakt; het grote voordeel hierbij is dat er bovenop de functionaliteiten van het gebruikte bestandssysteem ook eigenschappen van ZFS kunnen worden toegepast. Zo kan er bijvoorbeeld m.b.v. ZFS compressie worden toegepast op bestandssystemen die dit normaal niet ondersteunen (zoals FAT) \autocite{FBSDDP2017}.
+
+\clearpage
+
+Om een ZFS volume aan te maken met een grootte van 20GB en met compressie, gebruik je het volgende commando:
+
+\begin{lstlisting}[language=bash,style=command_style] 
+  $ zfs create -V 20G -o compression=on storage/projects/vol_test
+  & zfs list
+  NAME                        USED  AVAIL  REFER  MOUNTPOINT
+  storage                    20.6G   877G   133K  /storage
+  storage/projects           20.6G   877G   139K  /storage/projects
+  storage/projects/dev        128K   877G   128K  /storage/projects/dev
+  storage/projects/vol_test  20.6G   898G  85.2K  -
+  storage/projects/www        128K   877G   128K  /storage/projects/www
+\end{lstlisting}
+
+Een zvol heeft geen mount point, aangezien het om een block device gaat. Om bijvoorbeeld een EXT4 bestandsysteem aan te maken bovenop het volume en het vervolgens aan te koppelen, kan men de volgende procedure volgen:
+
+\begin{lstlisting}[language=bash,style=command_style] 
+  $ mkfs.ext4 /dev/zvol/storage/projects/vol_test
+  $ mkdir /mnt/zvol_test
+  $ mount /dev/zvol/storage/projects/vol_test /mnt/zvol_test/
+  $ df -h /mnt/zvol_test/
+  Filesystem      Size  Used Avail Use% Mounted on
+  /dev/zd0         20G   45M   19G   1% /mnt/zvol_test
+\end{lstlisting}
+
+In bovenstaand voorbeeld werd er eerst een EXT4-bestandssysteem aangemaakt op het volume; daarna werd het nodige \textit{mount point} aangemaakt. Vervolgens werd het bestandssysteem aan het aankoppelpunt gekoppeld.  
+
+\subsubsection{Snapshots}
+
+Snapshots zijn \textit{read-only} kopieën van een dataset; deze kunnen gemaakt worden van zowel bestandssystemen als volumes. Dankzij de COW-eigenschappen van ZFS is het triviaal om een snapshot te maken: bij het aanmaken van een snapshot wordt er eerst een kopie gemaakt van de data; deze zal worden blijven gebruikt door het systeem. Bij COW wordt de oude data niet overschreven: het is deze data dat in een snapshot terecht zal komen \autocite{Lucas2015}.
+
+Voordelen van snapshots zijn o.a. dat ze snel kunnen worden aangemaakt en worden teruggezet en dat ze weinig beslag leggen op de beschikbare schijfruimte. Bij creatie worden alle data en metadata van de dataset gedupliceerd d.m.v. referenties te leggen naar de originele dataset. Vanaf het ogenblik dat de brondataset verandert, moeten deze wijzigingen in de snapshot worden bijgehouden. In het begin is dus de grootte van een snapshot gelijk aan die van de dataset waarvan er een kopie gemaakt werd \autocite{FBSDDP2017}.
+
+Een snapshot kan bijvoorbeeld worden gebruikt om een back-up te hebben van de productieomgeving binnen het bedrijf. Als er iets fout is gelopen, kan er makkelijk worden terugerold naar de vorige versie m.b.v. een snapshot. 
+
+Om een snapshot te maken van de dataset \texttt{storage/projects/www}, kan men het volgende commando gebruiken:
+
+\begin{lstlisting}[language=bash,style=command_style] 
+  $ zfs snapshot storage/projects/www@www_$(date "+%d-%m-%Y")
+  $ zfs list -t snapshot
+  NAME                                  USED  AVAIL  REFER  MOUNTPOINT
+  storage/projects/www@www_16-05-2017      0      -   128K  -
+\end{lstlisting}
+
+De '@' is een delimiter; na deze karakter kan een naam worden ingegeven voor de dataset. In bovenstaand voorbeeld wordt de naam van de dataset gekozen gevolgd, door de huidige datum. De optie '-t' bij het commando \texttt{zfs list} wordt gebruikt om enkel bepaalde types van datasets weer te geven.
+
+Er kunnen ook recursieve snapshots worden gemaakt: hierbij worden kind-datasets ook mee opgenomen in een snapshot. Om aan te geven dat er een recursieve snapshot moet worden gecreëerd, wordt de optie '-r' gebruikt.
+
+\begin{lstlisting}[language=bash,style=command_style] 
+\end{lstlisting}
