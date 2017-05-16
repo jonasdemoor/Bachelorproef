@@ -160,4 +160,65 @@ De '@' is een delimiter; na deze karakter kan een naam worden ingegeven voor de 
 Er kunnen ook recursieve snapshots worden gemaakt: hierbij worden kind-datasets ook mee opgenomen in een snapshot. Om aan te geven dat er een recursieve snapshot moet worden gecreëerd, wordt de optie '-r' gebruikt.
 
 \begin{lstlisting}[language=bash,style=command_style] 
+  $ zfs snapshot -r storage@storage_rec_$(date "+%d-%m-%Y")
+  $ zfs list -t snapshot
+  NAME                                               USED  AVAIL  REFER  MOUNTPOINT
+  storage@storage_rec_16-05-2017                        0      -   133K  -
+  storage/projects@storage_rec_16-05-2017               0      -   139K  -
+  storage/projects/dev@storage_rec_16-05-2017           0      -   128K  -
+  storage/projects/vol_test@storage_rec_16-05-2017      0      -  3.43M  -
+  storage/projects/www@www_16-05-2017                   0      -   128K  -
+  storage/projects/www@storage_rec_16-05-2017           0      -   128K  -
 \end{lstlisting}
+
+Hier ziet men inderdaad dat het aanmaken van de snapshot \texttt{storage\_rec\_16-05-2017} recursief gebeurde.
+
+Het gebruik van snapshots komt nog uitgebreid aan bod in Hoofdstuk \ref{ch:h9}: \textit{Data-integriteit en Consistentie bij ZFS}.
+
+\subsubsection{Clones}
+
+Een clone is een kopie van een snapshot dat qua werking overeenkomt met een volwaardig bestandssysteem. De clone en de originele snapshot leven dus naast elkaar; zo is bijvoorbeeld de snapshot de productieomgeving en de clone een kopie van deze omgeving. Dit maakt het mogelijk om aanpassingen door te voeren en te testen op de clone zonder dat deze de productieomgeving beïnvloeden. Bij creatie nemen clones geen extra ruimte in, aangezien ze gelijk zijn aan de snapshot waarop ze gebaseerd zijn. Als er aanpassingen aan de clone worden gedaan, dan wordt er echter wel extra opslagruimte aangewend \autocite{Lucas2015}.
+
+Het concept van snapshots en clones valt het best te vergelijken met die van branches in bijvoorbeeld een versiebeheersysteem zoals git: de snapshot is de master branch, de clone is een aftakking van deze master branch. Er moet wel opgemerkt worden dat clones geen updates ontvangen van het bestandssysteem waarvan de snapshot werd genomen; indien nodig moeten er dus een nieuwe snapshot en dus ook een nieuwe clone worden aangemaakt \autocite{Lucas2015}.
+
+Om een clone van een snapshot aan te maken, gebruikt men het commando \texttt{zfs clone <snapshot> <nieuwe\_dataset>}:
+
+\begin{lstlisting}[language=bash,style=command_style] 
+  $ zfs clone storage/projects/www@www_16-05-2017 storage/projects/www_new
+  $ zfs list
+  NAME                        USED  AVAIL  REFER  MOUNTPOINT
+  storage                    20.6G   877G   133K  /storage
+  storage/projects           20.6G   877G   144K  /storage/projects
+  storage/projects/dev        128K   877G   128K  /storage/projects/dev
+  storage/projects/vol_test  20.6G   898G  3.43M  -
+  storage/projects/www        128K   877G   128K  /storage/projects/www
+  storage/projects/www_new   10.7K   877G   128K  /storage/projects/www_new
+\end{lstlisting}
+
+Uit de output van \texttt{zfs list} kan worden afgeleid dat er inderdaad een nieuwe dataset werd aangemaakt met de naam \texttt{www\_new}. Deze nieuwe dataset en de oorspronkelijke snapshot zijn aan elkaar gekoppeld. 
+
+Om de relatie tussen een snapshot en zijn kloon of klonen te bekijken, kunnen de betreffende properties van de clone worden opgehaald. Uit onderstaande uitvoer kan worden afgeleid dat de clone gebaseerd is op de snapshot \texttt{storage/projects/www@www\_16-05-2017}.
+
+\begin{lstlisting}[language=bash,style=command_style] 
+  $ zfs get origin /storage/projects/www_new
+  NAME                      PROPERTY  VALUE                                SOURCE
+  storage/projects/www_new  origin    storage/projects/www@www_16-05-2017  -
+\end{lstlisting}
+
+Om een clone te 'upgraden' of te promoveren tot een volwaardige dataset die volledig op zichzelf staat, gebruik je het commando \texttt{zfs promoto <naam clone>}:
+
+\begin{lstlisting}[language=bash,style=command_style] 
+  $ zfs promote storage/projects/www_new
+  $ zfs get origin /storage/projects/www_new
+  NAME                      PROPERTY  VALUE   SOURCE
+  storage/projects/www_new  origin    -       -
+\end{lstlisting}
+
+De waarde van de property 'origin' is leeg, wat aanduidt dat de dataset niet meer afhangt van de snaphot \texttt{istorage/projects/www@www\_16-05-2017}. 
+
+
+
+
+
+
+
