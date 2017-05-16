@@ -64,7 +64,7 @@ Om de huidige aanwezige datasets te bekijken, gebruik je het commando \texttt{zf
   storage   464K   898G   128K  /storage
 \end{lstlisting}
 
-In dit geval is er reeds automatisch een dataset aangemaakt met de naam 'storage' en als mountpoint '/storage'. Deze heeft dezelde naam als de zpool: deze is dus m.a.w. de parent-dataset van alle andere datasets die binnen deze pool zullen worden aangemaakt.
+In dit geval is er reeds automatisch een dataset aangemaakt met de naam 'storage' en als mountpoint '/storage'. Deze heeft dezelde naam als de zpool: deze is dus m.a.w. de parent dataset van alle andere datasets die binnen deze pool zullen worden aangemaakt.
 
 Er kan ook een lijst worden opgevraagd van alle aangekoppelde (\textit{mounted}) bestandssystemen m.b.v. het UNIX-commando \texttt{df}:
 
@@ -88,4 +88,24 @@ Om binnen de dataset \texttt{storage} een nieuwe dataset aan te maken, gebruik j
 
 \subsubsection{Filesystems}
 
-Filesystems (of bestandssystemen) zijn de meest voorkomende datasettypes.
+Filesystems (of bestandssystemen) zijn de meest voorkomende datasettypes. Qua eigenschappen en werking komen ze overeen met traditionele bestandssystemen: beide dienen om bestanden en mappen op te slaan, bevatten een POSIX-achtig permissiemodel en inodes \autocite{Lucas2015}. 
+
+Om het voorgaande voorbeeld van de verschillende teams met verschillende projecten wat te illustreren, maken we onder de root dataset \texttt{/storage} de dataset \texttt{/storage/projects} aan. Daarna worden de andere datasets aangemaakt onder de parent \texttt{/storage/projects}.
+
+\begin{lstlisting}[language=bash,style=command_style] 
+  $ zfs create storage/projects
+  $ zfs create storage/projects/www
+  $ zfs create storage/projects/dev
+  $ zfs list
+  NAME                   USED  AVAIL  REFER  MOUNTPOINT
+  storage                767K   898G   133K  /storage
+  storage/projects       394K   898G   139K  /storage/projects
+  storage/projects/dev   128K   898G   128K  /storage/projects/dev
+  storage/projects/www   128K   898G   128K  /storage/projects/www
+\end{lstlisting}
+
+Uit de uitvoer van \texttt{zfs list} kan men de makkelijk de ouder-kindrelaties opmaken: \texttt{storage} is de ouder van projects en projects is op zijn beurt opnieuw ouder van \texttt{dev} en \texttt{www}.
+
+\subsubsection{Volumes}
+
+ZFS volumes (of zvols) zijn 
