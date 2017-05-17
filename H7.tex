@@ -84,7 +84,7 @@ Er kan ook een lijst worden opgevraagd van alle aangekoppelde (\textit{mounted})
 
 Zoals kan worden afgeleid uit de uitvoer van bovenstaand commando, is de ZFS dataset inderdaad gekoppeld aan de map \texttt{/storage}.
 
-Om binnen de dataset \texttt{storage} een nieuwe dataset aan te maken, gebruik je het commando \texttt{zfs create}. Met behulp van dit commando kunnen er verschillende soorten ZFS datasets worden aangemaakt. Hieronder volgt een overzicht van de verschillende soorten datasets en hoe deze kunnen worden ingezet.
+Om binnen de dataset \texttt{storage} een nieuwe dataset aan te maken, gebruik je het commando \texttt{zfs create}. Met behulp van dit commando kunnen er verschillende soorten ZFS datasets worden aangemaakt. Hieronder volgt een overzicht van de meest voorkomende datasets en hoe deze kunnen worden ingezet.
 
 \subsubsection{Filesystems}
 
@@ -216,9 +216,107 @@ Om een clone te 'upgraden' of te promoveren tot een volwaardige dataset die voll
 
 De waarde van de property 'origin' is leeg, wat aanduidt dat de dataset niet meer afhangt van de snaphot \texttt{istorage/projects/www@www\_16-05-2017}. 
 
+\clearpage
 
+\subsection{Verwijderen van datasets}
 
+Een dataset verwijderen is relatief eenvoudig; dit kan verwezenlijkt worden met behulp van het commando \texttt{zfs destroy}. Echter moet er ook rekening worden gehouden met de relaties tussen de datasets, zoals ouder-kindrelaties en de relaties tussen snapshots en clones.
 
+Op dit moment beschikken we over de volgende reeks van datasets:
 
+\begin{lstlisting}[language=bash,style=command_style] 
+  $ zfs list
+  NAME                        USED  AVAIL  REFER  MOUNTPOINT
+  storage                    20.6G   877G   133K  /storage
+  storage/projects           20.6G   877G   139K  /storage/projects
+  storage/projects/dev        128K   877G   128K  /storage/projects/dev
+  storage/projects/vol_test  20.6G   898G  3.43M  -
+  storage/projects/www_new    139K   877G   128K  /storage/projects/www_new
+
+  $ zfs list -t snapshot
+  NAME                                               USED  AVAIL  REFER  MOUNTPOINT
+  storage@storage_rec_16-05-2017                    85.2K      -   133K  -
+  storage/projects@storage_rec_16-05-2017           90.6K      -   139K  -
+  storage/projects/dev@storage_rec_16-05-2017           0      -   128K  -
+  storage/projects/vol_test@storage_rec_16-05-2017   160K      -  3.43M  -
+  storage/projects/www_new@www_16-05-2017           10.7K      -   128K  -
+\end{lstlisting}
+
+Ter demonstratie wordt er een nieuwe dataset aangemaakt, die na afloop terug verwijderd wordt:
+
+\begin{lstlisting}[language=bash,style=command_style] 
+  $ zfs create storage/test_ds
+  $ zfs list storage/test_ds
+  NAME              USED  AVAIL  REFER  MOUNTPOINT
+  storage/test_ds   128K   877G   128K  /storage/test_ds
+  $ zfs destroy storage/test_ds
+  $  zfs list storage/test_ds
+  cannot open 'storage/test_ds': dataset does not exist
+\end{lstlisting}
+
+Als een dataset kinderen bevat (zoals bijvoorbeeld snapshots), dan geeft het commando \texttt{zfs destroy} de volgende fout:
+
+\begin{lstlisting}[language=bash,style=command_style] 
+  $ zfs destroy storage/projects/dev
+  cannot destroy 'storage/projects/dev': filesystem has children
+  use '-r' to destroy the following datasets:
+  storage/projects/dev@storage_rec_16-05-2017
+\end{lstlisting}
+
+\clearpage
+
+Om een dataset en diens kinderen te verwijderen, gebruikt men de optie '-r':
+
+\begin{lstlisting}[language=bash,style=command_style] 
+  $ zfs destroy -r storage/projects/dev
+  $ zfs list -t snapshot
+  NAME                                               USED  AVAIL  REFER  MOUNTPOINT
+  storage@storage_rec_16-05-2017                    85.2K      -   133K  -
+  storage/projects@storage_rec_16-05-2017           95.9K      -   139K  -
+  storage/projects/vol_test@storage_rec_16-05-2017   160K      -  3.43M  -
+  storage/projects/www_new@www_16-05-2017           10.7K      -   128K  -
+\end{lstlisting}
+
+Na uitvoering kan inderdaad worden vastgesteld dat de kind-dataset \texttt{storage/projects/dev@storage\_rec\_16-05-2017} verwijderd is.
+
+\subsection{Opvragen en wijzigen van properties}
+
+Datasets beschikken - net zoals storage pools - over een reeks properties die de eigenschappen en het gedrag van een dataset beïnvloeden. Reeds bij de voorbeelden over clones en snapshots werden er enkele voorbeelden van properties gegeven. 
+
+Om een lijst van alle properties op te halen wordt volgende instructie gebruikt: 
+
+\begin{lstlisting}[language=bash,style=command_style] 
+  $ zfs get all storage/projects
+  NAME              PROPERTY          VALUE                  SOURCE
+  storage/projects  type              filesystem             -
+  storage/projects  creation          Mon May 15 21:19 2017  -
+  storage/projects  used              20.6G                  -
+  storage/projects  available         877G                   -
+  storage/projects  referenced        133K                   -
+  storage/projects  compressratio     2.15x                  -
+  storage/projects  mounted           yes                    -
+  storage/projects  quota             none                   default
+  storage/projects  reservation       none                   default
+  
+  (deel van de uitvoer is weggelaten)
+\end{lstlisting}
+
+De kolom \texttt{SOURCE} duidt aan of deze property al dan niet door de systeembeheerder werd gewijzigd; de waarde 'default' duidt aan dat deze property niet manueel werd aangepast.
+
+\clearpage
+
+In onderstaand voorbeeld wordt de waarde van de eigenschap \texttt{quota} eerst opgehaald, vervolgens gewijzigd en tenslotte een laatste keer opgehaald:
+
+\begin{lstlisting}[language=bash,style=command_style] 
+  $ zfs get quota storage/projects
+  NAME              PROPERTY  VALUE  SOURCE
+  storage/projects  quota     none   default
+  $ zfs set quota=40GB storage/projects
+  $ zfs get quota storage/projects
+  NAME              PROPERTY  VALUE  SOURCE
+  storage/projects  quota     40G    local
+\end{lstlisting}
+
+Een quota dient om de groei van een dataset in te perken; in dit voorbeeld kan de dataset een maximale grootte aannemen van 40GB. Men kan ook zien dat de waarde van de kolom \texttt{SOURCE} veranderd is naar 'local', wat aanduidt dat de property manueel werd aangepast.
 
 
