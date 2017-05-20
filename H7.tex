@@ -6,7 +6,7 @@
 \chapter{ZFS Datasets}
 \label{ch:h7}
 
-In dit hoofdstuk worden ZFS datasets of bestandssystemen besproken. Er wordt onder andere getoond hoe men bestandssystemen kan aanmaken, wijzigen en delen met andere computers op het netwerk. 
+In dit hoofdstuk worden ZFS datasets of bestandssystemen besproken. Er wordt onder andere getoond welke soorten datasets er binnen ZFS bestaan, hoe men een dataset aanmaakt en hoe eigenschappen en gedrag van een dataset kan worden gewijzigd m.b.v. properties. Daarnaast wordt er ook getoond hoe datasets kunnen worden gedeeld met andere computers via NFS. 
 
 \section{Verschillen met traditionele bestandssystemen}
 
@@ -37,21 +37,21 @@ Voor het beheer van datasets wordt het commando \texttt{zfs} gebruikt; de syntax
 Als vertrekpunt wordt er een zpool gebruikt bestaande uit één RAID-Z1 VDEV en drie fysieke VDEV's:
 
 \begin{lstlisting}[language=bash,style=command_style]
-  $ zpool create storage raidz1 /dev/sda /dev/sdb /dev/sdc
-  $ zpool status
-    pool: storage
-   state: ONLINE
-    scan: none requested
-  config:
+$ zpool create storage raidz1 /dev/sda /dev/sdb /dev/sdc
+$ zpool status
+pool: storage
+state: ONLINE
+scan: none requested
+config:
 
-	NAME        STATE     READ WRITE CKSUM
-	storage     ONLINE       0     0     0
-	  raidz1-0  ONLINE       0     0     0
-	    sda     ONLINE       0     0     0
-	    sdb     ONLINE       0     0     0
-	    sdc     ONLINE       0     0     0
+NAME        STATE     READ WRITE CKSUM
+storage     ONLINE       0     0     0
+	raidz1-0  ONLINE       0     0     0
+	  sda     ONLINE       0     0     0
+	  sdb     ONLINE       0     0     0
+	  sdc     ONLINE       0     0     0
 
-  errors: No known data errors
+errors: No known data errors
 \end{lstlisting}
 
 \subsection{Bekijken en aanmaken van datasets}
@@ -59,9 +59,9 @@ Als vertrekpunt wordt er een zpool gebruikt bestaande uit één RAID-Z1 VDEV en 
 Om de huidige aanwezige datasets te bekijken, gebruik je het commando \texttt{zfs list}:
 
 \begin{lstlisting}[language=bash,style=command_style] 
-  $ zfs list
-  NAME      USED  AVAIL  REFER  MOUNTPOINT
-  storage   464K   898G   128K  /storage
+$ zfs list
+NAME      USED  AVAIL  REFER  MOUNTPOINT
+storage   464K   898G   128K  /storage
 \end{lstlisting}
 
 In dit geval is er reeds automatisch een dataset aangemaakt met de naam 'storage' en als mountpoint '/storage'. Deze heeft dezelde naam als de zpool: deze is dus m.a.w. de parent dataset van alle andere datasets die binnen deze pool zullen worden aangemaakt.
@@ -69,17 +69,17 @@ In dit geval is er reeds automatisch een dataset aangemaakt met de naam 'storage
 Er kan ook een lijst worden opgevraagd van alle aangekoppelde (\textit{mounted}) bestandssystemen m.b.v. het UNIX-commando \texttt{df}:
 
 \begin{lstlisting}[language=bash,style=command_style] 
-  $ df -h
-  Filesystem               Size  Used Avail Use% Mounted on
-  devtmpfs                 4.9G     0  4.9G   0% /dev
-  tmpfs                    4.9G     0  4.9G   0% /dev/shm
-  tmpfs                    4.9G  920K  4.9G   1% /run
-  tmpfs                    4.9G     0  4.9G   0% /sys/fs/cgroup
-  /dev/mapper/fedora-root   15G  1.8G   14G  12% /
-  tmpfs                    4.9G  4.0K  4.9G   1% /tmp
-  /dev/sdd1                976M  138M  772M  16% /boot
-  tmpfs                    993M     0  993M   0% /run/user/1000
-  storage                  899G  128K  899G   1% /storage 
+$ df -h
+Filesystem               Size  Used Avail Use% Mounted on
+devtmpfs                 4.9G     0  4.9G   0% /dev
+tmpfs                    4.9G     0  4.9G   0% /dev/shm
+tmpfs                    4.9G  920K  4.9G   1% /run
+tmpfs                    4.9G     0  4.9G   0% /sys/fs/cgroup
+/dev/mapper/fedora-root   15G  1.8G   14G  12% /
+tmpfs                    4.9G  4.0K  4.9G   1% /tmp
+/dev/sdd1                976M  138M  772M  16% /boot
+tmpfs                    993M     0  993M   0% /run/user/1000
+storage                  899G  128K  899G   1% /storage 
 \end{lstlisting}
 
 Zoals kan worden afgeleid uit de uitvoer van bovenstaand commando, is de ZFS dataset inderdaad gekoppeld aan de map \texttt{/storage}.
@@ -93,15 +93,15 @@ Filesystems (of bestandssystemen) zijn de meest voorkomende datasettypes. Qua ei
 Om het voorgaande voorbeeld van de verschillende teams met verschillende projecten wat te illustreren, maken we onder de root dataset \texttt{/storage} de dataset \texttt{/storage/projects} aan. Daarna worden de andere datasets aangemaakt onder de parent \texttt{/storage/projects}.
 
 \begin{lstlisting}[language=bash,style=command_style] 
-  $ zfs create storage/projects
-  $ zfs create storage/projects/www
-  $ zfs create storage/projects/dev
-  $ zfs list
-  NAME                   USED  AVAIL  REFER  MOUNTPOINT
-  storage                767K   898G   133K  /storage
-  storage/projects       394K   898G   139K  /storage/projects
-  storage/projects/dev   128K   898G   128K  /storage/projects/dev
-  storage/projects/www   128K   898G   128K  /storage/projects/www
+$ zfs create storage/projects
+$ zfs create storage/projects/www
+$ zfs create storage/projects/dev
+$ zfs list
+NAME                   USED  AVAIL  REFER  MOUNTPOINT
+storage                767K   898G   133K  /storage
+storage/projects       394K   898G   139K  /storage/projects
+storage/projects/dev   128K   898G   128K  /storage/projects/dev
+storage/projects/www   128K   898G   128K  /storage/projects/www
 \end{lstlisting}
 
 Uit de uitvoer van \texttt{zfs list} kan men de makkelijk de ouder-kindrelaties opmaken: \texttt{storage} is de ouder van projects en projects is op zijn beurt opnieuw ouder van \texttt{dev} en \texttt{www}.
@@ -115,25 +115,25 @@ ZFS volumes (of zvols) zijn het equivalent van UNIX block devices en worden dan 
 Om een ZFS volume aan te maken met een grootte van 20GB en met compressie, gebruik je het volgende commando:
 
 \begin{lstlisting}[language=bash,style=command_style] 
-  $ zfs create -V 20G -o compression=on storage/projects/vol_test
-  & zfs list
-  NAME                        USED  AVAIL  REFER  MOUNTPOINT
-  storage                    20.6G   877G   133K  /storage
-  storage/projects           20.6G   877G   139K  /storage/projects
-  storage/projects/dev        128K   877G   128K  /storage/projects/dev
-  storage/projects/vol_test  20.6G   898G  85.2K  -
-  storage/projects/www        128K   877G   128K  /storage/projects/www
+$ zfs create -V 20G -o compression=on storage/projects/vol_test
+$ zfs list
+NAME                        USED  AVAIL  REFER  MOUNTPOINT
+storage                    20.6G   877G   133K  /storage
+storage/projects           20.6G   877G   139K  /storage/projects
+storage/projects/dev        128K   877G   128K  /storage/projects/dev
+storage/projects/vol_test  20.6G   898G  85.2K  -
+storage/projects/www        128K   877G   128K  /storage/projects/www
 \end{lstlisting}
 
 Een zvol heeft geen mount point, aangezien het om een block device gaat. Om bijvoorbeeld een EXT4 bestandsysteem aan te maken bovenop het volume en het vervolgens aan te koppelen, kan men de volgende procedure volgen:
 
 \begin{lstlisting}[language=bash,style=command_style] 
-  $ mkfs.ext4 /dev/zvol/storage/projects/vol_test
-  $ mkdir /mnt/zvol_test
-  $ mount /dev/zvol/storage/projects/vol_test /mnt/zvol_test/
-  $ df -h /mnt/zvol_test/
-  Filesystem      Size  Used Avail Use% Mounted on
-  /dev/zd0         20G   45M   19G   1% /mnt/zvol_test
+$ mkfs.ext4 /dev/zvol/storage/projects/vol_test
+$ mkdir /mnt/zvol_test
+$ mount /dev/zvol/storage/projects/vol_test /mnt/zvol_test/
+$ df -h /mnt/zvol_test/
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/zd0         20G   45M   19G   1% /mnt/zvol_test
 \end{lstlisting}
 
 In bovenstaand voorbeeld werd er eerst een EXT4-bestandssysteem aangemaakt op het volume; daarna werd het nodige \textit{mount point} aangemaakt. Vervolgens werd het bestandssysteem aan het aankoppelpunt gekoppeld.  
@@ -149,10 +149,10 @@ Een snapshot kan bijvoorbeeld worden gebruikt om een back-up te hebben van de pr
 Om een snapshot te maken van de dataset \texttt{storage/projects/www}, kan men het volgende commando gebruiken:
 
 \begin{lstlisting}[language=bash,style=command_style] 
-  $ zfs snapshot storage/projects/www@www_$(date "+%d-%m-%Y")
-  $ zfs list -t snapshot
-  NAME                                  USED  AVAIL  REFER  MOUNTPOINT
-  storage/projects/www@www_16-05-2017      0      -   128K  -
+$ zfs snapshot storage/projects/www@www_$(date "+%d-%m-%Y")
+$ zfs list -t snapshot
+NAME                                  USED  AVAIL  REFER  MOUNTPOINT
+storage/projects/www@www_16-05-2017      0      -   128K  -
 \end{lstlisting}
 
 De '@' is een delimiter; na deze karakter kan een naam worden ingegeven voor de dataset. In bovenstaand voorbeeld wordt de naam van de dataset gekozen gevolgd, door de huidige datum. De optie '-t' bij het commando \texttt{zfs list} wordt gebruikt om enkel bepaalde types van datasets weer te geven.
@@ -160,15 +160,15 @@ De '@' is een delimiter; na deze karakter kan een naam worden ingegeven voor de 
 Er kunnen ook recursieve snapshots worden gemaakt: hierbij worden kind-datasets ook mee opgenomen in een snapshot. Om aan te geven dat er een recursieve snapshot moet worden gecreëerd, wordt de optie '-r' gebruikt.
 
 \begin{lstlisting}[language=bash,style=command_style] 
-  $ zfs snapshot -r storage@storage_rec_$(date "+%d-%m-%Y")
-  $ zfs list -t snapshot
-  NAME                                               USED  AVAIL  REFER  MOUNTPOINT
-  storage@storage_rec_16-05-2017                        0      -   133K  -
-  storage/projects@storage_rec_16-05-2017               0      -   139K  -
-  storage/projects/dev@storage_rec_16-05-2017           0      -   128K  -
-  storage/projects/vol_test@storage_rec_16-05-2017      0      -  3.43M  -
-  storage/projects/www@www_16-05-2017                   0      -   128K  -
-  storage/projects/www@storage_rec_16-05-2017           0      -   128K  -
+$ zfs snapshot -r storage@storage_rec_$(date "+%d-%m-%Y")
+$ zfs list -t snapshot
+NAME                                               USED  AVAIL  REFER  MOUNTPOINT
+storage@storage_rec_16-05-2017                        0      -   133K  -
+storage/projects@storage_rec_16-05-2017               0      -   139K  -
+storage/projects/dev@storage_rec_16-05-2017           0      -   128K  -
+storage/projects/vol_test@storage_rec_16-05-2017      0      -  3.43M  -
+storage/projects/www@www_16-05-2017                   0      -   128K  -
+storage/projects/www@storage_rec_16-05-2017           0      -   128K  -
 \end{lstlisting}
 
 Hier ziet men inderdaad dat het aanmaken van de snapshot \texttt{storage\_rec\_16-05-2017} recursief gebeurde.
@@ -184,15 +184,15 @@ Het concept van snapshots en clones valt het best te vergelijken met die van bra
 Om een clone van een snapshot aan te maken, gebruikt men het commando \texttt{zfs clone <snapshot> <nieuwe\_dataset>}:
 
 \begin{lstlisting}[language=bash,style=command_style] 
-  $ zfs clone storage/projects/www@www_16-05-2017 storage/projects/www_new
-  $ zfs list
-  NAME                        USED  AVAIL  REFER  MOUNTPOINT
-  storage                    20.6G   877G   133K  /storage
-  storage/projects           20.6G   877G   144K  /storage/projects
-  storage/projects/dev        128K   877G   128K  /storage/projects/dev
-  storage/projects/vol_test  20.6G   898G  3.43M  -
-  storage/projects/www        128K   877G   128K  /storage/projects/www
-  storage/projects/www_new   10.7K   877G   128K  /storage/projects/www_new
+$ zfs clone storage/projects/www@www_16-05-2017 storage/projects/www_new
+$ zfs list
+NAME                        USED  AVAIL  REFER  MOUNTPOINT
+storage                    20.6G   877G   133K  /storage
+storage/projects           20.6G   877G   144K  /storage/projects
+storage/projects/dev        128K   877G   128K  /storage/projects/dev
+storage/projects/vol_test  20.6G   898G  3.43M  -
+storage/projects/www        128K   877G   128K  /storage/projects/www
+storage/projects/www_new   10.7K   877G   128K  /storage/projects/www_new
 \end{lstlisting}
 
 Uit de output van \texttt{zfs list} kan worden afgeleid dat er inderdaad een nieuwe dataset werd aangemaakt met de naam \texttt{www\_new}. Deze nieuwe dataset en de oorspronkelijke snapshot zijn aan elkaar gekoppeld. 
@@ -200,18 +200,18 @@ Uit de output van \texttt{zfs list} kan worden afgeleid dat er inderdaad een nie
 Om de relatie tussen een snapshot en zijn kloon of klonen te bekijken, kunnen de betreffende properties van de clone worden opgehaald. Uit onderstaande uitvoer kan worden afgeleid dat de clone gebaseerd is op de snapshot \texttt{storage/projects/www@www\_16-05-2017}.
 
 \begin{lstlisting}[language=bash,style=command_style] 
-  $ zfs get origin /storage/projects/www_new
-  NAME                      PROPERTY  VALUE                                SOURCE
-  storage/projects/www_new  origin    storage/projects/www@www_16-05-2017  -
+$ zfs get origin /storage/projects/www_new
+NAME                      PROPERTY  VALUE                                SOURCE
+storage/projects/www_new  origin    storage/projects/www@www_16-05-2017  -
 \end{lstlisting}
 
 Om een clone te 'upgraden' of te promoveren tot een volwaardige dataset die volledig op zichzelf staat, gebruik je het commando \texttt{zfs promoto <naam clone>}:
 
 \begin{lstlisting}[language=bash,style=command_style] 
-  $ zfs promote storage/projects/www_new
-  $ zfs get origin /storage/projects/www_new
-  NAME                      PROPERTY  VALUE   SOURCE
-  storage/projects/www_new  origin    -       -
+$ zfs promote storage/projects/www_new
+$ zfs get origin /storage/projects/www_new
+NAME                      PROPERTY  VALUE   SOURCE
+storage/projects/www_new  origin    -       -
 \end{lstlisting}
 
 De waarde van de property 'origin' is leeg, wat aanduidt dat de dataset niet meer afhangt van de snaphot \texttt{istorage/projects/www@www\_16-05-2017}. 
@@ -225,42 +225,42 @@ Een dataset verwijderen is relatief eenvoudig; dit kan verwezenlijkt worden met 
 Op dit moment beschikken we over de volgende reeks van datasets:
 
 \begin{lstlisting}[language=bash,style=command_style] 
-  $ zfs list
-  NAME                        USED  AVAIL  REFER  MOUNTPOINT
-  storage                    20.6G   877G   133K  /storage
-  storage/projects           20.6G   877G   139K  /storage/projects
-  storage/projects/dev        128K   877G   128K  /storage/projects/dev
-  storage/projects/vol_test  20.6G   898G  3.43M  -
-  storage/projects/www_new    139K   877G   128K  /storage/projects/www_new
+$ zfs list
+NAME                        USED  AVAIL  REFER  MOUNTPOINT
+storage                    20.6G   877G   133K  /storage
+storage/projects           20.6G   877G   139K  /storage/projects
+storage/projects/dev        128K   877G   128K  /storage/projects/dev
+storage/projects/vol_test  20.6G   898G  3.43M  -
+storage/projects/www_new    139K   877G   128K  /storage/projects/www_new
 
-  $ zfs list -t snapshot
-  NAME                                               USED  AVAIL  REFER  MOUNTPOINT
-  storage@storage_rec_16-05-2017                    85.2K      -   133K  -
-  storage/projects@storage_rec_16-05-2017           90.6K      -   139K  -
-  storage/projects/dev@storage_rec_16-05-2017           0      -   128K  -
-  storage/projects/vol_test@storage_rec_16-05-2017   160K      -  3.43M  -
-  storage/projects/www_new@www_16-05-2017           10.7K      -   128K  -
+$ zfs list -t snapshot
+NAME                                               USED  AVAIL  REFER  MOUNTPOINT
+storage@storage_rec_16-05-2017                    85.2K      -   133K  -
+storage/projects@storage_rec_16-05-2017           90.6K      -   139K  -
+storage/projects/dev@storage_rec_16-05-2017           0      -   128K  -
+storage/projects/vol_test@storage_rec_16-05-2017   160K      -  3.43M  -
+storage/projects/www_new@www_16-05-2017           10.7K      -   128K  -
 \end{lstlisting}
 
 Ter demonstratie wordt er een nieuwe dataset aangemaakt, die na afloop terug verwijderd wordt:
 
 \begin{lstlisting}[language=bash,style=command_style] 
-  $ zfs create storage/test_ds
-  $ zfs list storage/test_ds
-  NAME              USED  AVAIL  REFER  MOUNTPOINT
-  storage/test_ds   128K   877G   128K  /storage/test_ds
-  $ zfs destroy storage/test_ds
-  $  zfs list storage/test_ds
-  cannot open 'storage/test_ds': dataset does not exist
+$ zfs create storage/test_ds
+$ zfs list storage/test_ds
+NAME              USED  AVAIL  REFER  MOUNTPOINT
+storage/test_ds   128K   877G   128K  /storage/test_ds
+$ zfs destroy storage/test_ds
+$  zfs list storage/test_ds
+cannot open 'storage/test_ds': dataset does not exist
 \end{lstlisting}
 
 Als een dataset kinderen bevat (zoals bijvoorbeeld snapshots), dan geeft het commando \texttt{zfs destroy} de volgende fout:
 
 \begin{lstlisting}[language=bash,style=command_style] 
-  $ zfs destroy storage/projects/dev
-  cannot destroy 'storage/projects/dev': filesystem has children
-  use '-r' to destroy the following datasets:
-  storage/projects/dev@storage_rec_16-05-2017
+$ zfs destroy storage/projects/dev
+cannot destroy 'storage/projects/dev': filesystem has children
+use '-r' to destroy the following datasets:
+storage/projects/dev@storage_rec_16-05-2017
 \end{lstlisting}
 
 \clearpage
@@ -268,13 +268,13 @@ Als een dataset kinderen bevat (zoals bijvoorbeeld snapshots), dan geeft het com
 Om een dataset en diens kinderen te verwijderen, gebruikt men de optie '-r':
 
 \begin{lstlisting}[language=bash,style=command_style] 
-  $ zfs destroy -r storage/projects/dev
-  $ zfs list -t snapshot
-  NAME                                               USED  AVAIL  REFER  MOUNTPOINT
-  storage@storage_rec_16-05-2017                    85.2K      -   133K  -
-  storage/projects@storage_rec_16-05-2017           95.9K      -   139K  -
-  storage/projects/vol_test@storage_rec_16-05-2017   160K      -  3.43M  -
-  storage/projects/www_new@www_16-05-2017           10.7K      -   128K  -
+$ zfs destroy -r storage/projects/dev
+$ zfs list -t snapshot
+NAME                                               USED  AVAIL  REFER  MOUNTPOINT
+storage@storage_rec_16-05-2017                    85.2K      -   133K  -
+storage/projects@storage_rec_16-05-2017           95.9K      -   139K  -
+storage/projects/vol_test@storage_rec_16-05-2017   160K      -  3.43M  -
+storage/projects/www_new@www_16-05-2017           10.7K      -   128K  -
 \end{lstlisting}
 
 Na uitvoering kan inderdaad worden vastgesteld dat de kind-dataset \texttt{storage/projects/dev@storage\_rec\_16-05-2017} verwijderd is.
@@ -286,19 +286,19 @@ Datasets beschikken - net zoals storage pools - over een reeks properties die de
 Om een lijst van alle properties op te halen wordt volgende instructie gebruikt: 
 
 \begin{lstlisting}[language=bash,style=command_style] 
-  $ zfs get all storage/projects
-  NAME              PROPERTY          VALUE                  SOURCE
-  storage/projects  type              filesystem             -
-  storage/projects  creation          Mon May 15 21:19 2017  -
-  storage/projects  used              20.6G                  -
-  storage/projects  available         877G                   -
-  storage/projects  referenced        133K                   -
-  storage/projects  compressratio     2.15x                  -
-  storage/projects  mounted           yes                    -
-  storage/projects  quota             none                   default
-  storage/projects  reservation       none                   default
+$ zfs get all storage/projects
+NAME              PROPERTY          VALUE                  SOURCE
+storage/projects  type              filesystem             -
+storage/projects  creation          Mon May 15 21:19 2017  -
+storage/projects  used              20.6G                  -
+storage/projects  available         877G                   -
+storage/projects  referenced        133K                   -
+storage/projects  compressratio     2.15x                  -
+storage/projects  mounted           yes                    -
+storage/projects  quota             none                   default
+storage/projects  reservation       none                   default
   
-  (deel van de uitvoer is weggelaten)
+(deel van de uitvoer is weggelaten)
 \end{lstlisting}
 
 De kolom \texttt{SOURCE} duidt aan of deze property al dan niet door de systeembeheerder werd gewijzigd; de waarde 'default' duidt aan dat deze property niet manueel werd aangepast.
@@ -308,15 +308,91 @@ De kolom \texttt{SOURCE} duidt aan of deze property al dan niet door de systeemb
 In onderstaand voorbeeld wordt de waarde van de eigenschap \texttt{quota} eerst opgehaald, vervolgens gewijzigd en tenslotte een laatste keer opgehaald:
 
 \begin{lstlisting}[language=bash,style=command_style] 
-  $ zfs get quota storage/projects
-  NAME              PROPERTY  VALUE  SOURCE
-  storage/projects  quota     none   default
-  $ zfs set quota=40GB storage/projects
-  $ zfs get quota storage/projects
-  NAME              PROPERTY  VALUE  SOURCE
-  storage/projects  quota     40G    local
+$ zfs get quota storage/projects
+NAME              PROPERTY  VALUE  SOURCE
+storage/projects  quota     none   default
+$ zfs set quota=40GB storage/projects
+$ zfs get quota storage/projects
+NAME              PROPERTY  VALUE  SOURCE
+storage/projects  quota     40G    local
 \end{lstlisting}
 
 Een quota dient om de groei van een dataset in te perken; in dit voorbeeld kan de dataset een maximale grootte aannemen van 40GB. Men kan ook zien dat de waarde van de kolom \texttt{SOURCE} veranderd is naar 'local', wat aanduidt dat de property manueel werd aangepast.
+
+\section{Toepassing: opzetten van een NFS-share m.b.v. ZFS datasets}
+
+In deze sectie wordt een ZFS dataset gebruikt om een NFS-share op te zetten die benaderd kan worden vanop het lokale netwerk. NFS (Network File System) is een netwerbestandssysteem dat gebruikt wordt om bestanden te delen met andere computers. Een grote troef van NFS is de relatieve eenvoud waarmee shares kunnen worden aangemaakt \autocite{FBSDDP2017}.
+
+\subsection{Installatie van NFS}
+
+Op de meeste Linux-distributies is NFS standaard geïnstalleerd. Wel moeten nog de nodige services worden geactiveerd.
+
+\begin{lstlisting}[language=bash,style=command_style] 
+$ dnf install nfs-utils
+$ systemctl start nfs-server.service && systemctl enable nfs-server.service
+\end{lstlisting}
+
+\subsection{Aanmaken van een nieuwe ZFS dataset}
+
+Voor dit voorbeeld werden eerst alle andere datasets verwijderd. Daarna werd er een niewe dataset met de naam \texttt{share} aangemaakt onder de dataset \texttt{storage}. 
+
+\begin{lstlisting}[language=bash,style=command_style]
+$ zfs destroy -r storage
+$ zfs create storage/share 
+$ zfs list
+NAME            USED  AVAIL  REFER  MOUNTPOINT
+storage         607K   898G   128K  /storage
+storage/share   128K   898G   128K  /storage/share
+\end{lstlisting}
+
+Nu is het slechts nog een kwestie van de juiste properties in te stellen op de dataset en deze te delen met behulp van NFS. 
+
+\subsection{Delen van de ZFS dataset}
+
+Om NFS als 'provider' te gebruiken, wordt de property \texttt{sharenfs} op de betreffende dataset aangezet en wordt de dataset gedeeld met het netwerk. Daarnaast wordt een firewall-regel toegevoegd om NFS-verkeer door te laten.
+
+\begin{lstlisting}[language=bash,style=command_style]
+$ zfs set sharenfs="rw=@192.168.0.0/24" storage/share
+$ zfs share storage/share
+$ firewall-cmd --add-service=nfs && firewall-cmd --add-service=nfs --permanent
+\end{lstlisting}
+
+Met bepaalde properties kunnen er instellingen worden meegegeven; in dit geval kan men m.b.v. de property \texttt{sharenfs} instellingen meegeven die door NFS worden gebruikt: enkel computers in het 192.168.0.0/24 subnet hebben lees- en schrijftoegang tot de share. Indien men de mappen ophaalt die door NFS worden gedeeld, dan ziet men inderdaad dat de map \texttt{/storage/share} gedeeld wordt:
+
+\begin{lstlisting}[language=bash,style=command_style]
+$ showmount -e
+Export list for SRV-ZFS:
+/storage/share 192.168.0.0/24
+\end{lstlisting}
+
+Tenslotte wordt de gebruiker 'jonas' eigenaar van de map gemaakt. Het is belangrijk dat de gebruikersnaam en user ID van zowel de gebruiker op de server als de gebruiker op de client overeenkomen. Er kan gebruik worden gemaakt van idmapping, maar dit voorbeeld is dermate eenvoudig dat dit enkel zou leiden tot complexiteit. 
+
+\begin{lstlisting}[language=bash,style=command_style]
+$ chown -R jonas:jonas chown -R jonas:jonas /storage/share/
+\end{lstlisting}
+
+\subsection{Toegang tot de share vanaf een client-computer}
+
+Op dit moment is de share toegankelijk vanop de client; er moet enkel nog een mount point worden aangemaakt op de client waaraan de NFS-share kan worden gekoppeld. Vervolgens kan de share worden aangekoppeld. Om dit proces in de toekomst wat te stroomlijnen, wordt er een nieuwe lijn toegevoegd in \texttt{/etc/fstab}.
+
+\begin{lstlisting}[language=bash,style=command_style]
+$ mkdir /mnt/nfsmount
+$ echo "192.168.0.10:/storage/share  /mnt/nfsmount  nfs  rw,defaults  0 2" >> /etc/fstab
+$ mount -a
+$ df -h
+Filesystem                         Size  Used Avail Use% Mounted on
+
+(deel van de uitvoer is weggelaten)
+
+192.168.0.10:/storage/share        899G  756M  898G   1% /mnt/nfsmount
+\end{lstlisting}
+
+De gebruiker kan nu vanop de client bestanden aanmaken, verwijderen en wijzigen op de server via een NFS-share.
+
+
+
+
+
+
 
 
