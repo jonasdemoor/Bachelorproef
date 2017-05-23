@@ -45,11 +45,11 @@ scan: none requested
 config:
 
 NAME        STATE     READ WRITE CKSUM
-storage     ONLINE       0     0     0
-	raidz1-0  ONLINE       0     0     0
-	  sda     ONLINE       0     0     0
-	  sdb     ONLINE       0     0     0
-	  sdc     ONLINE       0     0     0
+storage     ONLINE      0     0     0
+  raidz1-0  ONLINE      0     0     0
+	  sda     ONLINE      0     0     0
+	  sdb     ONLINE      0     0     0
+	  sdc     ONLINE      0     0     0
 
 errors: No known data errors
 \end{lstlisting}
@@ -155,7 +155,7 @@ NAME                                  USED  AVAIL  REFER  MOUNTPOINT
 storage/projects/www@www_16-05-2017      0      -   128K  -
 \end{lstlisting}
 
-De '@' is een delimiter; na deze karakter kan een naam worden ingegeven voor de dataset. In bovenstaand voorbeeld wordt de naam van de dataset gekozen gevolgd, door de huidige datum. De optie '-t' bij het commando \texttt{zfs list} wordt gebruikt om enkel bepaalde types van datasets weer te geven.
+De '@' is een delimiter; na deze karakter kan een naam worden ingegeven voor de dataset. In bovenstaand voorbeeld wordt de naam van de dataset gekozen, gevolgd door de huidige datum. De optie '-t' bij het commando \texttt{zfs list} wordt gebruikt om enkel bepaalde types van datasets weer te geven.
 
 Er kunnen ook recursieve snapshots worden gemaakt: hierbij worden kind-datasets ook mee opgenomen in een snapshot. Om aan te geven dat er een recursieve snapshot moet worden gecreëerd, wordt de optie '-r' gebruikt.
 
@@ -388,11 +388,3 @@ Filesystem                         Size  Used Avail Use% Mounted on
 \end{lstlisting}
 
 De gebruiker kan nu vanop de client bestanden aanmaken, verwijderen en wijzigen op de server via een NFS-share.
-
-
-
-
-
-
-
-
