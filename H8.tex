@@ -10,4 +10,10 @@ In dit hoofdstuk wordt de performantie van twee types RAID, namelijk ZFS RAID-Z 
 
 \section{Toelichting van de gehanteerde methodiek}
 
-Vooraleer over te gaan tot de testen, worden de gehanteerde tools, methodes en maatstaven wat meer toegelicht. Zoals reeds gezegd in de inleiding van deze
+Vooraleer over te gaan tot de testen, worden de gehanteerde tools, methodes en maatstaven wat meer toegelicht. Zoals reeds gezegd in de inleiding van deze scriptie, zal er vooral worden rekening worden gehouden met het aantal invoer- en uitvoerbewerkingen per seconde (of IOPS in het Engels). Daarnaast worden enkele workloads gesimuleerd op het testsysteem met name die van een databank en die van een webserver.  
+
+Voor het uitvoeren van de testen wordt er gebruik gemaakt van \textbf{Phoronix Test Suite\footnote{\url{https://www.phoronix-test-suite.com}}}: deze suite is een wrapper rond veelgebruike benchmarktools en maakt het mogelijk om op een makkelijke manier relevante gegevens te verzamelen. Er is weinig tot geen voorafgaande kennis vereist voor het uitvoeren van de verschillende benchmarks, en dit was dan ook één van de hoofdredenen om voor dit programma te kiezen. 
+
+Eerst werden er twee algemene testen uitgevoerd, nl. FIO (Flexible IO Tester) en FS-Mark; deze maten respectievelijk het aantal IOPS van de RAID-opstellingen en de algemene performance van de bestandssystemen bovenop deze RAID-opstellingen. Daarna werden twee types workloads,nl. een databanksysteem en een webserver, gesimuleerd; deze simulaties werden uitgevoerd met behulp van de SQLite benchmark en de Postmark benchmark.
+
+
