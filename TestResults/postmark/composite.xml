@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.6.0-->
+<PhoronixTestSuite>
+  <Generated>
+    <Title>mdadm-xfs-raid0-postmark</Title>
+    <LastModified>2017-05-28 14:24:07</LastModified>
+    <TestClient>Phoronix Test Suite v6.6.0 (Loppa)</TestClient>
+    <Description>Intel Core i5 650 testing with a MSI 2A9C v1.0 and AMD Radeon HD 5550/5570/5630/6510/6610/7570 2048MB on Fedora 25 via the Phoronix Test Suite.</Description>
+    <Notes></Notes>
+    <InternalTags></InternalTags>
+    <ReferenceID></ReferenceID>
+    <PreSetEnvironmentVariables></PreSetEnvironmentVariables>
+  </Generated>
+  <System>
+    <Identifier>MDADM RAID0</Identifier>
+    <Hardware>Processor: Intel Core i5 650 @ 3.20GHz (4 Cores), Motherboard: MSI 2A9C v1.0, Chipset: Intel Core DRAM, Memory: 4096 MB + 2048 MB + 2048 MB + 2048 MB DDR3-1333MHz, Disk: 1000GB SAMSUNG HD103SJ + 1000GB Western Digital WD1002FAEX-0 + 500GB Western Digital WD5000AZRX-0 + 1000GB Elements 1078, Graphics: AMD Radeon HD 5550/5570/5630/6510/6610/7570 2048MB (157/200MHz), Audio: Realtek ALC888, Monitor: SyncMaster, Network: Realtek RTL8111/8168/8411 + Ralink RT3090 Wireless 802.11n 1T/1R</Hardware>
+    <Software>OS: Fedora 25, Kernel: 4.10.12-200.fc25.x86_64 (x86_64), Compiler: GCC 6.3.1 20161221, File-System: xfs, Screen Resolution: 1920x1080</Software>
+    <User>root</User>
+    <TimeStamp>2017-05-27 15:45:09</TimeStamp>
+    <TestClientVersion></TestClientVersion>
+    <Notes>SELinux: Enabled.</Notes>
+    <JSON>{"compiler-configuration":"--build=x86_64-redhat-linux --disable-libgcj --disable-libunwind-exceptions --enable-__cxa_atexit --enable-bootstrap --enable-checking=release --enable-gnu-indirect-function --enable-gnu-unique-object --enable-initfini-array --enable-languages=c,c++,objc,obj-c++,fortran,ada,go,lto --enable-libmpx --enable-multilib --enable-plugin --enable-shared --enable-threads=posix --mandir=\/usr\/share\/man --with-arch_32=i686 --with-isl --with-linker-hash-style=gnu --with-tune=generic","disk-scheduler":"CFQ","disk-mount-options":"attr2,inode64,noquota,relatime,rw,seclabel","cpu-scaling-governor":"acpi-cpufreq ondemand"}</JSON>
+  </System>
+  <System>
+    <Identifier>MDADM RAID1</Identifier>
+    <Hardware>Processor: Intel Core i5 650 @ 3.20GHz (4 Cores), Motherboard: MSI 2A9C v1.0, Chipset: Intel Core DRAM, Memory: 4096 MB + 2048 MB + 2048 MB + 2048 MB DDR3-1333MHz, Disk: 1000GB SAMSUNG HD103SJ + 1000GB Western Digital WD1002FAEX-0 + 500GB Western Digital WD5000AZRX-0 + 1000GB Elements 1078, Graphics: AMD Radeon HD 5550/5570/5630/6510/6610/7570 2048MB (157/200MHz), Audio: Realtek ALC888, Monitor: SyncMaster, Network: Realtek RTL8111/8168/8411 + Ralink RT3090 Wireless 802.11n 1T/1R</Hardware>
+    <Software>OS: Fedora 25, Kernel: 4.10.12-200.fc25.x86_64 (x86_64), Compiler: GCC 6.3.1 20161221, File-System: xfs, Screen Resolution: 1920x1080</Software>
+    <User>root</User>
+    <TimeStamp>2017-05-27 19:56:07</TimeStamp>
+    <TestClientVersion></TestClientVersion>
+    <Notes>SELinux: Enabled.</Notes>
+    <JSON>{"compiler-configuration":"--build=x86_64-redhat-linux --disable-libgcj --disable-libunwind-exceptions --enable-__cxa_atexit --enable-bootstrap --enable-checking=release --enable-gnu-indirect-function --enable-gnu-unique-object --enable-initfini-array --enable-languages=c,c++,objc,obj-c++,fortran,ada,go,lto --enable-libmpx --enable-multilib --enable-plugin --enable-shared --enable-threads=posix --mandir=\/usr\/share\/man --with-arch_32=i686 --with-isl --with-linker-hash-style=gnu --with-tune=generic","disk-scheduler":"CFQ","disk-mount-options":"attr2,inode64,noquota,relatime,rw,seclabel","cpu-scaling-governor":"acpi-cpufreq ondemand"}</JSON>
+  </System>
+  <System>
+    <Identifier>MDADM RAID5</Identifier>
+    <Hardware>Processor: Intel Core i5 650 @ 3.20GHz (4 Cores), Motherboard: MSI 2A9C v1.0, Chipset: Intel Core DRAM, Memory: 4096 MB + 2048 MB + 2048 MB + 2048 MB DDR3-1333MHz, Disk: 1000GB SAMSUNG HD103SJ + 1000GB Western Digital WD1002FAEX-0 + 500GB Western Digital WD5000AZRX-0 + 1000GB Elements 1078, Graphics: AMD Radeon HD 5550/5570/5630/6510/6610/7570 2048MB (157/200MHz), Audio: Realtek ALC888, Monitor: SyncMaster, Network: Realtek RTL8111/8168/8411 + Ralink RT3090 Wireless 802.11n 1T/1R</Hardware>
+    <Software>OS: Fedora 25, Kernel: 4.10.12-200.fc25.x86_64 (x86_64), Compiler: GCC 6.3.1 20161221, File-System: xfs, Screen Resolution: 1920x1080</Software>
+    <User>root</User>
+    <TimeStamp>2017-05-27 22:47:49</TimeStamp>
+    <TestClientVersion></TestClientVersion>
+    <Notes>SELinux: Enabled.</Notes>
+    <JSON>{"compiler-configuration":"--build=x86_64-redhat-linux --disable-libgcj --disable-libunwind-exceptions --enable-__cxa_atexit --enable-bootstrap --enable-checking=release --enable-gnu-indirect-function --enable-gnu-unique-object --enable-initfini-array --enable-languages=c,c++,objc,obj-c++,fortran,ada,go,lto --enable-libmpx --enable-multilib --enable-plugin --enable-shared --enable-threads=posix --mandir=\/usr\/share\/man --with-arch_32=i686 --with-isl --with-linker-hash-style=gnu --with-tune=generic","disk-scheduler":"CFQ","disk-mount-options":"attr2,inode64,noquota,relatime,rw,seclabel","cpu-scaling-governor":"acpi-cpufreq ondemand"}</JSON>
+  </System>
+  <System>
+    <Identifier>ZFS Stripe (RAID0)</Identifier>
+    <Hardware>Processor: Intel Core i5 650 @ 3.20GHz (4 Cores), Motherboard: MSI 2A9C v1.0, Chipset: Intel Core DRAM, Memory: 4096 MB + 2048 MB + 2048 MB + 2048 MB DDR3-1333MHz, Disk: 1000GB SAMSUNG HD103SJ + 1000GB Western Digital WD1002FAEX-0 + 500GB Western Digital WD5000AZRX-0 + 1000GB Elements 1078, Graphics: AMD Radeon HD 5550/5570/5630/6510/6610/7570 2048MB (157/200MHz), Audio: Realtek ALC888, Monitor: SyncMaster, Network: Realtek RTL8111/8168/8411 + Ralink RT3090 Wireless 802.11n 1T/1R</Hardware>
+    <Software>OS: Fedora 25, Kernel: 4.10.12-200.fc25.x86_64 (x86_64), Compiler: GCC 6.3.1 20161221, File-System: zfs, Screen Resolution: 1920x1080</Software>
+    <User>root</User>
+    <TimeStamp>2017-05-28 12:02:33</TimeStamp>
+    <TestClientVersion></TestClientVersion>
+    <Notes>SELinux: Enabled.</Notes>
+    <JSON>{"compiler-configuration":"--build=x86_64-redhat-linux --disable-libgcj --disable-libunwind-exceptions --enable-__cxa_atexit --enable-bootstrap --enable-checking=release --enable-gnu-indirect-function --enable-gnu-unique-object --enable-initfini-array --enable-languages=c,c++,objc,obj-c++,fortran,ada,go,lto --enable-libmpx --enable-multilib --enable-plugin --enable-shared --enable-threads=posix --mandir=\/usr\/share\/man --with-arch_32=i686 --with-isl --with-linker-hash-style=gnu --with-tune=generic","disk-scheduler":"NOOP","disk-mount-options":"attr2,inode64,noquota,relatime,rw,seclabel","cpu-scaling-governor":"acpi-cpufreq ondemand"}</JSON>
+  </System>
+  <System>
+    <Identifier>ZFS Mirror (RAID1)</Identifier>
+    <Hardware>Processor: Intel Core i5 650 @ 3.20GHz (4 Cores), Motherboard: MSI 2A9C v1.0, Chipset: Intel Core DRAM, Memory: 4096 MB + 2048 MB + 2048 MB + 2048 MB DDR3-1333MHz, Disk: 1000GB SAMSUNG HD103SJ + 1000GB Western Digital WD1002FAEX-0 + 500GB Western Digital WD5000AZRX-0 + 1000GB Elements 1078, Graphics: AMD Radeon HD 5550/5570/5630/6510/6610/7570 2048MB (157/200MHz), Audio: Realtek ALC888, Monitor: SyncMaster, Network: Realtek RTL8111/8168/8411 + Ralink RT3090 Wireless 802.11n 1T/1R</Hardware>
+    <Software>OS: Fedora 25, Kernel: 4.10.12-200.fc25.x86_64 (x86_64), Compiler: GCC 6.3.1 20161221, File-System: zfs, Screen Resolution: 1920x1080</Software>
+    <User>root</User>
+    <TimeStamp>2017-05-28 12:56:19</TimeStamp>
+    <TestClientVersion></TestClientVersion>
+    <Notes>SELinux: Enabled.</Notes>
+    <JSON>{"compiler-configuration":"--build=x86_64-redhat-linux --disable-libgcj --disable-libunwind-exceptions --enable-__cxa_atexit --enable-bootstrap --enable-checking=release --enable-gnu-indirect-function --enable-gnu-unique-object --enable-initfini-array --enable-languages=c,c++,objc,obj-c++,fortran,ada,go,lto --enable-libmpx --enable-multilib --enable-plugin --enable-shared --enable-threads=posix --mandir=\/usr\/share\/man --with-arch_32=i686 --with-isl --with-linker-hash-style=gnu --with-tune=generic","disk-scheduler":"NOOP","disk-mount-options":"attr2,inode64,noquota,relatime,rw,seclabel","cpu-scaling-governor":"acpi-cpufreq ondemand"}</JSON>
+  </System>
+  <System>
+    <Identifier>ZFS RAID-Z (RAID5)</Identifier>
+    <Hardware>Processor: Intel Core i5 650 @ 3.20GHz (4 Cores), Motherboard: MSI 2A9C v1.0, Chipset: Intel Core DRAM, Memory: 4096 MB + 2048 MB + 2048 MB + 2048 MB DDR3-1333MHz, Disk: 1000GB SAMSUNG HD103SJ + 1000GB Western Digital WD1002FAEX-0 + 500GB Western Digital WD5000AZRX-0 + 1000GB Elements 1078, Graphics: AMD Radeon HD 5550/5570/5630/6510/6610/7570 2048MB (157/200MHz), Audio: Realtek ALC888, Monitor: SyncMaster, Network: Realtek RTL8111/8168/8411 + Ralink RT3090 Wireless 802.11n 1T/1R</Hardware>
+    <Software>OS: Fedora 25, Kernel: 4.10.12-200.fc25.x86_64 (x86_64), Compiler: GCC 6.3.1 20161221, File-System: zfs, Screen Resolution: 1920x1080</Software>
+    <User>root</User>
+    <TimeStamp>2017-05-28 13:54:08</TimeStamp>
+    <TestClientVersion></TestClientVersion>
+    <Notes>SELinux: Enabled.</Notes>
+    <JSON>{"compiler-configuration":"--build=x86_64-redhat-linux --disable-libgcj --disable-libunwind-exceptions --enable-__cxa_atexit --enable-bootstrap --enable-checking=release --enable-gnu-indirect-function --enable-gnu-unique-object --enable-initfini-array --enable-languages=c,c++,objc,obj-c++,fortran,ada,go,lto --enable-libmpx --enable-multilib --enable-plugin --enable-shared --enable-threads=posix --mandir=\/usr\/share\/man --with-arch_32=i686 --with-isl --with-linker-hash-style=gnu --with-tune=generic","disk-scheduler":"NOOP","disk-mount-options":"attr2,inode64,noquota,relatime,rw,seclabel","cpu-scaling-governor":"acpi-cpufreq ondemand"}</JSON>
+  </System>
+  <Result>
+    <Identifier>pts/postmark-1.1.0</Identifier>
+    <Title>PostMark</Title>
+    <AppVersion>1.51</AppVersion>
+    <Arguments></Arguments>
+    <Description>Disk Transaction Performance</Description>
+    <Scale>TPS</Scale>
+    <Proportion>HIB</Proportion>
+    <DisplayFormat>BAR_GRAPH</DisplayFormat>
+    <Data>
+      <Entry>
+        <Identifier>MDADM RAID0</Identifier>
+        <Value>2988</Value>
+        <RawString>2976:3012:2976</RawString>
+        <JSON>{"compiler-options":{"compiler-type":"CC","compiler":"gcc","compiler-options":"-O3"}}</JSON>
+      </Entry>
+      <Entry>
+        <Identifier>MDADM RAID1</Identifier>
+        <Value>3112</Value>
+        <RawString>3086:3164:3086</RawString>
+        <JSON>{"compiler-options":{"compiler-type":"CC","compiler":"gcc","compiler-options":"-O3"}}</JSON>
+      </Entry>
+      <Entry>
+        <Identifier>MDADM RAID5</Identifier>
+        <Value>2787</Value>
+        <RawString>2777:2808:2777</RawString>
+        <JSON>{"compiler-options":{"compiler-type":"CC","compiler":"gcc","compiler-options":"-O3"}}</JSON>
+      </Entry>
+      <Entry>
+        <Identifier>ZFS Stripe (RAID0)</Identifier>
+        <Value>3488</Value>
+        <RawString>3472:3472:3521</RawString>
+        <JSON>{"compiler-options":{"compiler-type":"CC","compiler":"gcc","compiler-options":"-O3"}}</JSON>
+      </Entry>
+      <Entry>
+        <Identifier>ZFS Mirror (RAID1)</Identifier>
+        <Value>3099</Value>
+        <RawString>3125:3086:3086</RawString>
+        <JSON>{"compiler-options":{"compiler-type":"CC","compiler":"gcc","compiler-options":"-O3"}}</JSON>
+      </Entry>
+      <Entry>
+        <Identifier>ZFS RAID-Z (RAID5)</Identifier>
+        <Value>3260</Value>
+        <RawString>3246:3246:3289</RawString>
+        <JSON>{"compiler-options":{"compiler-type":"CC","compiler":"gcc","compiler-options":"-O3"}}</JSON>
+      </Entry>
+    </Data>
+  </Result>
+</PhoronixTestSuite>
