@@ -6,7 +6,7 @@
 \chapter{Benchmarking van RAID-types}
 \label{ch:h8}
 
-In dit hoofdstuk wordt de performantie van twee types RAID, namelijk ZFS RAID-Z en mdadm (een softwarematige RAID voor Linux) gemeten en met elkaar vegeleken.
+In dit hoofdstuk wordt de performantie van twee types RAID, namelijk ZFS RAID-Z en Linux MD (een softwarematige RAID voor Linux) gemeten en met elkaar vegeleken.
 
 \section{Toelichting van de gehanteerde methodiek}
 
@@ -15,5 +15,33 @@ Vooraleer over te gaan tot de testen, worden de gehanteerde tools, methodes en m
 Voor het uitvoeren van de testen wordt er gebruik gemaakt van \textbf{Phoronix Test Suite\footnote{\url{https://www.phoronix-test-suite.com}}}: deze suite is een wrapper rond veelgebruike benchmarktools en maakt het mogelijk om op een makkelijke manier relevante gegevens te verzamelen. Er is weinig tot geen voorafgaande kennis vereist voor het uitvoeren van de verschillende benchmarks, en dit was dan ook één van de hoofdredenen om voor dit programma te kiezen. 
 
 Eerst werden er twee algemene testen uitgevoerd, nl. FIO (Flexible IO Tester) en FS-Mark; deze maten respectievelijk het aantal IOPS van de RAID-opstellingen en de algemene performance van de bestandssystemen bovenop deze RAID-opstellingen. Daarna werden twee types workloads,nl. een databanksysteem en een webserver, gesimuleerd; deze simulaties werden uitgevoerd met behulp van de SQLite benchmark en de Postmark benchmark.
+
+\section{Benchmarks: resultaten \& bevindingen}
+
+In deze sectie worden de uitgevoerde testen en diens resultaten toegelicht en besproken.
+
+\subsection{FIO: Flexible I/O Tester}
+
+Bij testen met een blokgrootte van 4KB waren er grote verschillen op te merken tussen MD-RAID en ZFS RAID; daarom werd er een extra test uitgevoerd waarbij de blokgrootte 4MB bedroeg.
+
+\subsubsection{FIO met een blocksize van 4KB}
+
+\begin{table}
+  \centering
+  \begin{tabular}{c}
+    \hline
+    \multicolumn{}
+    
+  \end{tabular}
+  \caption{Resultaten van de FIO-benchmark (blokgrootte: 4KB)}
+  \label{tab:results_fio_4k }
+\end{table}
+
+
+\subsection{FS-MARK}
+
+\subsection{SQLite}
+
+\subsection{Postmark}
 
 
