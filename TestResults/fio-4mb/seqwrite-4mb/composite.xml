@@ -3,7 +3,7 @@
 <PhoronixTestSuite>
   <Generated>
     <Title>mdadm-raid0-xfs-4mb-seqwrite</Title>
-    <LastModified>2017-05-29 22:15:25</LastModified>
+    <LastModified>2017-05-30 20:39:12</LastModified>
     <TestClient>Phoronix Test Suite v6.6.0 (Loppa)</TestClient>
     <Description>Intel Core i5 650 testing with a MSI 2A9C v1.0 and AMD Radeon HD 5550/5570/5630/6510/6610/7570 2048MB on Fedora 25 via the Phoronix Test Suite.</Description>
     <Notes></Notes>
@@ -52,7 +52,7 @@
     <JSON>{"compiler-configuration":"--build=x86_64-redhat-linux --disable-libgcj --disable-libunwind-exceptions --enable-__cxa_atexit --enable-bootstrap --enable-checking=release --enable-gnu-indirect-function --enable-gnu-unique-object --enable-initfini-array --enable-languages=c,c++,objc,obj-c++,fortran,ada,go,lto --enable-libmpx --enable-multilib --enable-plugin --enable-shared --enable-threads=posix --mandir=\/usr\/share\/man --with-arch_32=i686 --with-isl --with-linker-hash-style=gnu --with-tune=generic","disk-scheduler":"NOOP","disk-mount-options":"attr2,inode64,noquota,relatime,rw,seclabel","cpu-scaling-governor":"acpi-cpufreq ondemand"}</JSON>
   </System>
   <System>
-    <Identifier>zfs-raid1-4mb-seqwrite</Identifier>
+    <Identifier>Mirror (RAID1)</Identifier>
     <Hardware>Processor: Intel Core i5 650 @ 3.20GHz (4 Cores), Motherboard: MSI 2A9C v1.0, Chipset: Intel Core DRAM, Memory: 4096 MB + 2048 MB + 2048 MB + 2048 MB DDR3-1333MHz, Disk: 1000GB SAMSUNG HD103SJ + 1000GB Western Digital WD1002FAEX-0 + 500GB Western Digital WD5000AZRX-0 + 1000GB Elements 1078, Graphics: AMD Radeon HD 5550/5570/5630/6510/6610/7570 2048MB (157/200MHz), Audio: Realtek ALC888, Monitor: SyncMaster, Network: Realtek RTL8111/8168/8411 + Ralink RT3090 Wireless 802.11n 1T/1R</Hardware>
     <Software>OS: Fedora 25, Kernel: 4.10.12-200.fc25.x86_64 (x86_64), Compiler: GCC 6.3.1 20161221, File-System: zfs, Screen Resolution: 1920x1080</Software>
     <User>root</User>
@@ -118,7 +118,7 @@
         <JSON>{"compiler-options":{"compiler-type":"CC","compiler":"gcc","compiler-options":"-rdynamic -std=gnu99 -O3 -ffast-math -include -lrt -laio -lz -lm -lpthread -ldl"}}</JSON>
       </Entry>
       <Entry>
-        <Identifier>zfs-raid1-4mb-seqwrite</Identifier>
+        <Identifier>Mirror (RAID1)</Identifier>
         <Value>31</Value>
         <RawString>31:31:31</RawString>
         <JSON>{"compiler-options":{"compiler-type":"CC","compiler":"gcc","compiler-options":"-rdynamic -std=gnu99 -O3 -ffast-math -include -lrt -laio -lz -lm -lpthread -ldl"}}</JSON>
