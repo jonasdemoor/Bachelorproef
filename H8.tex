@@ -14,7 +14,9 @@ Vooraleer over te gaan tot de testen, worden de gehanteerde tools, methodes en m
 
 Voor het uitvoeren van de testen wordt er gebruik gemaakt van \textbf{Phoronix Test Suite\footnote{\url{https://www.phoronix-test-suite.com}}}: deze suite is een wrapper rond veelgebruike benchmarktools en maakt het mogelijk om op een makkelijke manier relevante gegevens te verzamelen. Er is weinig tot geen voorafgaande kennis vereist voor het uitvoeren van de verschillende benchmarks, en dit was dan ook één van de hoofdredenen om voor dit programma te kiezen. 
 
-Eerst werden er twee algemene testen uitgevoerd, nl. FIO (Flexible IO Tester) en FS-Mark; deze maten respectievelijk het aantal IOPS van de RAID-opstellingen en de algemene performance van de bestandssystemen bovenop deze RAID-opstellingen. Daarna werden twee types workloads,nl. een databanksysteem en een webserver, gesimuleerd; deze simulaties werden uitgevoerd met behulp van de SQLite benchmark en de Postmark benchmark.
+Eerst werden er twee algemene testen uitgevoerd, nl. FIO (Flexible I/O Tester) en FS-Mark; deze maten respectievelijk het aantal IOPS van de RAID-opstellingen en de algemene performance van de bestandssystemen bovenop deze RAID-opstellingen. Daarna werden twee types workloads,nl. een databanksysteem en een webserver, gesimuleerd; deze simulaties werden uitgevoerd met behulp van de SQLite benchmark en de PostMark benchmark.
+
+Op de MD-RAID-opstellingen werd telkens XFS gebruikt als bestandssysteem; dit omdat XFS zich in de meeste gevallen automatisch aanpast aan de omstandigheden en er dus weinig tot geen optimalisatie nodig is \autocite{XFSCommunity2016}. Bij een RAID1-opstelling werden altijd de eerste twee schijven gebruikt.
 
 \section{Benchmarks: resultaten \& bevindingen}
 
@@ -22,26 +24,106 @@ In deze sectie worden de uitgevoerde testen en diens resultaten toegelicht en be
 
 \subsection{FIO: Flexible I/O Tester}
 
-Bij testen met een blokgrootte van 4KB waren er grote verschillen op te merken tussen MD-RAID en ZFS RAID; daarom werd er een extra test uitgevoerd waarbij de blokgrootte 4MB bedroeg.
+Bij testen met een blokgrootte van 4KB waren er grote verschillen op te merken tussen MD-RAID en ZFS RAID; daarom werd er een extra test uitgevoerd waarbij de blokgrootte 4MB bedroeg. 
 
-\subsubsection{FIO met een blocksize van 4KB}
+\subsubsection{FIO met een blokgrootte van 4KB}
 
-\begin{table}
+\begin{table}[h]
   \centering
-  \begin{tabular}{c}
+  \begin{tabular}{l || c c c c | c c c c}
     \hline
-    \multicolumn{}
-    
+    \multicolumn{9}{c}{\textbf{Flexible I/O Tester (blokgrootte: 4KB)}} \\
+    \hline
+    & \multicolumn{4}{c|}{\textbf{ZFS}} & \multicolumn{4}{|c}{\textbf{Linux MD (XFS)}} \\
+    & RR & RW & SR & SW & RR & RW & SR & SW \\
+    \hline
+    RAID0 (Stripe) & 91924 & 4318 & 298431 & 82261 & 161 & 233812 & 100500  & 117097  \\
+    RAID1 (Mirror) & 88476 & 1816 & 302429 & 32570 & 120 & 142855 & 35124  & 104094 \\
+    RAID5 (RAID-Z) & 89730 & 3164 & 303172 & 61885 & 127 & 44623 & 51440  & 53907 \\
   \end{tabular}
-  \caption{Resultaten van de FIO-benchmark (blokgrootte: 4KB)}
-  \label{tab:results_fio_4k }
+  \caption{Resultaten van de FIO-benchmark (blokgrootte: 4KB) in IOPS. RR, RW, SR en SW staan respectievelijk voor Random Read, Random Write, Sequential Read en Sequential Write (hoe meer, hoe beter)}
+  \label{tab:results_fio_4k}
+\end{table}
+
+\subsubsection{FIO met een blokgrootte van 4MB}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l || c c c c | c c c c}
+    \hline
+    \multicolumn{9}{c}{\textbf{Flexible I/O Tester (blokgrootte: 4MB)}} \\
+    \hline
+    & \multicolumn{4}{c|}{\textbf{ZFS}} & \multicolumn{4}{|c}{\textbf{Linux MD (XFS)}} \\
+    & RR & RW & SR & SW & RR & RW & SR & SW \\
+    \hline
+    RAID0 (Stripe) & 548 & 79 & 561 & 80 & 41 & 276 & 97 & 99 \\
+    RAID1 (Mirror) & 560 & 31 & 575 & 31 & 26 & 100 & 33 & 111 \\
+    RAID5 (RAID-Z) & 568 & 61 & 571 & 61 & 32 & 51 & 62 & 51 \\
+  \end{tabular}
+  \caption{Resultaten van de FIO-benchmark (blokgrootte: 4MB) in IOPS. RR, RW, SR en SW staan respectievelijk voor Random Read, Random Write, Sequential Read en Sequential Write (hoe meer, hoe beter)}
+  \label{tab:results_fio_4mb}
+\end{table}
+
+\subsection{FS-Mark}
+
+Als test case werd er telkens gekozen voor de vierde optie, nl. het uitvoeren van een test met 40000 bestanden van elk 1MB groot en met een diepte van 32 mappen. 
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l || c | c }
+    \hline
+    \multicolumn{3}{c}{\textbf{FS-Mark (4000 bestanden, 32 submappen, bestandsgrootte: 1MB)}} \\
+    \hline
+    & \textbf{ZFS} & \textbf{Linux MD (XFS)} \\
+    \hline
+    RAID0 (Stripe) & 44.87 & 26.13 \\
+    RAID1 (Mirror) & 22.97 & 21.82 \\
+    RAID5 (RAID-Z) & 32.43 & 12.28 \\
+  \end{tabular}
+  \caption{Resultaten van de FS-Mark-benchmark (4000 bestanden, 32 submappen, bestandsgrootte: 1MB) in bestanden/s (hoe meer, hoe beter)}
+  \label{tab:results_fmark}
 \end{table}
 
 
-\subsection{FS-MARK}
 
 \subsection{SQLite}
 
-\subsection{Postmark}
+Bij deze benchmark wordt er een groot aantal \texttt{INSERT}-bewerkingen gedaan op een SQLite-database; hier wordt dus vooral de random write performantie getest.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l || c | c }
+    \hline
+    \multicolumn{3}{c}{\textbf{SQLite}} \\
+    \hline
+    & \textbf{ZFS} & \textbf{Linux MD (XFS)} \\
+    \hline
+    RAID0 (Stripe) & 154.36 & 295.50 \\
+    RAID1 (Mirror) & 230.29 & 444.29 \\
+    RAID5 (RAID-Z) & 273.47 & 476.32 \\
+  \end{tabular}
+  \caption{Resultaten van de SQLite-benchmark in seconden (hoe minder, hoe beter)}
+  \label{tab:results_sqlite}
+\end{table}
+
+\subsection{PostMark}
+
+Deze test verricht een aantal transacties op de RAID-array: op deze manier wordt de werking van een mail- of webserver gesimuleerd.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l || c | c }
+    \hline
+    \multicolumn{3}{c}{\textbf{PostMark}} \\
+    \hline
+    & \textbf{ZFS} & \textbf{Linux MD (XFS)} \\
+    \hline
+    RAID0 (Stripe) & 3488 & 2988 \\
+    RAID1 (Mirror) & 3099 & 3112 \\
+    RAID5 (RAID-Z) & 3260 & 2787 \\
+  \end{tabular}
+  \caption{Resultaten van de PostMark-benchmark in transacties/s (hoe meer, hoe beter)}
+  \label{tab:results_postmark}
+\end{table}
 
 
