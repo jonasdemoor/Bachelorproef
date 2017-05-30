@@ -45,6 +45,8 @@ Bij testen met een blokgrootte van 4KB waren er grote verschillen op te merken t
   \label{tab:results_fio_4k}
 \end{table}
 
+Uit de resultaten kan worden afegeleid dat beide RAID-types elk uitblinken in bepaalde soorten operaties. ZFS RAID behaalt in het algemeen erg goede resultaten bij random read bewerkingen en bij sequential reads; Linux MD haalt dan echter weer goede scores bij random writes en sequential writes. Theoretisch gezien zou Linux MD dus beter geschikt moeten zijn voor bijvoorbeeld databankoperaties, waarbij veel random writes voorkomen. ZFS zou theoretisch gezien beter zijn in het uitlezen van groten samenhangende bestanden (zoals back-ups of videobestanden), waarbij hoofdzakelijk sequential reads nodig zijn.  
+
 \subsubsection{FIO met een blokgrootte van 4MB}
 
 \begin{table}[h]
@@ -63,6 +65,10 @@ Bij testen met een blokgrootte van 4KB waren er grote verschillen op te merken t
   \caption{Resultaten van de FIO-benchmark (blokgrootte: 4MB) in IOPS. RR, RW, SR en SW staan respectievelijk voor Random Read, Random Write, Sequential Read en Sequential Write (hoe meer, hoe beter)}
   \label{tab:results_fio_4mb}
 \end{table}
+
+Het verhogen van de blocksize van de testen veranderde nauwelijks iets aan de conclusies die konden getrokken worden uit de voorgaande testen; de verhoudingen komen nagenoeg overeen. Echter is het contrast tussen ZFS en MDADM bij de hierbovengenoemde operaties veel duidelijker geworden door het optrekken van de blokgrootte. 
+
+Bij beide blocksizes kan worden opgemerkt dat RAID5 vaak het laagste aantal IOPS heeft. Dit is normaal, aangezien de parity ook nog moet berekend worden (zie Hoofstuk \ref{ch:h2}).
 
 \subsection{FS-Mark}
 
@@ -84,7 +90,7 @@ Als test case werd er telkens gekozen voor de vierde optie, nl. het uitvoeren va
   \label{tab:results_fmark}
 \end{table}
 
-
+Bij deze benchmark komt ZFS als beste uit de bus; enkel de prestaties bij RAID1 zijn bijna gelijk. De verklaring van de goede performantie bij een ZFS stripe en RAID-Z kan worden gevonden bij de variabele blokgrootte die ZFS hanteert (zie Hoofdstuk \ref{ch:h4} en bij de uitgebreide cachingmogelijkheden, waar ZFS gretig gebruik van maakt. 
 
 \subsection{SQLite}
 
@@ -106,6 +112,8 @@ Bij deze benchmark wordt er een groot aantal \texttt{INSERT}-bewerkingen gedaan 
   \label{tab:results_sqlite}
 \end{table}
 
+Bij deze databasesimulatie is het verschil in performantie tussen ZFS en Linux MD erg groot, nl. ongeveer 200 seconden. Opnieuw kan dit verklaard worden aan de hand van het cachingmechanisme van ZFS: ZFS gaat zoveel mogelijk data cachen, en rapporteert vervolgens aan de applicatie (in dit geval SQLite) dat de transactie voltooid is (terwijl dit niet noodzakelijk zo hoeft te zijn). Een andere mogelijke factor kan de relatief grootte blokgrootte van XFS zijn in vergelijking met de variabele blokgrootte van ZFS.
+
 \subsection{PostMark}
 
 Deze test verricht een aantal transacties op de RAID-array: op deze manier wordt de werking van een mail- of webserver gesimuleerd.
@@ -126,4 +134,4 @@ Deze test verricht een aantal transacties op de RAID-array: op deze manier wordt
   \label{tab:results_postmark}
 \end{table}
 
-
+De resultaten van deze benchmark wijken niet zo sterk af van elkaar. Toch is het opmerkelijk dat beide RAID-types bijna hetzelfde aantal transacties kunnen verwerken bij RAID-niveau 1, aangezien er bij andere RAID-niveaus relatief grote verschillen zijn.
