@@ -9,7 +9,7 @@ Al jarenlang is de meest gebruikte oplossing tegen dataverlies door het falen va
 
 In 2002 begon het toenmalige Sun Microsystems, nu onderdeel van Oracle Corporation, aan de ontwikkeling van ZFS (Zettabyte Filesystem). Dit is een bestandssysteem dat volledig \textit{from scratch} is ontwikkeld om \textit{``de tekortkomingen van huidige bestandssystemen op te lossen''}\autocite{JeffBonwick_lastZFS}, vooral met betrekking tot data-integriteit. Volgens de toenmalige hoofdontwikkelaar \textcite{ZFSBonwick} biedt ZFS heel wat vernieuwende functionaliteiten zoals een eenvoudiger beheer, automatische foutcorrectie, automatisch schalende bestandssystemen en een softwarematige RAID onder de term \textit{RAID-Z}. 
 
-Sinds 2013 is ZFS ook beschikbaar voor Linux, maar de eerste uitgaven leden onder nogal wat stabiliteitsproblemen. Tegenwoordig is ZFS op Linux volwassen genoeg geworden om in te zetten in productie. Deze bachelorproef is dan ook een goede gelegenheid om zelf wat meer onderzoek te doen naar ZFS en of het een volwaardig alternatief zou zijn voor een klassieke, hardwaregebaseerde RAID-oplossing op een server.
+Sinds 2013 is ZFS ook beschikbaar voor Linux, maar de eerste uitgaven leden onder nogal wat stabiliteitsproblemen. Tegenwoordig is ZFS op Linux volwassen genoeg geworden om in te zetten in productie. Deze bachelorproef is dan ook een goede gelegenheid om wat meer onderzoek te doen naar ZFS en of het een volwaardig alternatief zou zijn voor een klassieke, hardwaregebaseerde RAID-oplossing op een server.
 
 \section{Probleemstelling en Onderzoeksvragen}
 \label{sec:onderzoeksvragen}
@@ -32,27 +32,4 @@ Deze bachelorproef zal een antwoord vinden op volgende vragen:
   \item{Hoe staat het met data-integriteit en \gls{performantie}\footnote{Met 'performantie' wordt het aantal I/O's per seconde en de globale schijf- en CPU-belasting bedoeld.} bij ZFS onder verschillende workloads en toepassingen?}
 \end{itemize}
 
-\section{Opzet van deze bachelorproef}
-\label{sec:opzet-bachelorproef}
-
-%% TODO: Het is gebruikelijk aan het einde van de inleiding een overzicht te
-%% geven van de opbouw van de rest van de tekst. Deze sectie bevat al een aanzet
-%% die je kan aanvullen/aanpassen in functie van je eigen tekst.
-
-De rest van deze bachelorproef is als volgt opgebouwd:
-
-In Hoofdstuk~\ref{ch:methodologie} wordt de methodologie toegelicht en worden de gebruikte onderzoekstechnieken besproken om een antwoord te formuleren op de onderzoeksvragen.
-
-In Hoofdstuk~\ref{ch:h2} wordt er een korte inleiding gegeven op de geschiedenis en de algemene werking van RAID-systemen. Ook ZFS en RAID-Z worden reeds kort toegelicht.
-
-In Hoofdstuk~\ref{ch:h3} wordt er een globaal overzicht gegeven van de architectuur en ontwerpprincipes van ZFS. In de daaropvolgende hoofdstukken worden de belangrijkste onderdelen en functionaliteiten wat meer uitgediept. 
-
-In Hoofdstuk \ref{ch:h4} wordt het opslagmodel van het ZFS-bestandssysteem besproken. Onder andere de datastructuur en het transactiemodel van ZFS komen aan bod.
-
-In Hoofdstuk \ref{ch:h5} worden de stappen die moeten worden ondernomen om een desktopcomputer om te zetten naar een Linux-server die kan worden gebruikt voor ZFS besproken.
-
-In Hoofdstuk \ref{ch:h6} worden zpools en VDEV's wat meer in detail belicht. Tevens wordt er gedemonstreerd hoe men zpools en VDEV's aanmaakt en wijzigt.
-
-
-In Hoofdstuk~\ref{ch:conclusie}, tenslotte, wordt de conclusie gegeven en een antwoord geformuleerd op de onderzoeksvragen. Daarbij wordt ook een aanzet gegeven voor toekomstig onderzoek binnen dit domein.
 

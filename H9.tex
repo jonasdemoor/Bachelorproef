@@ -1,0 +1,294 @@
+
+%%=============================================================================
+%% H9 - Betrouwbaarheid van ZFS
+%%=============================================================================
+
+\chapter{Betrouwbaarheid van ZFS}
+\label{ch:h9}
+
+In dit hoofdstuk wordt de betrouwbaarheid van ZFS en RAID-Z nagegaan. Er wordt onder andere bekeken hoe een ZFS RAID-opstelling omgaat met het falen van hardware, hoe er wordt omgegaan met datacorruptie en hoe snapshots kunnen worden aangewend bij het verlies van data.
+
+\section{Gebruikte testopstelling}
+
+Voor het simuleren van een falende schijf of schijven moeten de schijven in kwestie worden losgekoppeld. Om het risico op eventuele hardwareschade zo laag mogelijk te houden, wordt er een virtuele machine aangemaakt m.b.v. VirtualBox met onderstaande instellingen.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{c l}
+    \hline
+    \multicolumn{2}{c}{\textbf{Specificaties Virtuele Machine}} \\
+    \hline
+    OS & Fedora Server 25 \\
+    \hline
+    CPU & 4x Host CPU (Intel Core i7-4712HQ CPU @ 2.30GHz) \\
+    \hline
+    Geheugen & 8GB \\
+    \hline
+    OS-schijf & 20GB (\texttt{/dev/sda}; SATA non-hot-pluggable) \\
+    \hline
+    \multirow{4}{*}{Zpool schijven} & 40GB (\texttt{/dev/sdb}; SATA hot-pluggable) \\
+      & 40GB (\texttt{/dev/sdc}; SATA hot-pluggable) \\
+      & 40GB (\texttt{/dev/sdd}; SATA hot-pluggable) \\
+    \hline
+    \multirow{2}{*}{NIC's} & VirtualBox NAT-adapter (10.0.2.15/24) \\
+      & VirtualBox Host-only Adapter (192.168.56.10/24) \\
+    \hline
+  \end{tabular}
+  \caption{Specificaties van de virtuele machine die gebruikt wordt in Hoofdstuk \ref{ch:h9}}
+  \label{tab:specs_vm}
+\end{table}
+
+Voor de simulaties wordt er een zpool gebruikt met één RAID-Z VDEV, bestaande uit drie schijven van elk 40GB.
+
+\begin{lstlisting}[language=bash,style=command_style]
+$ zpool create storage raidz1 /dev/sdb /dev/sdc /dev/sdd
+$ zpool status
+  pool: storage
+ state: ONLINE
+  scan: none requested
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	storage     ONLINE       0     0     0
+	  raidz1-0  ONLINE       0     0     0
+	    sdb     ONLINE       0     0     0
+	    sdc     ONLINE       0     0     0
+	    sdd     ONLINE       0     0     0
+
+errors: No known data errors
+$ zfs list
+NAME      USED  AVAIL  REFER  MOUNTPOINT
+storage  79.9K  76.8G  24.0K  /storage
+\end{lstlisting}
+
+Als testdata wordt er random data gegenereerd m.b.v. \texttt{head}\footnote{\url{https://unix.stackexchange.com/questions/33629/how-can-i-populate-a-file-with-random-data}}; deze data wordt op de RAID-Z array opgeslagen. 
+
+\begin{lstlisting}[language=bash,style=command_style]
+$ for i in {1..5}; do head -c 15GB </dev/urandom > /storage/dummy_$i; done
+$ ls -lh /storage/
+total 70G
+-rw-r--r--. 1 root root 14G May 31 17:18 dummy_1
+-rw-r--r--. 1 root root 14G May 31 17:19 dummy_2
+-rw-r--r--. 1 root root 14G May 31 17:21 dummy_3
+-rw-r--r--. 1 root root 14G May 31 17:23 dummy_4
+-rw-r--r--. 1 root root 14G May 31 17:24 dummy_5
+$ df -hT /storage/
+Filesystem     Type  Size  Used Avail Use% Mounted on
+storage        zfs    77G   70G  7.0G  91% /storage
+\end{lstlisting}
+
+\clearpage
+
+\section{Uitgevoerde simulaties}
+
+In deze sectie worden de verschillende simulaties die werden uitgevoerd overlopen en besproken.
+
+\subsection{Back-up \& recovery van data met snapshots}
+
+Snapshots werden reeds uitvoerig besproken in Hoofdstuk \ref{ch:h7}; ze dienen om op een efficiënte manier een back-up te maken van één of meerdere datasets. 
+
+Stel dat bovenstaande dummy-bestanden netwerkshares voorstellen waarbij elke share de data bevat van een gebruiker (gebruikers mogen in dit voorbeeld geen data bewaren op hun lokale werkstations uit veilgheidsredenen). Indien \texttt{gebruiker2} met home directory \texttt{/storage/dummy\_2} bijvoorbeeld enkele bestanden kwijt is of verwijderd heeft, dan kan deze data makkelijk worden teruggehaald m.b.v. een snapshot.
+
+\begin{lstlisting}[language=bash,style=command_style]
+$ zfs snapshot storage@$(date "+%d-%m-%Y")
+$ zfs list -t snapshot
+NAME                 USED  AVAIL  REFER  MOUNTPOINT
+storage@31-05-2017      0      -  69.8G  -
+$ rm -f /storage/dummy_2
+$ ls -lh /storage/
+total 56G
+-rw-r--r--. 1 root root 14G May 31 17:18 dummy_1
+-rw-r--r--. 1 root root 14G May 31 17:21 dummy_3
+-rw-r--r--. 1 root root 14G May 31 17:23 dummy_4
+-rw-r--r--. 1 root root 14G May 31 17:24 dummy_5
+$ zfs rollback storage@31-05-2017
+$ ls -lh /storage/
+total 70G
+-rw-r--r--. 1 root root 14G May 31 17:18 dummy_1
+-rw-r--r--. 1 root root 14G May 31 17:19 dummy_2
+-rw-r--r--. 1 root root 14G May 31 17:21 dummy_3
+-rw-r--r--. 1 root root 14G May 31 17:23 dummy_4
+-rw-r--r--. 1 root root 14G May 31 17:24 dummy_5
+\end{lstlisting}
+
+In bovenstaand voorbeeld wordt er eerst een snapshot genomen van de dataset; nadien wordt het bestand \texttt{dummy\_2} verwijderd. Als men de gemaakte snapshot terugzet, dan ziet men dat het bestand \texttt{dummy\_2} terug op zijn plaats staat. Er moet echter wel worden opgemerkt dat snapshots een degelijke (off-site) back-up niet overbodig maken: indien meerdere schijven van de RAID5-array falen, dan heb je niets meer aan de gemaakte snapshots. Een goede back-upstrategie is dus nog steeds onontbeerlijk.
+
+\subsection{Gedrag van een RAID-Z array bij het falen van een schijf}
+
+Het simuleren van een falende harde schijf wordt verwezenlijkt m.b.v. \texttt{VBoxManage}, het beheerscommando van VirtualBox voor de commandoregel. Met behulp van dit commando kan een hot-pluggable SATA-schijf worden losgekoppeld\footnote{Zie \url{https://www.virtualbox.org/manual/ch08.html}}. 
+
+\begin{lstlisting}[language=bash,style=command_style]
+# Op het hostsysteem
+$ VBoxManage storageattach "Fedora Server x64" --storagectl "SATA" --port 1 --device 0 --medium none
+
+# Op de virtuele machine
+$ dmesg
+(deel van de uitvoer is weggelaten)
+
+[ 6772.524376] ata2: exception Emask 0x10 SAct 0x0 SErr 0x4010000 action 0xe frozen
+[ 6772.525402] ata2: irq_stat 0x80400040, connection status changed
+[ 6772.525670] ata2: SError: { PHYRdyChg DevExch }
+[ 6772.525866] ata2: hard resetting link
+[ 6773.198452] ata2: SATA link down (SStatus 0 SControl 300)
+
+$ zpool export storage
+$ zpool import storage
+$ zpool status 
+  pool: storage
+ state: DEGRADED
+status: One or more devices could not be used because the label is missing or
+	invalid.  Sufficient replicas exist for the pool to continue
+	functioning in a degraded state.
+action: Replace the device using 'zpool replace'.
+   see: http://zfsonlinux.org/msg/ZFS-8000-4J
+  scan: none requested
+config:
+
+	NAME                      STATE     READ WRITE CKSUM
+	storage                   DEGRADED     0     0     0
+	  raidz1-0                DEGRADED     0     0     0
+	    18175546172533204033  UNAVAIL      0     0     0  was /dev/sdb1
+	    sdc                   ONLINE       0     0     0
+	    sdd                   ONLINE       0     0     0
+
+errors: No known data errors
+$ ls -lh /storage/
+total 70G
+-rw-r--r--. 1 root root 14G May 31 17:18 dummy_1
+-rw-r--r--. 1 root root 14G May 31 17:19 dummy_2
+-rw-r--r--. 1 root root 14G May 31 17:21 dummy_3
+-rw-r--r--. 1 root root 14G May 31 17:23 dummy_4
+-rw-r--r--. 1 root root 14G May 31 17:24 dummy_5
+\end{lstlisting}
+
+Nadat de eerste schijf van de array werd weggehaald, gaf de Linux-kernel onmiddellijk aan dat er een schijf was weggevallen. Na de zpool te exporteren en opnieuw te importeren, gaf ZFS aan dat de pool in een onjuiste toestand was gekomen, maar dat deze nog operationeel was. Nadien werd er gecontroleerd of de data zich nog op de array bevond, en dit bleek inderdaad het geval te zijn.
+
+Indien er zich een fout voordoet, geeft ZFS reeds aan welke actie er moet gebeuren; in dit geval moet het systeem worden afgesloten, de 'defecte' schijf worden vervangen en het commando \texttt{zfs replace} worden uitgevoerd.
+
+\begin{lstlisting}[language=bash,style=command_style]
+# Op het hostsysteem
+$ VBoxManage createhd --filename /home/jonas/VirtualBox\ VMs/Fedora\ Server\ x64/TestZFS.vdi --size 42000 --format VDI --variant Fixed
+$ VBoxManage storageattach "Fedora Server x64" --storagectl "SATA" --port 1 --device 0 --type HDD --medium /home/jonas/VirtualBox\ VMs/Fedora\ Server\ x64/TestZFS.vdi --mtype shareable
+
+# Op de virtuele machine
+$ zpool status
+  pool: storage
+ state: DEGRADED
+status: One or more devices could not be used because the label is missing or
+	invalid.  Sufficient replicas exist for the pool to continue
+	functioning in a degraded state.
+action: Replace the device using 'zpool replace'.
+   see: http://zfsonlinux.org/msg/ZFS-8000-4J
+  scan: resilvered 68.5K in 0h0m with 0 errors on Wed May 31 19:18:10 2017
+config:
+
+	NAME                      STATE     READ WRITE CKSUM
+	storage                   DEGRADED     0     0     0
+	  raidz1-0                DEGRADED     0     0     0
+	    18175546172533204033  UNAVAIL      0     0     0  was /dev/sdb1
+	    sdc                   ONLINE       0     0     0
+	    sdd                   ONLINE       0     0     0
+
+errors: No known data errors
+\end{lstlisting}
+
+Nadat de virtuele machine was uitgezet werd er een nieuwe schijf aangemaakt om de 'defecte' schijf te vervangen; de nieuwe schijf is een klein beetje groter dan de oude schijf. ZFS aanvaardt geen vervangingsschijven die kleiner zijn dan de originele schijf, daarom werd in deze situatie het zekere voor het onzekere genomen. 
+
+Eens de nieuwe schijf zich in de machine bevond, was het slechts een kwestie van ZFS de opdracht te geven om de oude schijf te vervangen met de nieuwe schijf. Na deze opdracht begon ZFS onmiddellijk met het scrubben van de pool. Opmerkelijk is hier de relatief korte herbouwtijd van de array: dit ligt enerzijds aan de kleine grootte van de array en anderzijds aan de manier waarop ZFS met blokken omgaat. ZFS weet namelijk waar de data zich bevindt op de schijven: dit maakt het herbouwen van een RAID-Z-opstelling aanzienlijk sneller dan het herbouwen van een traditionele RAID-array (zie hoofdstukken \ref{ch:h3} en \ref{ch:h4}).
+
+\begin{lstlisting}[language=bash,style=command_style]
+$ zpool replace storage 18175546172533204033 /dev/sdb -f
+$ zpool status 
+  pool: storage
+ state: DEGRADED
+status: One or more devices is currently being resilvered.  The pool will
+	continue to function, possibly in a degraded state.
+action: Wait for the resilver to complete.
+  scan: resilver in progress since Wed May 31 19:35:54 2017
+    6.88G scanned out of 105G at 227M/s, 0h7m to go
+    2.29G resilvered, 6.56% done
+config:
+
+	NAME                        STATE     READ WRITE CKSUM
+	storage                     DEGRADED     0     0     0
+	  raidz1-0                  DEGRADED     0     0     0
+	    replacing-0             UNAVAIL      0     0     0
+	      18175546172533204033  UNAVAIL      0     0     0  was /dev/sdb1/old
+	      sdb                   ONLINE       0     0     0  (resilvering)
+	    sdc                     ONLINE       0     0     0
+	    sdd                     ONLINE       0     0     0
+
+errors: No known data errors
+\end{lstlisting}
+
+\subsection{Corruptiedetectie en automatische reparatie}
+
+Om de corruptiedetectiemechanismen en zelf-reparerende eigenschappen van ZFS na te gaan, worden er telkens SHA256-checksums berekend van een bestand dat zich in de pool bevindt\footnote{Idee naar \url{https://www.youtube.com/watch?v=VlFGTtU65Xo}}. 
+
+\begin{lstlisting}[language=bash,style=command_style]
+$ rm /storage/dummy_{2..5} -f
+$ sha256sum /storage/dummy_1 
+fc4c5c62db504cec7b5cafa264c329416d0207da9e4a61066bb07563caf9ec2e  /storage/dummy_1
+\end{lstlisting}
+
+Nadien wordt de ZFS pool geëxporteerd en wordt er random data weggeschreven naar één van de VDEV's van de RAID-Z array. De reden om eerste de pool te exporteren, is omdat ZFS op deze manier geen zicht heeft op wat er ondertussen gebeurt (nl. het wegschrijven van random data). Als de pool terug online komt, is het aan ZFS om na te kijken of de checksums nog kloppen en, indien nodig, corrupte data te repareren indien mogelijk.
+
+\begin{lstlisting}[language=bash,style=command_style]
+$ zpool export storage
+
+# Er zal ongeveer 20GB aan random data worden weggeschreven naar /dev/sdb
+$ for i in {1..500}; do dd if=/dev/urandom of=/dev/sdb bs=4M count=10 seek=1; sleep 1; done
+
+$ zpool import storage
+$ zpool status
+  pool: storage
+ state: ONLINE
+status: One or more devices has experienced an unrecoverable error.  An
+	attempt was made to correct the error.  Applications are unaffected.
+action: Determine if the device needs to be replaced, and clear the errors
+	using 'zpool clear' or replace the device with 'zpool replace'.
+   see: http://zfsonlinux.org/msg/ZFS-8000-9P
+  scan: none requested
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	storage     ONLINE       0     0     0
+	  raidz1-0  ONLINE       0     0     0
+	    sdb     ONLINE       0     0     5
+	    sdc     ONLINE       0     0     0
+	    sdd     ONLINE       0     0     0
+
+errors: No known data errors
+\end{lstlisting}
+
+ZFS heeft reeds gemerkt dat er corruptie is opgetreden; ook zijn er bij de VDEV \texttt{sdb} vijf checksum errors opgedoken. Op dit moment is het verstandig om een scrub uit te voeren op de pool. Bij een scrub zoekt ZFS naar consistentiefouten en zal hij deze trachten te repareren indien mogelijk.
+
+\begin{lstlisting}[language=bash,style=command_style]
+$ zpool scrub storage
+$ zpool status 
+  pool: storage
+ state: ONLINE
+status: One or more devices has experienced an unrecoverable error.  An
+	attempt was made to correct the error.  Applications are unaffected.
+action: Determine if the device needs to be replaced, and clear the errors
+	using 'zpool clear' or replace the device with 'zpool replace'.
+   see: http://zfsonlinux.org/msg/ZFS-8000-9P
+  scan: scrub repaired 39.0M in 0h0m with 0 errors on Wed May 31 21:58:32 2017
+config:
+
+	NAME        STATE     READ WRITE CKSUM
+	storage     ONLINE       0     0     0
+	  raidz1-0  ONLINE       0     0     0
+	    sdb     ONLINE       0     0   640
+	    sdc     ONLINE       0     0     0
+	    sdd     ONLINE       0     0     0
+
+errors: No known data errors
+\end{lstlisting}
+
+Na uitvoering kan er worden vastgesteld dat ZFS 640 errors heeft gerepareerd. Indien men de checksum herberekend van het bestand \texttt{dummy\_1}, dan ziet men dat de checksum overeenkomt met de originele checksum en dat er dus geen silent data corruption is opgetreden.
+
+\begin{lstlisting}[language=bash,style=command_style]
+$ sha256sum /storage/dummy_1
+fc4c5c62db504cec7b5cafa264c329416d0207da9e4a61066bb07563caf9ec2e  /storage/dummy_1
+\end{lstlisting}

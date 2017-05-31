@@ -173,7 +173,7 @@ storage/projects/www@storage_rec_16-05-2017           0      -   128K  -
 
 Hier ziet men inderdaad dat het aanmaken van de snapshot \texttt{storage\_rec\_16-05-2017} recursief gebeurde.
 
-Het gebruik van snapshots komt nog uitgebreid aan bod in Hoofdstuk \ref{ch:h9}: \textit{Data-integriteit en Consistentie bij ZFS}.
+Het gebruik van snapshots komt nog aan bod in Hoofdstuk \ref{ch:h9}: \textit{Betrouwbaarheid van ZFS}.
 
 \subsubsection{Clones}
 
@@ -197,7 +197,7 @@ storage/projects/www_new   10.7K   877G   128K  /storage/projects/www_new
 
 Uit de output van \texttt{zfs list} kan worden afgeleid dat er inderdaad een nieuwe dataset werd aangemaakt met de naam \texttt{www\_new}. Deze nieuwe dataset en de oorspronkelijke snapshot zijn aan elkaar gekoppeld. 
 
-Om de relatie tussen een snapshot en zijn kloon of klonen te bekijken, kunnen de betreffende properties van de clone worden opgehaald. Uit onderstaande uitvoer kan worden afgeleid dat de clone gebaseerd is op de snapshot \texttt{storage/projects/www@www\_16-05-2017}.
+Om de relatie tussen een snapshot en zijn clone of clones te bekijken, kunnen de betreffende properties van de clone worden opgehaald. Uit onderstaande uitvoer kan worden afgeleid dat de clone gebaseerd is op de snapshot \texttt{storage/projects/www@www\_16-05-2017}.
 
 \begin{lstlisting}[language=bash,style=command_style] 
 $ zfs get origin /storage/projects/www_new

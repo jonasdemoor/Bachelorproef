@@ -11,4 +11,59 @@
 %% mogelijke manier toegepast hebt om een antwoord te vinden op de
 %% onderzoeksvraag.
 
+In dit hoofdstuk worden de methodes en denkpistes besproken die werden gehanteerd tijdens het opstellen van deze scriptie. Daarnaast wordt er reeds per hoofdstuk een inhoudelijk overzicht gegeven van wat de lezer kan verwachten bij het lezen van dit werk.
 
+\section{Gehanteerde methodiek}
+
+De bachelorproef is opgedeeld in twee grote onderdelen: een theoretisch deel en een meer praktisch gericht deel. 
+
+In het theoretische gedeelte wordt er vooral gefocust op de interne werking van ZFS. Vooraleer echter de werking van ZFS uit te spitten, wordt er eerst een overzicht gegeven van RAID-systemen en RAID-niveaus. Nadien worden het ontwerp van ZFS en de beslissingen van de ontwikkelaars toegelicht; waar mogelijk wordt er telkens een vergelijking gemaakt met de manier waarop meer 'traditionele' oplossingen een bepaald probleem zouden aanpakken. Niet alle aspecten van de interne werking van ZFS worden besproken; daarvoor is deze scriptie ook helemaal niet bedoeld. Echter is een globaal beeld van de werking van ZFS van belang aangezien er toch wel significante verschillen zijn tussen een opslagstack binnen ZFS en een traditionele opslagstack. 
+
+Het theoretisch deel biedt m.a.w. al grotendeels  een antwoord op de eerste twee onderzoeksvragen.
+
+In het praktische gedeelte worden onder andere de performantie en betrouwbaarheid van ZFS geanalyseerd, om zo een antwoord te vinden op de laatste onderzoeksvraag. Bij dit onderdeel worden er twee testsystemen gebruikt, nl. een fysieke machine en een virtuele machine (via VirtualBox). Het eerstegenoemde systeem dient hoofdzakelijk om benchmarks uit te voeren; het tweede systeem dient uitsluitend om de betrouwbaarheid van een ZFS RAID-Z-opstelling na te gaan.
+
+Voor het uitvoeren van de performantietesten wordt er gebruik gemaakt van \textbf{Phoronix Test Suite\footnote{\url{https://www.phoronix-test-suite.com}}}: deze suite is een wrapper rond veelgebruike benchmarktools en maakt het mogelijk om op een makkelijke manier relevante gegevens te verzamelen. Er is weinig tot geen voorafgaande kennis vereist voor het uitvoeren van de verschillende benchmarks, en dit was dan ook één van de hoofdredenen om voor dit programma te kiezen. 
+
+Naast performantie en betrouwbaarheid, worden er ook nog andere aspecten van ZFS belicht, waaronder:
+
+\begin{itemize}
+  \item{Het voorbereiden en installeren van een computersysteem voor het gebruik van Linux en ZFS;}
+  \item{Creatie en beheer van ZFS pools en VDEV's;}
+  \item{De verschillende types van bestandssystemen (of datasets) die er binnen de ZFS stack bestaan;}
+\end{itemize}
+
+Hier en daar worden er nog enkele theoretische aspecten besproken, maar enkel al alleen als dit een toegevoegde waarde heeft. Bij bijvoorbeeld het hoofdstuk over VDEV's en storage pools is het noodzakelijk om te verduidelijken welke soorten VDEV's er bestaan; op deze manier wordt er context geschapen en is het voor de lezer ook duidelijker wat er in bepaalde gevallen bedoeld wordt.
+
+\section{Opbouw van de bachelorproef}
+
+Deze bachelorproef is verder globaal gezien als volgt opgebouwd:
+
+In Hoofdstuk \ref{ch:methodologie} wordt de methodologie toegelicht en worden de gebruikte onderzoekstech-
+nieken besproken om een antwoord te formuleren op de onderzoeksvragen.
+
+In Hoofdstuk \ref{ch:h2} wordt er een korte inleiding gegeven op de geschiedenis en de algemene
+werking van RAID-systemen. Ook ZFS en RAID-Z worden reeds kort toegelicht.
+
+In Hoofdstuk \ref{ch:h3} wordt er een globaal overzicht gegeven van de architectuur en ontwerpprin-
+cipes van ZFS. In de daaropvolgende hoofdstukken worden de belangrijkste onderdelen en
+functionaliteiten wat meer uitgediept.
+
+In Hoofdstuk \ref{ch:h4} wordt het opslagmodel van het ZFS-bestandssysteem besproken. Onder
+andere de datastructuur en het transactiemodel van ZFS komen aan bod.
+
+In Hoofdstuk \ref{ch:h5} worden de stappen die moeten worden ondernomen om een desktopcom-
+puter om te zetten naar een Linux-server die kan worden gebruikt voor ZFS besproken.
+
+In Hoofdstuk \ref{ch:h6} worden zpools en VDEV’s wat meer in detail belicht. Tevens wordt er
+gedemonstreerd hoe men zpools en VDEV’s aanmaakt en wijzigt.
+
+In Hoofdstuk \ref{ch:h7} worden traditionele bestandssystemen vergeleken met ZFS datasets. Onder andere de verschillende soorten datasets komen aan bod; tevens wordt er aan het eind van het hoofdstuk getoond hoe een ZFS dataset kan worden gebruikt om een NFS-share op te zetten.
+
+In Hoofdstuk \ref{ch:h8} worden de prestaties van RAID-Z en Linux MD, een softwarematige RAID binnen Linux, met elkaar vergeleken. Hiervoor wordt er gebruik gemaakt van Phoronix Benchmark: dit is een wrapper rond verschillende onafhankelijke tools dat het verzamelen van relevante gegevens een stuk makkelijker maakt.
+
+In Hoofdstuk \ref{ch:h9} wordt de betrouwbaarheid van ZFS nagegaan, met name: hoe regaeert een RAID-Z-opstelling op fouten onder verschillende omstandigheden?
+
+In Hoofdstuk \ref{ch:conclusie}, tenslotte, wordt de conclusie gegeven en een antwoord geformuleerd op
+de onderzoeksvragen. Daarbij wordt ook een aanzet gegeven voor toekomstig onderzoek
+binnen dit domein.
