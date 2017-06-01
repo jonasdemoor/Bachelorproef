@@ -194,7 +194,7 @@ errors: No known data errors
 
 Nadat de virtuele machine was uitgezet werd er een nieuwe schijf aangemaakt om de 'defecte' schijf te vervangen; de nieuwe schijf is een klein beetje groter dan de oude schijf. ZFS aanvaardt geen vervangingsschijven die kleiner zijn dan de originele schijf, daarom werd in deze situatie het zekere voor het onzekere genomen. 
 
-Eens de nieuwe schijf zich in de machine bevond, was het slechts een kwestie van ZFS de opdracht te geven om de oude schijf te vervangen met de nieuwe schijf. Na deze opdracht begon ZFS onmiddellijk met het scrubben van de pool. Opmerkelijk is hier de relatief korte herbouwtijd van de array: dit ligt enerzijds aan de kleine grootte van de array en anderzijds aan de manier waarop ZFS met blokken omgaat. ZFS weet namelijk waar de data zich bevindt op de schijven: dit maakt het herbouwen van een RAID-Z-opstelling aanzienlijk sneller dan het herbouwen van een traditionele RAID-array (zie hoofdstukken \ref{ch:h3} en \ref{ch:h4}).
+Eens de nieuwe schijf zich in de machine bevond, was het slechts een kwestie van ZFS de opdracht te geven om de oude schijf te vervangen door de nieuwe schijf. Na deze opdracht begon ZFS onmiddellijk met het scrubben van de pool. Opmerkelijk is hier de relatief korte herbouwtijd van de array: dit ligt enerzijds aan de kleine grootte van de array en anderzijds aan de manier waarop ZFS met blokken omgaat. ZFS weet namelijk waar de data zich bevindt op de schijven: dit maakt het herbouwen van een RAID-Z-opstelling aanzienlijk sneller dan het herbouwen van een traditionele RAID-array (zie hoofdstukken \ref{ch:h3} en \ref{ch:h4}).
 
 \begin{lstlisting}[language=bash,style=command_style]
 $ zpool replace storage 18175546172533204033 /dev/sdb -f

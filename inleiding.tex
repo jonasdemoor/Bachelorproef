@@ -9,7 +9,7 @@ Al jarenlang is de meest gebruikte oplossing tegen dataverlies door het falen va
 
 In 2002 begon het toenmalige Sun Microsystems, nu onderdeel van Oracle Corporation, aan de ontwikkeling van ZFS (Zettabyte Filesystem). Dit is een bestandssysteem dat volledig \textit{from scratch} is ontwikkeld om \textit{``de tekortkomingen van huidige bestandssystemen op te lossen''}\autocite{JeffBonwick_lastZFS}, vooral met betrekking tot data-integriteit. Volgens de toenmalige hoofdontwikkelaar \textcite{ZFSBonwick} biedt ZFS heel wat vernieuwende functionaliteiten zoals een eenvoudiger beheer, automatische foutcorrectie, automatisch schalende bestandssystemen en een softwarematige RAID onder de term \textit{RAID-Z}. 
 
-Sinds 2013 is ZFS ook beschikbaar voor Linux, maar de eerste uitgaven leden onder nogal wat stabiliteitsproblemen. Tegenwoordig is ZFS op Linux volwassen genoeg geworden om in te zetten in productie. Deze bachelorproef is dan ook een goede gelegenheid om wat meer onderzoek te doen naar ZFS en of het een volwaardig alternatief zou zijn voor een klassieke, hardwaregebaseerde RAID-oplossing op een server.
+Sinds 2013 is ZFS ook beschikbaar voor Linux, maar de eerste uitgaven leden onder nogal wat stabiliteitsproblemen. Tegenwoordig is ZFS op Linux volwassen genoeg geworden om in te zetten in productie. Deze bachelorproef is dan ook een goede gelegenheid om wat meer onderzoek te doen naar ZFS en of het een volwaardig alternatief zou zijn voor een klassieke (hardwaregebaseerde) RAID-oplossing op een server.
 
 \section{Probleemstelling en Onderzoeksvragen}
 \label{sec:onderzoeksvragen}
@@ -29,7 +29,7 @@ Deze bachelorproef zal een antwoord vinden op volgende vragen:
 \begin{itemize}
 	\item{Wat zijn de grootste verschillen tussen een klassieke RAID-oplossing en ZFS RAID-Z?}
 	\item{Hoe is de architectuur van ZFS opgebouwd en op welke manieren tracht het oplossingen te vinden voor de problemen die zich voordoen bij andere bestandssystemen en RAID-opstellingen?}
-  \item{Hoe staat het met data-integriteit en \gls{performantie}\footnote{Met 'performantie' wordt het aantal I/O's per seconde en de globale schijf- en CPU-belasting bedoeld.} bij ZFS onder verschillende workloads en toepassingen?}
+  \item{Hoe staat het met data-integriteit en \gls{performantie}\footnote{Met 'performantie' wordt het aantal I/O's per seconde en de globale CPU-belasting bedoeld.} bij ZFS onder verschillende workloads en toepassingen?}
 \end{itemize}
 
 

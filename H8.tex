@@ -6,13 +6,13 @@
 \chapter{Benchmarking van RAID-types}
 \label{ch:h8}
 
-In dit hoofdstuk wordt de performantie van twee types RAID, namelijk ZFS RAID-Z en Linux MD (een softwarematige RAID voor Linux) gemeten en met elkaar vegeleken.
+In dit hoofdstuk wordt de performantie van twee types RAID, namelijk ZFS RAID-Z en Linux MD (een softwarematige RAID voor Linux) gemeten en met elkaar vergeleken.
 
 \section{Toelichting van de gehanteerde methodiek}
 
 Vooraleer over te gaan tot de testen, worden de gehanteerde tools, methodes en maatstaven wat meer toegelicht. Zoals reeds gezegd in de inleiding van deze scriptie, zal er vooral worden rekening worden gehouden met het aantal invoer- en uitvoerbewerkingen per seconde (of IOPS in het Engels). Daarnaast worden enkele workloads gesimuleerd op het testsysteem met name die van een databank en die van een webserver.  
 
-Eerst werden er twee algemene testen uitgevoerd, nl. FIO (Flexible I/O Tester) en FS-Mark; deze maten respectievelijk het aantal IOPS van de RAID-opstellingen en de algemene performance van de bestandssystemen bovenop deze RAID-opstellingen. Daarna werden twee types workloads,nl. een databanksysteem en een webserver, gesimuleerd; deze simulaties werden uitgevoerd met behulp van de SQLite benchmark en de PostMark benchmark.
+Eerst werden er twee algemene testen uitgevoerd, nl. FIO (Flexible I/O Tester) en FS-Mark; deze maten respectievelijk het aantal IOPS van de RAID-opstellingen en de algemene performance van de bestandssystemen bovenop deze RAID-opstellingen. Daarna werden twee types workloads, nl. een databanksysteem en een webserver, gesimuleerd; deze simulaties werden uitgevoerd met behulp van de SQLite benchmark en de PostMark benchmark.
 
 Op de MD-RAID-opstellingen werd telkens XFS gebruikt als bestandssysteem; dit omdat XFS zich in de meeste gevallen automatisch aanpast aan de omstandigheden en er dus weinig tot geen optimalisatie nodig is \autocite{XFSCommunity2016}. Bij een RAID1-opstelling werden altijd de eerste twee schijven gebruikt.
 
@@ -43,7 +43,7 @@ Bij testen met een blokgrootte van 4KB waren er grote verschillen op te merken t
   \label{tab:results_fio_4k}
 \end{table}
 
-Uit de resultaten kan worden afegeleid dat beide RAID-types elk uitblinken in bepaalde soorten operaties. ZFS RAID behaalt in het algemeen erg goede resultaten bij random read bewerkingen en bij sequential reads; Linux MD haalt dan echter weer goede scores bij random writes en sequential writes. Theoretisch gezien zou Linux MD dus beter geschikt moeten zijn voor bijvoorbeeld databankoperaties, waarbij veel random writes voorkomen. ZFS zou theoretisch gezien beter zijn in het uitlezen van groten samenhangende bestanden (zoals back-ups of videobestanden), waarbij hoofdzakelijk sequential reads nodig zijn.  
+Uit de resultaten kan worden afgeleid dat beide RAID-types elk uitblinken in bepaalde soorten operaties. ZFS RAID behaalt in het algemeen erg goede resultaten bij random read bewerkingen en bij sequential reads; Linux MD haalt dan echter weer goede scores bij random writes en sequential writes. Theoretisch gezien zou Linux MD dus beter geschikt moeten zijn voor bijvoorbeeld databankoperaties, waarbij veel random writes voorkomen. ZFS zou theoretisch gezien beter zijn in het uitlezen van grote samenhangende bestanden (zoals back-ups of videobestanden), waarbij hoofdzakelijk sequential reads nodig zijn.  
 
 \subsubsection{FIO met een blokgrootte van 4MB}
 
