@@ -16,6 +16,16 @@ This paper introduces five levels of RAIDs, giving their relative cost/performan
   Timestamp                = {25.04.2017}
 }
 
+@Www{,
+  Title                    = {Introduction},
+  Author                   = {Apple},
+  Url                      = {https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/APFS_Guide/Introduction/Introduction.html},
+  Year                     = {2017},
+
+  Owner                    = {jonas},
+  Timestamp                = {2017.06.01}
+}
+
 @Book{OSThreePiecesRemzi2015,
   Title                    = {{Operating Systems: Three Easy Pieces}},
   Author                   = {Remzi H. Arpaci-Dusseau and Andrea C. Arpaci-Dusseau},
@@ -111,6 +121,16 @@ useful new features almost as a side effect.},
 
   Owner                    = {jonas},
   Timestamp                = {25.04.2017}
+}
+
+@Www{,
+  Title                    = {DragonFlyBSD: hammer},
+  Author                   = {DragonFlyBSD},
+  Url                      = {https://www.dragonflybsd.org/hammer/},
+  Year                     = {2017},
+
+  Owner                    = {jonas},
+  Timestamp                = {2017.06.01}
 }
 
 @Techreport{Goda2012,
@@ -262,6 +282,16 @@ includes an annotated bibliography of disk array-related literature.},
   Timestamp                = {25.04.2017}
 }
 
+@Www{,
+  Title                    = {Resilient File System (ReFS) overview},
+  Author                   = {Microsoft},
+  Url                      = {https://docs.microsoft.com/en-us/windows-server/storage/refs/refs-overview},
+  Year                     = {2016},
+
+  Owner                    = {jonas},
+  Timestamp                = {2017.06.01}
+}
+
 @Www{OracleOnbekend,
   Title                    = {Oracle and Sun Microsystems},
   Author                   = {{Oracle Corporation}},
@@ -304,6 +334,16 @@ includes an annotated bibliography of disk array-related literature.},
 
   Owner                    = {Jonas De Moor},
   Timestamp                = {25.04.2017}
+}
+
+@Www{BTRFSProject2017,
+  Title                    = {Main Page},
+  Author                   = {{The BTRFS Project}},
+  Url                      = {https://btrfs.wiki.kernel.org/index.php/Main_Page},
+  Year                     = {2017},
+
+  Owner                    = {jonas},
+  Timestamp                = {2017.06.01}
 }
 
 @Www{Project2017,
@@ -384,6 +424,16 @@ includes an annotated bibliography of disk array-related literature.},
 
   Owner                    = {Jonas De Moor},
   Timestamp                = {25.04.2017}
+}
+
+@Www{XFSCommunity2016,
+  Title                    = {XFS FAQ},
+  Author                   = {{XFS Community}},
+  Url                      = {http://xfs.org/index.php/XFS_FAQ},
+  Year                     = {2016},
+
+  Owner                    = {jonas},
+  Timestamp                = {2017.05.24}
 }
 
 @Www{ZFSOL2017,
