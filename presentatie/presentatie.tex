@@ -14,7 +14,6 @@
 %----------------------------------------------------------------------------------------
 %	PACKAGES AND THEMES
 %----------------------------------------------------------------------------------------
-
 \documentclass{beamer}
 
 \mode<presentation> {
@@ -79,7 +78,53 @@
 \usepackage{graphicx} % Allows including images
 \usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
 
+% Eigen packages
 \usepackage[dutch]{babel}
+\usepackage{multirow}
+
+\usepackage[style=apa,backend=biber]{biblatex}
+\DeclareLanguageMapping{dutch}{dutch-apa}
+
+\usepackage[font=scriptsize,justification=centering]{caption}
+\usepackage{filecontents}
+\usepackage{textcomp}
+
+% Bibliografie (afbeeldingen etc.)
+\begin{filecontents}{\jobname.bib}
+@Conference{KendiOnbekend,
+  Title                    = {ZFS: Enhancing the Open Source Storage System (and the Kernel)},
+  Author                   = {Kendi, Christian},
+  Year                     = {Onbekend},
+  Language                 = {English},
+  Url                      = {https://www.blackhat.com/presentations/bh-dc-10/Kendi_Christian/Blackhat-DC-2010-Kendi-Enhancing-ZFS-slides.pdf},
+  Owner                    = {Jonas De Moor},
+  Timestamp                = {25.04.2017}}
+
+@Techreport{ZFSBonwick,
+  Title                    = {The Zettabyte Filesystem},
+  Author                   = {Bonwick, Jeff and others},
+  Year                     = {2002},
+  Language                 = {English},
+  Month                    = {Unknown},
+  Url                      = {http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.184.3704&rep=rep1&type=pdf},
+  Organization             = {Sun Microsystems},
+  Owner                    = {Jonas De Moor},
+  Timestamp                = {25.04.2017}}
+
+@Techreport{Microsystems2006,
+  Title                    = {ZFS on-disk specification},
+  Author                   = {{Sun Microsystems}},
+  Year                     = {2006},
+  Language                 = {English},
+  Url                      = {http://www.giis.co.in/Zfs_ondiskformat.pdf},
+
+  Owner                    = {Jonas De Moor},
+  Timestamp                = {25.04.2017}}
+\end{filecontents}
+
+\renewcommand*{\nameyeardelim}{\addcomma\addspace}
+
+\addbibresource{\jobname.bib}
 
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
@@ -90,7 +135,7 @@
 \author{Jonas De Moor} % Your name
 \institute[HoGent] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
 {
-Toegepaste Informatica - Systeem- en Netwerkbeher \\ Hogeschool Gent \\ % Your institution for the title page
+Toegepaste Informatica - Systeem- en Netwerkbeheer \\ Hogeschool Gent \\ % Your institution for the title page
 \medskip
 \textit{jonas.demoor.v3741@student.hogent.be} % Your email address
 }
@@ -112,148 +157,306 @@ Toegepaste Informatica - Systeem- en Netwerkbeher \\ Hogeschool Gent \\ % Your i
 %----------------------------------------------------------------------------------------
 
 %------------------------------------------------
-\section{First Section} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
+\section{Achtergrond} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
 %------------------------------------------------
 
-\subsection{Subsection Example} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
+\subsection{Motivatie} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
+
+%------------------------------------------------
 
 \begin{frame}
-\frametitle{Paragraphs of Text}
-Sed iaculis dapibus gravida. Morbi sed tortor erat, nec interdum arcu. Sed id lorem lectus. Quisque viverra augue id sem ornare non aliquam nibh tristique. Aenean in ligula nisl. Nulla sed tellus ipsum. Donec vestibulum ligula non lorem vulputate fermentum accumsan neque mollis.\\~\\
+\frametitle{Motivatie voor het voeren van dit onderzoek}
 
-Sed diam enim, sagittis nec condimentum sit amet, ullamcorper sit amet libero. Aliquam vel dui orci, a porta odio. Nullam id suscipit ipsum. Aenean lobortis commodo sem, ut commodo leo gravida vitae. Pellentesque vehicula ante iaculis arcu pretium rutrum eget sit amet purus. Integer ornare nulla quis neque ultrices lobortis. Vestibulum ultrices tincidunt libero, quis commodo erat ullamcorper id.
+  \begin{itemize}
+    \item{RAID5 'write hole'}
+    \item Relatie tussen BTRFS en ZFS
+    \item ZFS On Linux (cf. Ubuntu 16.04 LTS)
+    \item Interesses: Linux en Unix
+  \end{itemize}
+
 \end{frame}
 
 %------------------------------------------------
 
+\subsection{Onderzoeksvragen}
+
+%------------------------------------------------
+
 \begin{frame}
-\frametitle{Bullet Points}
+  \frametitle{Onderzoeksvragen}
+  \begin{itemize}
+	  \item Wat zijn de grootste verschillen tussen een klassieke RAID-oplossing en ZFS RAID-Z?
+	  \item Hoe is de architectuur van ZFS opgebouwd en op welke manieren tracht het oplossingen te vinden voor de problemen die zich voordoen bij andere bestandssystemen en RAID-opstellingen?
+    \item Hoe staat het met data-integriteit en performantie\footnote{Met 'performantie' wordt het aantal I/O's per seconde en de globale CPU-belasting bedoeld.} bij ZFS onder verschillende workloads en toepassingen?
+  \end{itemize}
+\end{frame}
+
+%------------------------------------------------
+
+\subsection{Opbouw van het onderzoek}
+
+%------------------------------------------------
+
+\begin{frame}
+\frametitle{Opbouw van het onderzoek}
+
+Twee grote onderdelen:
+  \begin{enumerate}
+    \item Theoretisch gedeelte
+      \begin{itemize}
+        \item Inleiding tot RAID-niveaus
+        \item Architectuur en ontwerpprincipes van ZFS
+        \item Interne datastructuren en transactiemodel
+      \end{itemize}
+    \item{Praktisch gedeelte}
+      \begin{itemize}
+        \item Storage Pools \& VDEV's
+        \item Datasets
+        \item Performantie \& Betrouwbaarheid
+      \end{itemize}
+  \end{enumerate}
+\end{frame}
+
+%------------------------------------------------
+
+\subsection{Gehanteerde methodiek}
+
+%------------------------------------------------
+
+\begin{frame}
+\frametitle{Gehanteerde methodiek}
+  \begin{itemize}
+    \item Phoronix Benchmark: performantietesten op fysieke machine
+    \begin{itemize}
+      \item FIO (Flexible I/O Tester): IOPS
+      \item FS-Mark: bestandssysteemoperaties
+      \item PostMark: simulatie van webserver/mailserver
+      \item SQLite: databankoperaties
+    \end{itemize}
+    \item Virtuele Machine: betrouwbaarheidstesten
+    \begin{itemize}
+      \item Wegvallen van een schijf (array van drie schijven)
+      \item Dataverlies door gebruikersfout
+      \item Bescherming tegen datacorruptie
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Gehanteerde methodiek}
+  \begin{table}
+    \centering
+    \begin{tabular}{c l}
+      \toprule
+      \multicolumn{2}{c}{\textbf{Specificaties}} \\ 
+      \midrule
+      \textbf{Fabrikant} & HP \\
+      \hline
+      \textbf{Model} & HP Pavilion Elite HPE-310be \\
+      \hline
+      \textbf{CPU} & Intel Core i5 650 @ 3.2 GHz (2 Cores; 4 Threads) \\
+      \hline
+      \textbf{Geheugen} & 10GB DDR3 @ 1333MHz \\ 
+      \hline
+      \textbf{GPU} & AMD Radeon HD 5570 \\
+      \hline
+      \multirow{4}{*}{\textbf{Interne schijven}} & SAMSUNG HD103SJ (1TB) \\
+        & WDC WD1002FAEX-0 (1TB) \\
+        & WDC WD5000AZRX-0 (500GB) \\
+      \hline
+      \textbf{Externe schijf} & WD Elements 1078 (1TB) \\
+      \hline
+      \textbf{RAID Controller} & Intel Corporation SATA RAID Controller \\
+      \bottomrule
+    \end{tabular}
+    \caption{Specificaties van het fysieke systeem dat gebruikt werd doorheen de bachelorproef (data verkregen via \texttt{lshw})}
+    \label{tab:specs_desktop }
+  \end{table}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Gehanteerde methodiek}
+  \begin{table}[h]
+    \centering
+    \begin{tabular}{c l}
+      \toprule
+      \multicolumn{2}{c}{\textbf{Specificaties Virtuele Machine}} \\
+      \hline
+      \textbf{OS} & Fedora Server 25 \\
+      \hline
+      \textbf{CPU} & 4x Host CPU (Intel Core i7-4712HQ CPU @ 2.30GHz) \\
+      \hline
+      \textbf{Geheugen} & 8GB \\
+      \hline
+      \textbf{OS-schijf} & 20GB (\texttt{/dev/sda}; SATA non-hot-pluggable) \\
+      \hline
+      \multirow{4}{*}{\textbf{Zpool schijven}} & 40GB (\texttt{/dev/sdb}; SATA hot-pluggable) \\
+        & 40GB (\texttt{/dev/sdc}; SATA hot-pluggable) \\
+        & 40GB (\texttt{/dev/sdd}; SATA hot-pluggable) \\
+      \hline
+      \multirow{2}{*}{\textbf{NIC's}} & VirtualBox NAT-adapter (10.0.2.15/24) \\
+        & VirtualBox Host-only Adapter (192.168.56.10/24) \\
+      \bottomrule
+    \end{tabular}
+    \caption{Specificaties van de virtuele machine die gebruikt werd voor de betrouwbaarheidstesten}
+    \label{tab:specs_vm}
+  \end{table}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Inhoud} % Table of contents slide, comment this block out to remove it
+  \tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+\end{frame}
+
+%------------------------------------------------
+\section{Onderzoek}
+%------------------------------------------------
+
+\subsection{Achtergrondinformatie m.b.t. ZFS}
+
+%------------------------------------------------
+
+\begin{frame}
+\frametitle{ZFS: een kort overzicht}
 \begin{itemize}
-\item Lorem ipsum dolor sit amet, consectetur adipiscing elit
-\item Aliquam blandit faucibus nisi, sit amet dapibus enim tempus eu
-\item Nulla commodo, erat quis gravida posuere, elit lacus lobortis est, quis porttitor odio mauris at libero
-\item Nam cursus est eget velit posuere pellentesque
-\item Vestibulum faucibus velit a augue condimentum quis convallis nulla gravida
+  \item Copy-On-Write bestandssysteem
+  \item Ontwikkeld door Sun Microsystems (begin jaren 2000) 
+  \item Oorspronkelijk onderdeel van Solaris
+  \item Nu: verdere ontwikkeling via OpenZFS (en Oracle)
+  \item Ondertussen ook beschikbaar op BSD en Linux (ZFS on Linux)
+  \item{Beschikt over RAID-Z (softwarematige RAID)}
 \end{itemize}
 \end{frame}
 
 %------------------------------------------------
 
+\subsection{Architectuur van ZFS}
+
+%------------------------------------------------
+
 \begin{frame}
-\frametitle{Blocks of Highlighted Text}
-\begin{block}{Block 1}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ultricies in feugiat rutrum, porttitor sit amet augue. Aliquam ut tortor mauris. Sed volutpat ante purus, quis accumsan dolor.
-\end{block}
+\frametitle{Architectuur van ZFS}
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.63\linewidth]{img/h3-zfs_overview}
+    \caption{Een overzicht van de verschillende componenten van ZFS \autocite{KendiOnbekend}}
+    \label{fig:kendi_zfs_overview}
+  \end{figure}
+\end{frame}
 
-\begin{block}{Block 2}
-Pellentesque sed tellus purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum quis magna at risus dictum tempor eu vitae velit.
-\end{block}
+\begin{frame}
+  \frametitle{Architectuur van ZFS}
+  \begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{img/bs-vs-zfs}
+    \caption{Vergelijking tussen een 'traditionele' storage stack (links) en de ZFS storage stack (rechts) \autocite{ZFSBonwick}}
+    \label{fig:bonwick_zfs_vs_fs}
+  \end{figure}
+\end{frame}
 
-\begin{block}{Block 3}
-Suspendisse tincidunt sagittis gravida. Curabitur condimentum, enim sed venenatis rutrum, ipsum neque consectetur orci, sed blandit justo nisi ac lacus.
-\end{block}
+%------------------------------------------------
+
+\subsection{VDEV's \& Storage Pools}
+
+%------------------------------------------------
+
+\begin{frame}
+  \frametitle{Storage Pools}
+  \begin{itemize}
+    \item Abstractie voor fysieke apparaten \textbf{\textrightarrow} gegroepeerd in VDEV's
+    \item Dynamische allocatie van opslagruimte
+    \item Schijven kunnen worden toegevoegd zonder downtime\footnote{Afhankelijk van de situatie}    
+  \end{itemize}
+
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/h3-pools-vs-vols}
+    \caption{Illustratie van ZFS pooled storage (rechts) t.o.v.volume-based storage (links) \autocite{ZFSBonwick}}
+    \label{fig:bonwick_pools_illustratie}
+    \end{figure}
 \end{frame}
 
 %------------------------------------------------
 
 \begin{frame}
-\frametitle{Multiple Columns}
-\begin{columns}[c] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
-
-\column{.45\textwidth} % Left column and width
-\textbf{Heading}
-\begin{enumerate}
-\item Statement
-\item Explanation
-\item Example
-\end{enumerate}
-
-\column{.5\textwidth} % Right column and width
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ultricies in feugiat rutrum, porttitor sit amet augue. Aliquam ut tortor mauris. Sed volutpat ante purus, quis accumsan dolor.
-
-\end{columns}
-\end{frame}
-
-%------------------------------------------------
-\section{Second Section}
-%------------------------------------------------
-
-\begin{frame}
-\frametitle{Table}
-\begin{table}
-\begin{tabular}{l l l}
-\toprule
-\textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
-\midrule
-Treatment 1 & 0.0003262 & 0.562 \\
-Treatment 2 & 0.0015681 & 0.910 \\
-Treatment 3 & 0.0009271 & 0.296 \\
-\bottomrule
-\end{tabular}
-\caption{Table caption}
-\end{table}
+  \frametitle{VDEV's: Virtual Devices}
+  \begin{itemize}
+    \item Bouwstenen van storage pools
+    \item RAID-niveaus binnen ZFS:
+    \begin{itemize}
+      \item Stripes, Mirrors, RAID-Z, etc. 
+    \end{itemize}
+    \item Speciale VDEV's:
+    \begin{itemize}
+      \item SLOG, L2ARC
+    \end{itemize}
+  \end{itemize}
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.6\textwidth]{img/h6_vdevs_tree}
+    \caption{Conceptuele voorstelling van VDEV's in een boomstructuur \autocite{Microsystems2006}}
+    \label{fig:vdevs_boom}
+  \end{figure}
 \end{frame}
 
 %------------------------------------------------
 
-\begin{frame}
-\frametitle{Theorem}
-\begin{theorem}[Mass--energy equivalence]
-$E = mc^2$
-\end{theorem}
+\begin{frame}[fragile]
+  \frametitle{Voorbeeld: zpool met een RAID-Z VDEV}
+  \begin{verbatim}
+    $ zpool create storage raidz1 /dev/sda /dev/sdb /dev/sdc
+    $ zpool status
+      pool: storage
+      state: ONLINE
+      scan: none requested
+      config:
+
+	    NAME        STATE     READ WRITE CKSUM
+	    storage     ONLINE       0     0     0
+	      raidz1-0  ONLINE       0     0     0
+	        sda     ONLINE       0     0     0
+	        sdb     ONLINE       0     0     0
+	        sdc     ONLINE       0     0     0
+
+      errors: No known data errors
+  \end{verbatim}
 \end{frame}
 
 %------------------------------------------------
 
-\begin{frame}[fragile] % Need to use the fragile option when verbatim is used in the slide
-\frametitle{Verbatim}
-\begin{example}[Theorem Slide Code]
-\begin{verbatim}
+\subsection{Benchmarks}
+
+%------------------------------------------------
+
 \begin{frame}
-\frametitle{Theorem}
-\begin{theorem}[Mass--energy equivalence]
-$E = mc^2$
-\end{theorem}
-\end{frame}\end{verbatim}
-\end{example}
+  \frametitle{Inhoud}
+  \tableofcontents
 \end{frame}
 
 %------------------------------------------------
 
 \begin{frame}
-\frametitle{Figure}
-Uncomment the code on this slide to include your own image from the same directory as the template .TeX file.
-%\begin{figure}
-%\includegraphics[width=0.8\linewidth]{test}
-%\end{figure}
+  \frametitle{Benchmarks}
+  FIO-benchmark: aantal IOPS (Invoer/Uitvoer-bewerkingen per seconde)
+  
 \end{frame}
 
 %------------------------------------------------
-
-\begin{frame}[fragile] % Need to use the fragile option when verbatim is used in the slide
-\frametitle{Citation}
-An example of the \verb|\cite| command to cite within the presentation:\\~
-
-This statement requires citation \cite{p1}.
-\end{frame}
+\section{Conclusie}
+%------------------------------------------------
 
 %------------------------------------------------
 
-\begin{frame}
-\frametitle{References}
-\footnotesize{
-\begin{thebibliography}{99} % Beamer does not support BibTeX so references must be inserted manually as below
-\bibitem[Smith, 2012]{p1} John Smith (2012)
-\newblock Title of the publication
-\newblock \emph{Journal Name} 12(3), 45 -- 678.
-\end{thebibliography}
-}
+\begin{frame}[allowframebreaks]
+  \frametitle{Referenties}
+  \printbibliography
 \end{frame}
 
 %------------------------------------------------
 
 \begin{frame}
-\Huge{\centerline{The End}}
+\Huge{\centerline{Zijn er nog vragen?}}
 \end{frame}
 
 %----------------------------------------------------------------------------------------
