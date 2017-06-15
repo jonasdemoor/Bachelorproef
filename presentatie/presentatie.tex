@@ -94,6 +94,11 @@
 \def\verbatim@font{\scriptsize\ttfamily}
 \makeatother
 
+\usepackage{datetime}
+\newdate{date}{16}{06}{2017}
+\date{\displaydate{date}}
+
+
 % Bibliografie (afbeeldingen etc.)
 \begin{filecontents}{\jobname.bib}
 @Conference{KendiOnbekend,
@@ -144,7 +149,7 @@ Toegepaste Informatica - Systeem- en Netwerkbeheer \\ Hogeschool Gent \\ % Your 
 \medskip
 \textit{jonas.demoor.v3741@student.hogent.be} % Your email address
 }
-\date{\today} % Date, can be changed to a custom date
+\date{\displaydate{date}} % Date, can be changed to a custom date
 
 \begin{document}
 
@@ -309,11 +314,6 @@ Twee grote onderdelen:
   \end{table}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Inhoud} % Table of contents slide, comment this block out to remove it
-  \tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
-\end{frame}
-
 %------------------------------------------------
 \section{Onderzoek}
 %------------------------------------------------
@@ -431,13 +431,6 @@ Twee grote onderdelen:
 %------------------------------------------------
 
 \subsection{Benchmarks}
-
-%------------------------------------------------
-
-\begin{frame}
-  \frametitle{Inhoud}
-  \tableofcontents
-\end{frame}
 
 %------------------------------------------------
 
@@ -600,13 +593,6 @@ Twee grote onderdelen:
 %------------------------------------------------
 
 \subsection{Betrouwbaarheidstesten}
-
-%------------------------------------------------
-
-\begin{frame}
-  \frametitle{Inhoud}
-  \tableofcontents
-\end{frame}
 
 %------------------------------------------------
 
@@ -806,11 +792,37 @@ Twee grote onderdelen:
   \end{verbatim}
 \end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{Betrouwbaarheid}
+  \begin{itemize}
+    \item Gedrag van de array bij het optreden van silent data corruption
+  \end{itemize}
+  \begin{verbatim}
+    $ sha256sum /storage/dummy_1
+    4c5c62db504cec7b5cafa264c329416d0207da9e4a61066bb07563caf9ec2e  /storage/dummy_1
+  \end{verbatim}
+\end{frame}
+
 
     
 %------------------------------------------------
 \section{Conclusie}
 %------------------------------------------------
+
+\begin{frame}[fragile]
+  \frametitle{Conclusie}
+  \begin{itemize}
+    \item Performantie: meeste gevallen in het voordeel van ZFS
+    \item Betrouwbaarheid van ZFS is uitstekend
+    \item Voordelen van ZFS: ZVOL's, CoW, ARC, etc.
+    \item Use cases:
+    \begin{itemize}
+      \item ZFS: grote SAN's, enthousiastelingen (ECC geheugen?)
+      \item 'klassieke' RAID: NAS-systemen, consumentensystemen
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
 
 %------------------------------------------------
 
