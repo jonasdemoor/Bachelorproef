@@ -89,6 +89,11 @@
 \usepackage{filecontents}
 \usepackage{textcomp}
 
+\usepackage{verbatim}
+\makeatletter
+\def\verbatim@font{\scriptsize\ttfamily}
+\makeatother
+
 % Bibliografie (afbeeldingen etc.)
 \begin{filecontents}{\jobname.bib}
 @Conference{KendiOnbekend,
@@ -436,12 +441,373 @@ Twee grote onderdelen:
 
 %------------------------------------------------
 
+% RANDOM READ
+
 \begin{frame}
   \frametitle{Benchmarks}
-  FIO-benchmark: aantal IOPS (Invoer/Uitvoer-bewerkingen per seconde)
-  
+  FIO-benchmark: aantal IOPS (Invoer/Uitvoer-bewerkingen per seconde)    
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/Testen/FIO-4MB/fio-randomread-4mb-md}
+    \caption{Aantal IOPS bij random read operaties (blokgrootte: 4MB), uitgevoerd op een Linux MD-opstelling}
+  \end{figure}
 \end{frame}
 
+%------------------------------------------------
+
+\begin{frame}
+  \frametitle{Benchmarks}
+  FIO-benchmark: aantal IOPS (Invoer/Uitvoer-bewerkingen per seconde)    
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/Testen/FIO-4MB/fio-randomread-4mb-zfs}
+    \caption{Aantal IOPS bij random read operaties (blokgrootte: 4MB), uitgevoerd op een ZFS-opstelling}
+  \end{figure}
+\end{frame}
+
+%------------------------------------------------
+
+% RANDOM WRITE
+
+\begin{frame}
+  \frametitle{Benchmarks}
+  FIO-benchmark: aantal IOPS (Invoer/Uitvoer-bewerkingen per seconde)    
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/Testen/FIO-4MB/fio-randomwrite-4mb-md}
+    \caption{Aantal IOPS bij random write operaties (blokgrootte: 4MB), uitgevoerd op een Linux MD-opstelling}
+  \end{figure}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+  \frametitle{Benchmarks}
+  FIO-benchmark: aantal IOPS (Invoer/Uitvoer-bewerkingen per seconde)    
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/Testen/FIO-4MB/fio-randomwrite-4mb-zfs}
+    \caption{Aantal IOPS bij random write operaties (blokgrootte: 4MB), uitgevoerd op ZFS-opstelling}
+  \end{figure}
+\end{frame}
+
+%------------------------------------------------
+
+% SEQ READ
+
+\begin{frame}
+  \frametitle{Benchmarks}
+  FIO-benchmark: aantal IOPS (Invoer/Uitvoer-bewerkingen per seconde)    
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/Testen/FIO-4MB/fio-seqread-4mb-md}
+    \caption{Aantal IOPS bij sequential read operaties (blokgrootte: 4MB), uitgevoerd op een Linux MD-opstelling}
+  \end{figure}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+  \frametitle{Benchmarks}
+  FIO-benchmark: aantal IOPS (Invoer/Uitvoer-bewerkingen per seconde)    
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/Testen/FIO-4MB/fio-seqread-4mb-zfs}
+    \caption{Aantal IOPS bij sequential read operaties (blokgrootte: 4MB), uitgevoerd op een ZFS-opstelling}
+  \end{figure}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+  \frametitle{Benchmarks}
+  FIO-benchmark: aantal IOPS (Invoer/Uitvoer-bewerkingen per seconde)    
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/Testen/FIO-4MB/fio-seqwrite-4mb-md}
+    \caption{Aantal IOPS bij sequential write operaties (blokgrootte: 4MB), uitgevoerd op een Linux MD-opstelling}
+  \end{figure}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+  \frametitle{Benchmarks}
+  FIO-benchmark: aantal IOPS (Invoer/Uitvoer-bewerkingen per seconde)    
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/Testen/FIO-4MB/fio-seqwrite-4mb-zfs}
+    \caption{Aantal IOPS bij sequential write operaties (blokgrootte: 4MB), uitgevoerd op een ZFS-opstelling}
+  \end{figure}
+\end{frame}
+
+%------------------------------------------------
+
+% FMARK
+
+\begin{frame}
+  \frametitle{Benchmarks}
+  FS-Mark: algemene bestandssysteemperformantie (bestanden per seconde)    
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/Testen/FS-Mark/fmark.png}
+    \caption{Vergelijking tussen Linux MD i.c.m. XFS en ZFS inzake algemene bestandssysteemperformantie}
+  \end{figure}
+\end{frame}
+
+%------------------------------------------------
+
+% POSTMARK
+
+\begin{frame}
+  \frametitle{Benchmarks}
+  PostMark: Simulatie van de workload van een mail- of webserver    
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/Testen/PostMark/postmark.png}
+    \caption{Simulatie van een web- of mailserver waarbij de performantie van respectievelijk Linux MD i.c.m. XFS en ZFS met elkaar wordt vergeleken}
+  \end{figure}
+\end{frame}
+
+%------------------------------------------------
+
+% SQLITE
+
+\begin{frame}
+  \frametitle{Benchmarks}
+  SQLite: Simulatie van de workload van een databanksysteem  
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/Testen/SQLite/sqlite-md.png}
+    \caption{Performantie van Linux MD i.c.m. XFS bij een groot aantal \texttt{INSERT}-bewerkingen op een SQLite-databank}
+  \end{figure}
+\end{frame}
+
+
+%------------------------------------------------
+
+\begin{frame}
+  \frametitle{Benchmarks}
+  SQLite: Simulatie van de workload van een databanksysteem  
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/Testen/SQLite/sqlite-zfs.png}
+    \caption{Performantie van ZFS bij een groot aantal \texttt{INSERT}-bewerkingen op een SQLite-databank}
+  \end{figure}
+\end{frame}
+
+
+%------------------------------------------------
+
+\subsection{Betrouwbaarheidstesten}
+
+%------------------------------------------------
+
+\begin{frame}
+  \frametitle{Inhoud}
+  \tableofcontents
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+  \frametitle{Betrouwbaarheid}
+  \begin{itemize}
+    \item Dataverlies door een gebruikersfout\footnote{Testdata gegenereerd met: \texttt{for i in {1..5}; do head -c 15GB </dev/urandom > /storage/dummy\_\$i; done}}
+  \end{itemize}
+
+  \begin{verbatim}
+    $ zfs snapshot storage@$(date "+%d-%m-%Y")
+    $ zfs list -t snapshot
+    NAME                 USED  AVAIL  REFER  MOUNTPOINT
+    storage@31-05-2017      0      -  69.8G  -
+    $ rm -f /storage/dummy_2
+    $ ls -lh /storage/
+    total 56G
+    -rw-r--r--. 1 root root 14G May 31 17:18 dummy_1
+    -rw-r--r--. 1 root root 14G May 31 17:21 dummy_3
+    -rw-r--r--. 1 root root 14G May 31 17:23 dummy_4
+    -rw-r--r--. 1 root root 14G May 31 17:24 dummy_5
+  \end{verbatim}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}[fragile]
+  \frametitle{Betrouwbaarheid}
+  \begin{itemize}
+    \item Dataverlies door een gebruikersfout  
+  \end{itemize}
+
+  \begin{verbatim}
+    $ zfs rollback storage@31-05-2017
+    $ ls -lh /storage/
+    total 70G
+    -rw-r--r--. 1 root root 14G May 31 17:18 dummy_1
+    -rw-r--r--. 1 root root 14G May 31 17:19 dummy_2
+    -rw-r--r--. 1 root root 14G May 31 17:21 dummy_3
+    -rw-r--r--. 1 root root 14G May 31 17:23 dummy_4
+    -rw-r--r--. 1 root root 14G May 31 17:24 dummy_5
+  \end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Betrouwbaarheid}
+  \begin{itemize}
+    \item Gedrag van de array bij het wegvallen van een schijf
+  \end{itemize}
+  \begin{verbatim}
+    # Op het hostsysteem
+    $ VBoxManage storageattach "Fedora Server x64" --storagectl "SATA" --port 1 --device 0 --medium none
+
+    # Op de virtuele machine
+    $ dmesg
+    (deel van de uitvoer is weggelaten)
+
+    [ 6772.524376] ata2: exception Emask 0x10 SAct 0x0 SErr 0x4010000 action 0xe frozen
+    [ 6772.525402] ata2: irq_stat 0x80400040, connection status changed
+    [ 6772.525670] ata2: SError: { PHYRdyChg DevExch } 
+    [ 6772.525866] ata2: hard resetting link
+    [ 6773.198452] ata2: SATA link down (SStatus 0  SControl 300)
+  \end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Betrouwbaarheid}
+  \begin{itemize}
+    \item Gedrag van de array bij het wegvallen van een schijf
+  \end{itemize}
+  \begin{verbatim}
+    $ zpool export storage
+    $ zpool import storage
+    $ zpool status 
+      pool: storage
+    state: DEGRADED
+    status: One or more devices could not be used because the label is missing or
+	    invalid.  Sufficient replicas exist for the pool to continue
+	    functioning in a degraded state.
+    action: Replace the device using 'zpool replace'.
+      see: http://zfsonlinux.org/msg/ZFS-8000-4J
+      scan: none requested
+    config:
+
+	    NAME                      STATE     READ WRITE CKSUM
+	    storage                   DEGRADED     0     0     0
+	      raidz1-0                DEGRADED     0     0     0
+	        18175546172533204033  UNAVAIL      0     0     0  was /dev/sdb1
+	        sdc                   ONLINE       0     0     0
+	        sdd                   ONLINE       0     0     0
+
+    errors: No known data errors
+  \end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Betrouwbaarheid}
+  \begin{itemize}
+    \item Gedrag van de array bij het wegvallen van een schijf
+  \end{itemize}
+  \begin{verbatim}
+    $ zpool replace storage 18175546172533204033 /dev/sdb -f
+    $ zpool status 
+      pool: storage
+    state: DEGRADED
+    status: One or more devices is currently being resilvered.  The pool will
+	    continue to function, possibly in a degraded state.
+    action: Wait for the resilver to complete.
+      scan: resilver in progress since Wed May 31 19:35:54 2017
+        6.88G scanned out of 105G at 227M/s, 0h7m to go
+        2.29G resilvered, 6.56% done
+    config:
+
+	    NAME                        STATE     READ WRITE CKSUM
+	    storage                     DEGRADED     0     0     0
+	      raidz1-0                  DEGRADED     0     0     0
+	        replacing-0             UNAVAIL      0     0     0
+	          18175546172533204033  UNAVAIL      0     0     0  was /dev/sdb1/old
+	          sdb                   ONLINE       0     0     0  (resilvering)
+	        sdc                     ONLINE       0     0     0
+	        sdd                     ONLINE       0     0     0
+
+    errors: No known data errors
+  \end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Betrouwbaarheid}
+  \begin{itemize}
+    \item Gedrag van de array bij het optreden van silent data corruption
+  \end{itemize}
+  \begin{verbatim}
+    $ sha256sum /storage/dummy_1 
+    fc4c5c62db504cec7b5cafa264c329416d0207da9e4a61066bb07563caf9ec2e  /storage/dummy_1
+    
+    $ zpool export storage
+
+  \end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Betrouwbaarheid}
+  \begin{itemize}
+    \item Gedrag van de array bij het optreden van silent data corruption
+  \end{itemize}
+  \begin{verbatim}
+    $ zpool import storage
+    $ zpool status
+      pool: storage
+    state: ONLINE
+    status: One or more devices has experienced an unrecoverable error.  An
+	    attempt was made to correct the error.  Applications are unaffected.
+    action: Determine if the device needs to be replaced, and clear the errors
+	    using 'zpool clear' or replace the device with 'zpool replace'.
+      see: http://zfsonlinux.org/msg/ZFS-8000-9P
+      scan: none requested
+    config:
+
+	    NAME        STATE     READ WRITE CKSUM
+	    storage     ONLINE       0     0     0
+	      raidz1-0  ONLINE       0     0     0
+	        sdb     ONLINE       0     0     5
+	        sdc     ONLINE       0     0     0
+	        sdd     ONLINE       0     0     0
+
+    errors: No known data errors
+  \end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Betrouwbaarheid}
+  \begin{itemize}
+    \item Gedrag van de array bij het optreden van silent data corruption
+  \end{itemize}
+  \begin{verbatim}
+    $ zpool scrub storage
+    $ zpool status 
+      pool: storage
+    state: ONLINE
+    status: One or more devices has experienced an unrecoverable error.  An
+	    attempt was made to correct the error.  Applications are unaffected.
+    action: Determine if the device needs to be replaced, and clear the errors
+	    using 'zpool clear' or replace the device with 'zpool replace'.
+      see: http://zfsonlinux.org/msg/ZFS-8000-9P
+      scan: scrub repaired 39.0M in 0h0m with 0 errors on Wed May 31 21:58:32 2017
+    config:
+
+	    NAME        STATE     READ WRITE CKSUM
+	    storage     ONLINE       0     0     0
+	      raidz1-0  ONLINE       0     0     0
+	        sdb     ONLINE       0     0   640
+	        sdc     ONLINE       0     0     0
+	        sdd     ONLINE       0     0     0
+
+    errors: No known data errors
+
+  \end{verbatim}
+\end{frame}
+
+
+    
 %------------------------------------------------
 \section{Conclusie}
 %------------------------------------------------
